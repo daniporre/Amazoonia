@@ -16,6 +16,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let navigationBarAppearance = UINavigationBar.appearance()
+        let tabBarAppearance = UITabBar.appearance()
+        
+        navigationBarAppearance.isTranslucent = true
+        tabBarAppearance.tintColor = #colorLiteral(red: 0.4245980382, green: 0.5975795388, blue: 0.4042197466, alpha: 1)
+        // change navigation item title color
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        
+        navigationBarAppearance.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        navigationBarAppearance.barTintColor = #colorLiteral(red: 0.4235294118, green: 0.5960784314, blue: 0.4039215686, alpha: 1)
+        if #available(iOS 11.0, *) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.white
+            ]
+        }
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         return true
     }
 
