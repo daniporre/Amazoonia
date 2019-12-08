@@ -22,9 +22,9 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         
         setUpNavigationBar()
         
-        alumnos = ["José Ortega Cano","Alejandro Rodriguez Felices","Paula Monge Fernandez","Francisco Hernández Del Pino"]
-        fotos = [#imageLiteral(resourceName: "niño5"),#imageLiteral(resourceName: "niño4"),#imageLiteral(resourceName: "niño1"),#imageLiteral(resourceName: "niño3")]
-        numExp = [7,5,7,4]
+        alumnos = ["José Ortega Cano","Alejandro Rodriguez Felices","Paula Monge Fernandez","Francisco Hernández Del Pino","David Martínez Fernandez","Juan Escaño García", "María Hernández Soler"]
+        fotos = [#imageLiteral(resourceName: "niño5"),#imageLiteral(resourceName: "niño4"),#imageLiteral(resourceName: "niño1"),#imageLiteral(resourceName: "niño3"),#imageLiteral(resourceName: "niño2"),#imageLiteral(resourceName: "niño6"),#imageLiteral(resourceName: "niño7")]
+        numExp = [7,5,7,4,5,7,3]
         self.childrenTableView.delegate = self
         self.childrenTableView.dataSource = self
         addNewStudentButton.setImage(#imageLiteral(resourceName: "addNewStudentLong").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -127,7 +127,7 @@ extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
         cell.imageViewCell.clipsToBounds = true
 //        cell.accessoryType = .disclosureIndicator
         
-        cell.backGroundCell.layer.cornerRadius = 10
+        cell.backGroundCell.layer.cornerRadius = 15
         cell.backGroundCell.backgroundColor = UIColor.white
         cell.backGroundCell.layer.borderColor = #colorLiteral(red: 0.5616337657, green: 0.7937321067, blue: 0.5317659974, alpha: 1)
         cell.backGroundCell.layer.borderWidth = 3

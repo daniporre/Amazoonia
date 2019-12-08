@@ -19,6 +19,7 @@
 		17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D842396D0F200B79EEE /* TeacherViewController.swift */; };
 		17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */; };
 		17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */; };
+		17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		17D75D842396D0F200B79EEE /* TeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherViewController.swift; sourceTree = "<group>"; };
 		17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherTableViewCell.swift; sourceTree = "<group>"; };
 		17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewStudentViewController.swift; sourceTree = "<group>"; };
+		17DD9F19239CAAD100D36818 /* Students.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Students.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				1714421F238D9B600075C653 /* Assets.xcassets */,
 				17144221238D9B600075C653 /* LaunchScreen.storyboard */,
 				17144224238D9B600075C653 /* Info.plist */,
+				17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */,
 			);
 			path = amazoonia;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */,
 				178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */,
 				17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */,
+				17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +612,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				17DD9F19239CAAD100D36818 /* Students.xcdatamodel */,
+			);
+			currentVersion = 17DD9F19239CAAD100D36818 /* Students.xcdatamodel */;
+			path = Students.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1714420D238D9B5F0075C653 /* Project object */;
 }

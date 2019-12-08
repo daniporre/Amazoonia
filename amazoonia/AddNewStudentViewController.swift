@@ -36,6 +36,8 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         
         
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
+        self.imageView.image = #imageLiteral(resourceName: "addStudent").withRenderingMode(.alwaysTemplate)
+        self.imageView.tintColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
         topConstantContraint = self.topConstraintView.constant
         bottomConstantConstraint = self.bottomConstraintView.constant
 
