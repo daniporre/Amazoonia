@@ -33,6 +33,10 @@ class ViewController: UIViewController {
         bottomConstantConstraint = self.bottomConstraintView.constant
         configTextFieldsButton()
     }
+    
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
     }

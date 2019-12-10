@@ -242,6 +242,9 @@
                                 <rect key="frame" x="306" y="594" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="addNewStudent"/>
+                                <connections>
+                                    <segue destination="TEM-zn-qrr" kind="show" id="YtL-jB-KJE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -252,11 +255,6 @@
                         <barButtonItem key="leftBarButtonItem" title="Item" id="NT9-9q-9l7">
                             <connections>
                                 <action selector="logOutButton:" destination="civ-lO-ODC" id="KgK-8f-GY7"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="tel-39-nMO">
-                            <connections>
-                                <segue destination="TEM-zn-qrr" kind="presentation" id="nnE-je-1dv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
