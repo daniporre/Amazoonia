@@ -22,6 +22,7 @@
 		17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */; };
 		17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */; };
 		17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */; };
+		17DD9F2223A03E4A00D36818 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2123A03E4A00D36818 /* ReviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		17DD9F19239CAAD100D36818 /* Students.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Students.xcdatamodel; sourceTree = "<group>"; };
 		17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherViewController.swift; sourceTree = "<group>"; };
 		17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherTableViewCell.swift; sourceTree = "<group>"; };
+		17DD9F2123A03E4A00D36818 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			children = (
 				17DD9F1E239FFB7400D36818 /* Cells */,
 				17D75D842396D0F200B79EEE /* TeacherViewController.swift */,
+				17DD9F2123A03E4A00D36818 /* ReviewViewController.swift */,
 				178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */,
 				17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */,
 				17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */,
@@ -311,6 +314,7 @@
 				17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */,
 				17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */,
 				17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */,
+				17DD9F2223A03E4A00D36818 /* ReviewViewController.swift in Sources */,
 				178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */,
 				17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */,
 				17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */,

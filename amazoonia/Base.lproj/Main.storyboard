@@ -682,11 +682,106 @@
             </objects>
             <point key="canvasLocation" x="3920.8000000000002" y="145.27736131934034"/>
         </scene>
+        <!--Review View Controller-->
+        <scene sceneID="OWw-Se-riZ">
+            <objects>
+                <viewController storyboardIdentifier="qualifyViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4pf-Zf-aOn" customClass="ReviewViewController" customModule="amazoonia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Dh-r7-mpU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mar" translatesAutoresizingMaskIntoConstraints="NO" id="dew-AC-nUe">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqz-oH-9hp">
+                                <rect key="frame" x="147" y="294" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.87058823529999996" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="good"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="ratingPress:" destination="4pf-Zf-aOn" eventType="touchUpInside" id="Ff6-oS-X4r"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3X-fT-DM1">
+                                <rect key="frame" x="242" y="293" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.87058823529999996" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="great"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="ratingPress:" destination="4pf-Zf-aOn" eventType="touchUpInside" id="fJi-9r-gcZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DD2-yJ-1Ao">
+                                <rect key="frame" x="347" y="28" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="close"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="cancelButton:" destination="4pf-Zf-aOn" eventType="touchUpInside" id="cFh-SX-R05"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9R-Ee-0Rb">
+                                <rect key="frame" x="53" y="293" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.87058823529999996" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="dislike"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="ratingPress:" destination="4pf-Zf-aOn" eventType="touchUpInside" id="ols-BO-Xdf"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="¿Qué calificación obtiene este experimento?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="59A-rD-N0c">
+                                <rect key="frame" x="-8" y="189" width="390" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="zGi-SI-VDE"/>
+                    </view>
+                    <connections>
+                        <outlet property="backGroundImageView" destination="dew-AC-nUe" id="6Lv-EG-Xyp"/>
+                        <outlet property="badButton" destination="c9R-Ee-0Rb" id="gwI-8G-xbe"/>
+                        <outlet property="goodButton" destination="oqz-oH-9hp" id="lQS-GD-NnF"/>
+                        <outlet property="greatButton" destination="c3X-fT-DM1" id="7Tb-tB-aMp"/>
+                        <outlet property="questionLabel" destination="59A-rD-N0c" id="5rl-w4-5rZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vLO-eN-RlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4748" y="146"/>
+        </scene>
     </scenes>
     <resources>
         <image name="addNewStudent" width="56" height="56"/>
         <image name="addStudent" width="700" height="700"/>
+        <image name="close" width="64" height="64"/>
+        <image name="dislike" width="85.333335876464844" height="85.333335876464844"/>
+        <image name="good" width="128" height="128"/>
+        <image name="great" width="128" height="128"/>
         <image name="logo sin fondo" width="900" height="900"/>
+        <image name="mar" width="469.5" height="312.75"/>
         <image name="nido" width="900" height="900"/>
         <image name="niño5" width="194" height="260"/>
         <image name="users-and-groups-user-128-px" width="72" height="72"/>

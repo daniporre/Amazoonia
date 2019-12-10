@@ -36,6 +36,10 @@ class ShowStudentTeacherViewController: UIViewController {
         setNormalNavigationBar(viewController: self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableViewExperiments.reloadData()
+    }
+    
     func setNormalNavigationBar(viewController: UIViewController){
         if #available(iOS 11.0, *) {
             viewController.navigationItem.largeTitleDisplayMode = .never
@@ -82,5 +86,27 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         return 90
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //Creamos la accion Eliminar de tipo UIContextualAction para la celda...
+        
+        
+        //Creamos la accion Compartir de tipo UIContextualAction para la celda...
+        let shareAction = UIContextualAction(style: .destructive, title:  "Calificar", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            let vc = self.storyboard!.instantiateViewController(withIdentifier: "qualifyViewController")
+            self.present(vc, animated: true, completion: nil)
+            
+            //respuesta haptica de tipo impacto...
+            let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
+            let generator = UIImpactFeedbackGenerator(style: impact)
+            generator.prepare()
+            
+            generator.impactOccurred()
+        })
+//        shareAction.image = #imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate)
+        shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        
+        return UISwipeActionsConfiguration(actions: [shareAction])
+    }
     
 }

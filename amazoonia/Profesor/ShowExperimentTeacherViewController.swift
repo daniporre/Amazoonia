@@ -65,6 +65,11 @@ extension ShowExperimentTeacherViewController: UITableViewDelegate, UITableViewD
         cell.backgroundViewCell.clipsToBounds = true
         cell.backgroundImageCell.image = backgroundImages[indexPath.row]
         cell.examplesLabelCell.textColor = colors[indexPath.row]
+        
+        cell.examplesLabelCell.layer.shadowRadius = 2
+        cell.examplesLabelCell.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        cell.examplesLabelCell.layer.shadowOpacity = 5
+        cell.examplesLabelCell.layer.shadowOffset = CGSize(width: 0, height: 3)
 
 
         return cell
