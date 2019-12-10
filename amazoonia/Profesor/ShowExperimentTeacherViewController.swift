@@ -20,12 +20,12 @@ class ShowExperimentTeacherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameExperiments = ["Pone huevos","No produce leche","No es acuático","Es vertebrado"]
-        imageExperiments = [#imageLiteral(resourceName: "nidoLleno"),#imageLiteral(resourceName: "sinLeche"),#imageLiteral(resourceName: "tierra"),#imageLiteral(resourceName: "vertebrado"),]
-        examples = ["Gallina, serpiente, golondrina, rana, tiburon." ,"Vaca, perro, gato, elefante, leon, tigre.","Ballena, pez espada, medusa, calamar, cangrejo, estrella de mar.", "Lince, conejo, pez, cerdo, cabra."]
+        nameExperiments = ["Pone huevos","No produce leche","No es acuático","Es vertebrado", "Tiene 4 patas"]
+        imageExperiments = [#imageLiteral(resourceName: "nidoLleno"),#imageLiteral(resourceName: "sinLeche"),#imageLiteral(resourceName: "tierra"),#imageLiteral(resourceName: "vertebrado"),#imageLiteral(resourceName: "arana4")]
+        examples = ["Gallina, serpiente, golondrina, rana, tiburon." ,"Vaca, perro, gato, elefante, león.","Ballena, pez espada, medusa, calamar, cangrejo, estrella de mar.", "Lince, conejo, pez, cerdo, cabra.", "Caballo, tigre, oso, búfalo, cebra."]
         typeLabel.text = "Mamífero"
-        backgroundImages = [#imageLiteral(resourceName: "nido"),#imageLiteral(resourceName: "leche"),#imageLiteral(resourceName: "mar"),#imageLiteral(resourceName: "huesos")]
-        colors = [#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)]
+        backgroundImages = [#imageLiteral(resourceName: "nido"),#imageLiteral(resourceName: "leche"),#imageLiteral(resourceName: "mar"),#imageLiteral(resourceName: "huesos"),#imageLiteral(resourceName: "patas")]
+        colors = [#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]
         // Do any additional setup after loading the view.
     }
     
