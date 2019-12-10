@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -18,7 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var topConstraintView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
     
-    
+    var profesores: [NSManagedObject] = []
     
     var topConstantContraint: CGFloat = 0
     var bottomConstantConstraint: CGFloat = 0
@@ -61,6 +62,31 @@ class ViewController: UIViewController {
     
     
     @IBAction func loginButton(_ sender: UIButton) {
+    }
+    
+    func auntenticacion (user: String, password: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Profesor")
+        
+        do {
+            profesores = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("No se pudo obtener la lista de profesores. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "inicioProfesor"){
+            let viewDestiny = segue.destination as? TeacherViewController 
+                
+            
+        }
     }
     
     @IBAction func showPasswordButton(_ sender: UIButton) {

@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
+    var students: [NSManagedObject] = []
+    var teacher: [NSManagedObject]?
+    
     var alumnos = [String]()
     var fotos = [UIImage]()
     var numExp = [Int]()
@@ -45,6 +49,16 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         setUpNavigationBar()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.studentsTableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
     }
     
     

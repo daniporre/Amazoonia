@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18G1012" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="Alumno" representedClassName="Alumno" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numExp" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="experimentos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Experimento" inverseName="alumno" inverseEntity="Experimento" syncable="YES"/>
+        <relationship name="profesor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profesor" inverseName="listaAlumnos" inverseEntity="Profesor" syncable="YES"/>
+    </entity>
+    <entity name="Experimento" representedClassName="Experimento" syncable="YES" codeGenerationType="class">
+        <attribute name="aquatic" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backbone" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="eggs" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="legs" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="milk" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="alumno" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alumno" inverseName="experimentos" inverseEntity="Alumno" syncable="YES"/>
+    </entity>
+    <entity name="Profesor" representedClassName="Profesor" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="listaAlumnos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alumno" inverseName="profesor" inverseEntity="Alumno" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Profesor" positionX="-45" positionY="0" width="128" height="120"/>
+        <element name="Alumno" positionX="-18" positionY="27" width="128" height="150"/>
+        <element name="Experimento" positionX="9" positionY="54" width="128" height="195"/>
+    </elements>
 </model>
