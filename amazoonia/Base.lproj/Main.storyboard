@@ -118,7 +118,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h29-OY-lKB"/>
-                                                    <segue destination="civ-lO-ODC" kind="show" id="D55-zw-xxW"/>
+                                                    <segue destination="civ-lO-ODC" kind="show" identifier="inicioProfesor" id="D55-zw-xxW"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -542,6 +542,7 @@
                                             <outlet property="dateCell" destination="zcz-Zx-XvT" id="u2g-9F-dbw"/>
                                             <outlet property="imageViewCell" destination="dUW-Jv-i5x" id="OMd-lY-IQt"/>
                                             <outlet property="nameCell" destination="PRH-o7-afQ" id="ZgU-k0-tMX"/>
+                                            <segue destination="YnS-2V-h8R" kind="show" id="GsA-pP-Mze"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -573,11 +574,120 @@
             </objects>
             <point key="canvasLocation" x="2981.5999999999999" y="146.17691154422789"/>
         </scene>
+        <!--Experimento-->
+        <scene sceneID="Nds-Vs-bzA">
+            <objects>
+                <viewController id="YnS-2V-h8R" customClass="ShowExperimentTeacherViewController" customModule="amazoonia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OED-7k-52Y">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fjF-MI-qYV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="622"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShowExperimentTeacherTableViewCell" rowHeight="250" id="WTF-SS-B8h" customClass="ShowExperimentTeacherTableViewCell" customModule="amazoonia" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="250"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WTF-SS-B8h" id="lF1-IV-T9U">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tiK-Is-dPh">
+                                                    <rect key="frame" x="15" y="11" width="345" height="228"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nido" translatesAutoresizingMaskIntoConstraints="NO" id="KYc-M1-C8z">
+                                                            <rect key="frame" x="0.0" y="37" width="345" height="191"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="afb-6c-bUw">
+                                                            <rect key="frame" x="0.0" y="37" width="345" height="191"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Gig-KX-eih">
+                                                                <rect key="frame" x="0.0" y="0.0" width="345" height="191"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            </view>
+                                                            <blurEffect style="light"/>
+                                                        </visualEffectView>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jf7-QE-Cw9">
+                                                            <rect key="frame" x="0.0" y="37" width="345" height="4"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26s-AO-JOx">
+                                                            <rect key="frame" x="8" y="8" width="329" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="609-bi-aqM">
+                                                            <rect key="frame" x="111" y="49" width="122" height="122"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ejemplos: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Alz-tg-Ouv">
+                                                            <rect key="frame" x="8" y="179" width="329" height="41"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.30173470769999999" green="0.38761096540000001" blue="0.27622850409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <size key="shadowOffset" width="0.0" height="-5"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.61144286390000002" green="0.78737252950000003" blue="0.55682808159999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="backgroundImageCell" destination="KYc-M1-C8z" id="yJ1-1S-Mcb"/>
+                                            <outlet property="backgroundViewCell" destination="tiK-Is-dPh" id="R8w-rR-ffx"/>
+                                            <outlet property="blurViewCell" destination="afb-6c-bUw" id="lCQ-e2-FqH"/>
+                                            <outlet property="examplesLabelCell" destination="Alz-tg-Ouv" id="AfE-nk-qDS"/>
+                                            <outlet property="imageExperimentCell" destination="609-bi-aqM" id="uUn-1n-mLr"/>
+                                            <outlet property="titleCell" destination="26s-AO-JOx" id="AV1-AI-PDM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="YnS-2V-h8R" id="Zyh-eO-YX2"/>
+                                    <outlet property="delegate" destination="YnS-2V-h8R" id="mB4-S3-oOd"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZI-kG-5XV">
+                                <rect key="frame" x="0.0" y="622" width="375" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXk-8D-QbM">
+                                        <rect key="frame" x="8" y="8" width="359" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.61144286390000002" green="0.78737252950000003" blue="0.55682808159999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="iIT-Ws-VP6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Experimento" id="3Lx-kN-ePP"/>
+                    <connections>
+                        <outlet property="typeLabel" destination="bXk-8D-QbM" id="3HL-2b-pQE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sl3-Kk-GQb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3920.8000000000002" y="145.27736131934034"/>
+        </scene>
     </scenes>
     <resources>
         <image name="addNewStudent" width="56" height="56"/>
         <image name="addStudent" width="700" height="700"/>
         <image name="logo sin fondo" width="900" height="900"/>
+        <image name="nido" width="900" height="900"/>
         <image name="niño5" width="194" height="260"/>
         <image name="users-and-groups-user-128-px" width="72" height="72"/>
     </resources>

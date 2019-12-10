@@ -20,6 +20,8 @@
 		17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */; };
 		17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */; };
 		17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */; };
+		17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */; };
+		17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherTableViewCell.swift; sourceTree = "<group>"; };
 		17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewStudentViewController.swift; sourceTree = "<group>"; };
 		17DD9F19239CAAD100D36818 /* Students.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Students.xcdatamodel; sourceTree = "<group>"; };
+		17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherViewController.swift; sourceTree = "<group>"; };
+		17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,12 +114,10 @@
 		17144217238D9B5F0075C653 /* amazoonia */ = {
 			isa = PBXGroup;
 			children = (
+				17DD9F1D239FFB5C00D36818 /* Profesor */,
 				17144218238D9B5F0075C653 /* AppDelegate.swift */,
 				1714421A238D9B5F0075C653 /* ViewController.swift */,
-				17D75D842396D0F200B79EEE /* TeacherViewController.swift */,
 				1714421C238D9B5F0075C653 /* Main.storyboard */,
-				178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */,
-				17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */,
 				1714421F238D9B600075C653 /* Assets.xcassets */,
 				17144221238D9B600075C653 /* LaunchScreen.storyboard */,
 				17144224238D9B600075C653 /* Info.plist */,
@@ -145,8 +147,28 @@
 		17DD9ED7239C2C3700D36818 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		17DD9F1D239FFB5C00D36818 /* Profesor */ = {
+			isa = PBXGroup;
+			children = (
+				17DD9F1E239FFB7400D36818 /* Cells */,
+				17D75D842396D0F200B79EEE /* TeacherViewController.swift */,
+				178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */,
+				17D75D882396E34C00B79EEE /* AddNewStudentViewController.swift */,
+				17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */,
+			);
+			path = Profesor;
+			sourceTree = "<group>";
+		};
+		17DD9F1E239FFB7400D36818 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */,
+				178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */,
+				17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -286,7 +308,9 @@
 				17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */,
 				1714421B238D9B5F0075C653 /* ViewController.swift in Sources */,
 				17144219238D9B5F0075C653 /* AppDelegate.swift in Sources */,
+				17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */,
 				17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */,
+				17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */,
 				178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */,
 				17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */,
 				17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */,
@@ -465,6 +489,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = amazoonia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -482,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = amazoonia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
