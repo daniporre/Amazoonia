@@ -109,7 +109,19 @@ class ReviewViewController: UIViewController {
     
     
     @IBAction func cancelButton(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere calificar este experimento?", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "No calificar", style: .destructive) { (UIAlertAction) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "Calificar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(cancel)
+        alertController.addAction(ok)
+        
+        present(alertController, animated: true)
     }
     
     

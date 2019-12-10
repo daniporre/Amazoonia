@@ -538,6 +538,7 @@
                                                 </stackView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="90" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="dateCell" destination="zcz-Zx-XvT" id="u2g-9F-dbw"/>
                                             <outlet property="imageViewCell" destination="dUW-Jv-i5x" id="OMd-lY-IQt"/>
@@ -673,7 +674,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="iIT-Ws-VP6"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Experimento" id="3Lx-kN-ePP"/>
+                    <navigationItem key="navigationItem" title="Experimento" id="3Lx-kN-ePP">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="calificar" id="esQ-pf-Nzx">
+                            <connections>
+                                <action selector="qualifyButton:" destination="YnS-2V-h8R" id="DTN-t6-Xf1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="typeLabel" destination="bXk-8D-QbM" id="3HL-2b-pQE"/>
                     </connections>
@@ -776,6 +783,7 @@
     <resources>
         <image name="addNewStudent" width="56" height="56"/>
         <image name="addStudent" width="700" height="700"/>
+        <image name="calificar" width="56" height="56"/>
         <image name="close" width="64" height="64"/>
         <image name="dislike" width="85.333335876464844" height="85.333335876464844"/>
         <image name="good" width="128" height="128"/>

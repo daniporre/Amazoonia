@@ -103,7 +103,7 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
             
             generator.impactOccurred()
         })
-//        shareAction.image = #imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate)
+        shareAction.image = #imageLiteral(resourceName: "calificar").withRenderingMode(.alwaysTemplate)
         shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         
         return UISwipeActionsConfiguration(actions: [shareAction])

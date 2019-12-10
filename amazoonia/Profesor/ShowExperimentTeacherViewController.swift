@@ -29,7 +29,11 @@ class ShowExperimentTeacherViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func qualifyButton(_ sender: UIBarButtonItem) {
+        let vc = self.storyboard!.instantiateViewController(withIdentifier: "qualifyViewController")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -40,8 +40,25 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         self.imageView.tintColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
         topConstantContraint = self.topConstraintView.constant
         bottomConstantConstraint = self.bottomConstraintView.constant
+        
+        let scaleImage = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        let transformImage = CGAffineTransform(translationX: 0.0, y: 50.0)
+        
+        imageView.transform = scaleImage.concatenating(transformImage)
+        
+        
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.viewWillAppear(animated)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+            
+            self.imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            
+        }, completion: nil)
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
