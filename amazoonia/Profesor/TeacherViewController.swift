@@ -25,19 +25,13 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         
         setUpNavigationBar()
+        setUpTableView()
+        setUpNewStudentButton()
         
         alumnos = ["José Ortega Cano","Alejandro Rodriguez Felices","Elena Nito Fernandez","Francisco Hernández Del Pino","David Martínez Fernandez","Juan Escaño García", "Penélope Luda Soler"]
         fotos = [#imageLiteral(resourceName: "niño5"),#imageLiteral(resourceName: "niño4"),#imageLiteral(resourceName: "niño1"),#imageLiteral(resourceName: "niño3"),#imageLiteral(resourceName: "niño2"),#imageLiteral(resourceName: "niño6"),#imageLiteral(resourceName: "niño7")]
         numExp = [7,5,7,4,5,7,3]
-        self.childrenTableView.delegate = self
-        self.childrenTableView.dataSource = self
-        addNewStudentButton.setImage(#imageLiteral(resourceName: "addNewStudentLong").withRenderingMode(.alwaysOriginal), for: .normal)
         
-        addNewStudentButton.layer.shadowRadius = 2
-        addNewStudentButton.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        addNewStudentButton.layer.shadowOpacity = 5
-        addNewStudentButton.adjustsImageWhenHighlighted = false
-        addNewStudentButton.layer.shadowOffset = CGSize(width: 0, height: 3)
 
     }
     
@@ -59,8 +53,20 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         let managedContext = appDelegate.persistentContainer.viewContext
     }
     
+    func setUpTableView(){
+        self.childrenTableView.delegate = self
+        self.childrenTableView.dataSource = self
+    }
     
     
+    func setUpNewStudentButton() {
+        addNewStudentButton.setImage(#imageLiteral(resourceName: "addNewStudentLong").withRenderingMode(.alwaysOriginal), for: .normal)
+        addNewStudentButton.layer.shadowRadius = 2
+        addNewStudentButton.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        addNewStudentButton.layer.shadowOpacity = 5
+        addNewStudentButton.adjustsImageWhenHighlighted = false
+        addNewStudentButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
     
     func setUpNavigationBar() {
         

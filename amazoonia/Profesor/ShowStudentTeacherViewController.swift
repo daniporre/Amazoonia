@@ -25,6 +25,7 @@ class ShowStudentTeacherViewController: UIViewController {
         experiments = ["Experimento1","Experimento2","Experimento3","Experimento4","Experimento5","Experimento6","Experimento7"]
         date = ["20/02/2019","30/04/2019","18/09/2019","28/11/2019","28/11/2019","28/11/2019","28/11/2019"]
         fotos = [#imageLiteral(resourceName: "pajaro"),#imageLiteral(resourceName: "libelula"),#imageLiteral(resourceName: "cocodrilo"),#imageLiteral(resourceName: "pez-volador"),#imageLiteral(resourceName: "sapo"),#imageLiteral(resourceName: "tigre"),#imageLiteral(resourceName: "koala"),]
+        
         self.studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
         blurView.layer.cornerRadius = 15
         // Do any additional setup after loading the view.

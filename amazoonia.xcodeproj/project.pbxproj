@@ -23,6 +23,11 @@
 		17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */; };
 		17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */; };
 		17DD9F2223A03E4A00D36818 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2123A03E4A00D36818 /* ReviewViewController.swift */; };
+		17DD9F2723A060CF00D36818 /* StudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2623A060CF00D36818 /* StudentViewController.swift */; };
+		17DD9F2A23A06A4500D36818 /* StudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2923A06A4500D36818 /* StudentTableViewCell.swift */; };
+		17DD9F2C23A0729200D36818 /* AddNewExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2B23A0729200D36818 /* AddNewExperimentViewController.swift */; };
+		17DD9F2E23A0777000D36818 /* PermisionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2D23A0777000D36818 /* PermisionsViewController.swift */; };
+		17DD9F3023A080E700D36818 /* AddNewExperimentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DD9F2F23A080E700D36818 /* AddNewExperimentTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,11 @@
 		17DD9F1B239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherViewController.swift; sourceTree = "<group>"; };
 		17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentTeacherTableViewCell.swift; sourceTree = "<group>"; };
 		17DD9F2123A03E4A00D36818 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		17DD9F2623A060CF00D36818 /* StudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentViewController.swift; sourceTree = "<group>"; };
+		17DD9F2923A06A4500D36818 /* StudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewCell.swift; sourceTree = "<group>"; };
+		17DD9F2B23A0729200D36818 /* AddNewExperimentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExperimentViewController.swift; sourceTree = "<group>"; };
+		17DD9F2D23A0777000D36818 /* PermisionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermisionsViewController.swift; sourceTree = "<group>"; };
+		17DD9F2F23A080E700D36818 /* AddNewExperimentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExperimentTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +126,7 @@
 		17144217238D9B5F0075C653 /* amazoonia */ = {
 			isa = PBXGroup;
 			children = (
+				17DD9F2523A060B900D36818 /* Alumno */,
 				17DD9F1D239FFB5C00D36818 /* Profesor */,
 				17144218238D9B5F0075C653 /* AppDelegate.swift */,
 				1714421A238D9B5F0075C653 /* ViewController.swift */,
@@ -124,6 +135,7 @@
 				17144221238D9B600075C653 /* LaunchScreen.storyboard */,
 				17144224238D9B600075C653 /* Info.plist */,
 				17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */,
+				17DD9F2D23A0777000D36818 /* PermisionsViewController.swift */,
 			);
 			path = amazoonia;
 			sourceTree = "<group>";
@@ -172,6 +184,25 @@
 				17D75D862396D41700B79EEE /* TeacherTableViewCell.swift */,
 				178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */,
 				17DD9F1F239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		17DD9F2523A060B900D36818 /* Alumno */ = {
+			isa = PBXGroup;
+			children = (
+				17DD9F2823A06A1400D36818 /* Cells */,
+				17DD9F2623A060CF00D36818 /* StudentViewController.swift */,
+				17DD9F2B23A0729200D36818 /* AddNewExperimentViewController.swift */,
+			);
+			path = Alumno;
+			sourceTree = "<group>";
+		};
+		17DD9F2823A06A1400D36818 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				17DD9F2923A06A4500D36818 /* StudentTableViewCell.swift */,
+				17DD9F2F23A080E700D36818 /* AddNewExperimentTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -307,15 +338,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17DD9F2C23A0729200D36818 /* AddNewExperimentViewController.swift in Sources */,
+				17DD9F2723A060CF00D36818 /* StudentViewController.swift in Sources */,
 				178EDC54239B584C00A2071F /* StudentTeacherTableViewCell.swift in Sources */,
 				17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */,
+				17DD9F2A23A06A4500D36818 /* StudentTableViewCell.swift in Sources */,
 				1714421B238D9B5F0075C653 /* ViewController.swift in Sources */,
 				17144219238D9B5F0075C653 /* AppDelegate.swift in Sources */,
 				17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */,
+				17DD9F2E23A0777000D36818 /* PermisionsViewController.swift in Sources */,
 				17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */,
 				17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */,
 				17DD9F2223A03E4A00D36818 /* ReviewViewController.swift in Sources */,
 				178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */,
+				17DD9F3023A080E700D36818 /* AddNewExperimentTableViewCell.swift in Sources */,
 				17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */,
 				17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */,
 			);

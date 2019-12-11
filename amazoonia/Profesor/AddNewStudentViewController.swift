@@ -30,25 +30,16 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameTextField.delegate = self
-        passwordTextField.delegate = self
+        
         configTextFieldsButton()
+        setUpAnimation()
+        setUpTableView()
+        setUpNavBarAndImageView()
         
-        
-        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
-        self.imageView.image = #imageLiteral(resourceName: "addStudent").withRenderingMode(.alwaysTemplate)
-        self.imageView.tintColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
         topConstantContraint = self.topConstraintView.constant
         bottomConstantConstraint = self.bottomConstraintView.constant
         
-        let scaleImage = CGAffineTransform(scaleX: 0.0, y: 0.0)
-        let transformImage = CGAffineTransform(translationX: 0.0, y: 50.0)
         
-        imageView.transform = scaleImage.concatenating(transformImage)
-        
-        
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +50,23 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
             self.imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             
         }, completion: nil)
+    }
+    
+    func setUpNavBarAndImageView() {
+        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
+        self.imageView.image = #imageLiteral(resourceName: "addStudent").withRenderingMode(.alwaysTemplate)
+        self.imageView.tintColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+    }
+    
+    func setUpTableView () {
+        nameTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
+    func setUpAnimation() {
+        let scaleImage = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        let transformImage = CGAffineTransform(translationX: 0.0, y: 50.0)
+        imageView.transform = scaleImage.concatenating(transformImage)
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {

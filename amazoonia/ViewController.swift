@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Photos
+
 
 class ViewController: UIViewController {
 
@@ -15,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var showPasswordButton: UIButton!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBOutlet weak var topConstraintView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
@@ -40,6 +43,21 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        self.checkForGrantedPermissions()
+    }
+    
+    func checkForGrantedPermissions() {
+        let photosAuth : Bool = PHPhotoLibrary.authorizationStatus() == .authorized
+        
+        let authorized = photosAuth
+        
+        
+        if !authorized {
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "ShowTerms") {
+                navigationController?.present(vc, animated: true)
+            }
+        }
+        
     }
     
     func configTextFieldsButton() {
@@ -62,6 +80,13 @@ class ViewController: UIViewController {
     
     
     @IBAction func loginButton(_ sender: UIButton) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            performSegue(withIdentifier: "inicioProfesor", sender: nil)
+        }
+        if segmentedControl.selectedSegmentIndex == 1 {
+            performSegue(withIdentifier: "inicioAlumno", sender: nil)
+        }
+        
     }
     
     func auntenticacion (user: String, password: String) {
@@ -78,6 +103,8 @@ class ViewController: UIViewController {
         } catch let error as NSError {
             print("No se pudo obtener la lista de profesores. \(error), \(error.userInfo)")
         }
+        
+        
         
     }
     
