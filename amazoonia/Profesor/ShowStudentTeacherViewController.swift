@@ -78,7 +78,7 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         cell.imageViewCell.image = fotos[indexPath.row]
         cell.nameCell.text = experiments[indexPath.row]
         cell.dateCell.text = date[indexPath.row]
-        cell.accessoryType = .detailDisclosureButton
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

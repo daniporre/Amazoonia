@@ -64,7 +64,7 @@ class SingInViewController: UIViewController {
     
     @IBAction func helpButton(_ sender: UIButton) {
         
-        if let url = URL(string: "https://es.wikipedia.org/wiki/Ayuda:Registro") {
+        if let url = URL(string: "https://Amazoonia/Registro") {
             if #available(iOS 10, *){
                 UIApplication.shared.open(url)
             }else{
