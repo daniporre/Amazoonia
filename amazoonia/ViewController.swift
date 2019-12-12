@@ -29,16 +29,23 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.textFieldUser.delegate = self
-        self.textFieldPassword.delegate = self
+        
         
         
         topConstantContraint = self.topConstraintView.constant
         bottomConstantConstraint = self.bottomConstraintView.constant
-        configTextFieldsButton()
+        print(topConstraintView.constant)
+        print(bottomConstraintView.constant)
+        setUpView()
     }
     
-    
+    func setUpView() {
+        configTextFieldsButton()
+        self.textFieldUser.delegate = self
+        self.textFieldPassword.delegate = self
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
+        
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,41 +146,66 @@ class ViewController: UIViewController {
 extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
+        if textField == textFieldUser {
+            textFieldPassword.becomeFirstResponder()
+        }
+        if textField == textFieldPassword {
+            textFieldPassword.resignFirstResponder()
+            if segmentedControl.selectedSegmentIndex == 0 {
+                performSegue(withIdentifier: "inicioProfesor", sender: nil)
+            }
+            if segmentedControl.selectedSegmentIndex == 1 {
+                performSegue(withIdentifier: "inicioAlumno", sender: nil)
+            }
+        }
         return true
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
-        self.topConstraintView.constant = self.topConstraintView.constant - 100
-        self.bottomConstraintView.constant = self.bottomConstraintView.constant - 100
+        self.topConstraintView.constant = -4
+        self.bottomConstraintView.constant = 47
         
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField == textFieldUser {
+            setEmptyViewTextField(textfield: textFieldUser)
+        }
+        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
 //        self.textFieldsTopConstraint.constant = constantContraint
         
-        if textFieldUser.isEditing {
-            return
-        }
-        if textFieldPassword.isEditing {
-            return
-        }
-        if textFieldUser.isEditing == false && textFieldPassword.isEditing == false {
+//        if textFieldUser.isEditing {
+//            return
+//        }
+//        if textFieldPassword.isEditing {
+//            return
+//        }
+//        if textFieldUser.isEditing == false && textFieldPassword.isEditing == false {
+////            self.topConstraintView.constant = topConstantContraint
+////            self.bottomConstraintView.constant = bottomConstantConstraint
+//        }
+//
+//        if textField == textFieldPassword && !textFieldPassword.isEditing {
 //            self.topConstraintView.constant = topConstantContraint
 //            self.bottomConstraintView.constant = bottomConstantConstraint
-        }
+//
+//        }
+//        if textField == textFieldUser && !textFieldUser.isEditing {
+//            self.topConstraintView.constant = topConstantContraint
+//            self.bottomConstraintView.constant = bottomConstantConstraint
+//        }
         
-        if textField == textFieldPassword && !textFieldPassword.isEditing {
-            self.topConstraintView.constant = topConstantContraint
-            self.bottomConstraintView.constant = bottomConstantConstraint
-
+        if textField == textFieldPassword {
+            self.topConstraintView.constant = self.topConstantContraint
+            self.bottomConstraintView.constant = self.topConstantContraint
         }
-        if textField == textFieldUser && !textFieldUser.isEditing {
-            self.topConstraintView.constant = topConstantContraint
-            self.bottomConstraintView.constant = bottomConstantConstraint
-        }
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
         
     }
     

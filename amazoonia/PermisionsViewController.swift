@@ -33,10 +33,21 @@ class PermisionsViewController: UIViewController {
         PHPhotoLibrary.requestAuthorization { [unowned self] (authStatus) in
             DispatchQueue.main.async {
                 if authStatus == .authorized {
-                    self.authorizationCompleted()
+                    self.askForCameraPermisions()
                 } else {
                     self.infoLabel.text = "Nos has denegado el permiso de fotos. Por favor, actívalo en los Ajustes de tu dispositvo para continuar.\nAjustes / Amazoonia / Fotos"
                 }
+            }
+        }
+    }
+    
+    func askForCameraPermisions() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if response {
+                self.authorizationCompleted()
+            } else {
+                print("Acceso a cámara denegado")
+                self.infoLabel.text = "Nos has denegado el permiso de cámara. Por favor, actívalo en los Ajustes de tu dispositvo para continuar.\nAjustes / Amazoonia / Cámara"
             }
         }
     }

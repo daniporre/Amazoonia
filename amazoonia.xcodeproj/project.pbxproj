@@ -14,6 +14,8 @@
 		17144223238D9B600075C653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17144221238D9B600075C653 /* LaunchScreen.storyboard */; };
 		1714422E238D9B610075C653 /* amazooniaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1714422D238D9B610075C653 /* amazooniaTests.swift */; };
 		17144239238D9B610075C653 /* amazooniaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17144238238D9B610075C653 /* amazooniaUITests.swift */; };
+		175C153C23A2CE9100899CE6 /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153B23A2CE9100899CE6 /* SingInViewController.swift */; };
+		175C153E23A2DF5300899CE6 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153D23A2DF5300899CE6 /* Funcs.swift */; };
 		178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */; };
 		178EDC54239B584C00A2071F /* StudentTeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */; };
 		17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D842396D0F200B79EEE /* TeacherViewController.swift */; };
@@ -61,6 +63,8 @@
 		17144234238D9B610075C653 /* amazooniaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = amazooniaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17144238238D9B610075C653 /* amazooniaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = amazooniaUITests.swift; sourceTree = "<group>"; };
 		1714423A238D9B610075C653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		175C153B23A2CE9100899CE6 /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
+		175C153D23A2DF5300899CE6 /* Funcs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
 		178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStudentTeacherViewController.swift; sourceTree = "<group>"; };
 		178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTeacherTableViewCell.swift; sourceTree = "<group>"; };
 		17D75D842396D0F200B79EEE /* TeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				17144224238D9B600075C653 /* Info.plist */,
 				17DD9F18239CAAD100D36818 /* Students.xcdatamodeld */,
 				17DD9F2D23A0777000D36818 /* PermisionsViewController.swift */,
+				175C153B23A2CE9100899CE6 /* SingInViewController.swift */,
+				175C153D23A2DF5300899CE6 /* Funcs.swift */,
 			);
 			path = amazoonia;
 			sourceTree = "<group>";
@@ -345,7 +351,9 @@
 				17DD9F2A23A06A4500D36818 /* StudentTableViewCell.swift in Sources */,
 				1714421B238D9B5F0075C653 /* ViewController.swift in Sources */,
 				17144219238D9B5F0075C653 /* AppDelegate.swift in Sources */,
+				175C153C23A2CE9100899CE6 /* SingInViewController.swift in Sources */,
 				17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */,
+				175C153E23A2DF5300899CE6 /* Funcs.swift in Sources */,
 				17DD9F2E23A0777000D36818 /* PermisionsViewController.swift in Sources */,
 				17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */,
 				17DD9F20239FFC6500D36818 /* ShowExperimentTeacherTableViewCell.swift in Sources */,

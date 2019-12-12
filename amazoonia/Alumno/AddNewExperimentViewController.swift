@@ -33,13 +33,33 @@ class AddNewExperimentViewController: UIViewController {
         self.nameTextField.delegate = self
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "done").withRenderingMode(.alwaysTemplate)
     }
     
     func setUpTemporallyData() {
         nameExperiments = ["¿Pone huevos?","¿Produce leche?","¿Es acuático?","¿Es vertebrado?", "¿Cuantas patas tiene?"]
         imageExperiments = [#imageLiteral(resourceName: "nidoLleno"),#imageLiteral(resourceName: "sinLeche"),#imageLiteral(resourceName: "tierra"),#imageLiteral(resourceName: "vertebrado"),#imageLiteral(resourceName: "arana4")]
     }
-
+    @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        
+        
+        
+        let alertController = UIAlertController(title: "Guardar nuevo experimento", message: "¿Está seguro/a de que quiere guardar el experimento con nombre \(nameTextField.text!) a la lista de experimentos?", preferredStyle: .actionSheet)
+        
+        let ok = UIAlertAction(title: "Guardar", style: .default) { (UIAlertAction) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(cancel)
+        alertController.addAction(ok)
+        
+        present(alertController, animated: true)
+        
+    }
+    
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Cancelar", message: "¿Estás seguro/a de que no quieres realizar este experimento", preferredStyle: .alert)
         
