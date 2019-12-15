@@ -17,6 +17,7 @@ class SingInViewController: UIViewController {
     @IBOutlet weak var secondPasswordTextField: UITextField!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var secondShowPasswordButton: UIButton!
+    @IBOutlet weak var helpButton: UIButton!
     
     
     
@@ -28,6 +29,7 @@ class SingInViewController: UIViewController {
     
     func setUpView(){
         self.singInButton.layer.cornerRadius = 10
+        self.helpButton.layer.cornerRadius = 10
         self.passwordTextField.isSecureTextEntry = true
         self.secondPasswordTextField.isSecureTextEntry = true
         setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField)

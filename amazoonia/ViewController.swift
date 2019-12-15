@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var singInButton: UIButton!
     
     @IBOutlet weak var topConstraintView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
@@ -70,6 +71,7 @@ class ViewController: UIViewController {
     func configTextFieldsButton() {
         
         self.loginButton.layer.cornerRadius = 10
+        self.singInButton.layer.cornerRadius = 10
         self.textFieldPassword.isSecureTextEntry = true
         
         showPasswordButton.setImage(#imageLiteral(resourceName: "hidePassword").withRenderingMode(.alwaysTemplate), for: .selected)
