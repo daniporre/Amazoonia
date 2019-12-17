@@ -10,8 +10,12 @@ import UIKit
 
 class AddNewExperimentViewController: UIViewController {
 
+    @IBOutlet weak var viewTextfield: UIView!
+    @IBOutlet weak var labelTexfield: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     var nameExperiments = [String]()
     var imageExperiments = [UIImage]()
+    
     var examples = [String]()
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -34,6 +38,7 @@ class AddNewExperimentViewController: UIViewController {
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "done").withRenderingMode(.alwaysTemplate)
+        self.saveButton.isEnabled = false
     }
     
     func setUpTemporallyData() {
@@ -61,7 +66,13 @@ class AddNewExperimentViewController: UIViewController {
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Cancelar", message: "¿Estás seguro/a de que no quieres realizar este experimento", preferredStyle: .alert)
+        
+        if (nameTextField.text?.isEmpty)! {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        let alertController = UIAlertController(title: "Cancelar", message: "¿Estás seguro/a de que no quieres realizar el experimento \(nameTextField.text!)", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "No realizar", style: .destructive) { (UIAlertAction) in
             self.dismiss(animated: true, completion: nil)
@@ -134,5 +145,46 @@ extension AddNewExperimentViewController: UITableViewDelegate, UITableViewDataSo
 extension AddNewExperimentViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return self.view.endEditing(true)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if (nameTextField.text?.isEmpty)! {
+            UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                
+                
+                let scaleLabel = CGAffineTransform(scaleX: 1, y: 1)
+                let transformLabel = CGAffineTransform(translationX: 0.0, y: 0.0)
+                
+            
+                
+                self.labelTexfield.transform = scaleLabel.concatenating(transformLabel)
+                self.viewTextfield.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
+                self.viewTextfield.backgroundColor = UIColor.lightGray
+                self.labelTexfield.textColor = UIColor.lightGray
+                
+            }, completion: nil)
+        }
+        
+        if !(nameTextField.text?.isEmpty)! {
+            saveButton.isEnabled = true
+        }
+        if (nameTextField.text?.isEmpty)! {
+            saveButton.isEnabled = false
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+            
+            
+            let scaleLabel = CGAffineTransform(scaleX: 0.85, y: 0.85)
+            let transformLabel = CGAffineTransform(translationX: -3.5, y: -20.0)
+            
+            self.labelTexfield.transform = scaleLabel.concatenating(transformLabel)
+            self.viewTextfield.transform = CGAffineTransform(translationX: 0, y: 5.0)
+            self.labelTexfield.textColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+            self.viewTextfield.backgroundColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+            
+        }, completion: nil)
     }
 }

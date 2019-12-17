@@ -31,7 +31,7 @@ class ReviewViewController: UIViewController {
         backGroundImageView.addSubview(blurEffectView)
         
         blurViewMarks.effect = UIBlurEffect(style: .dark)
-        blurEffectView.alpha = 0.97
+        blurEffectView.alpha = 1
         
         backGroundImageView.addSubview(blurEffectView)
         blurViewMarks.layer.cornerRadius = 10

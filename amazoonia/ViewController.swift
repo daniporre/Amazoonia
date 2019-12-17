@@ -12,13 +12,18 @@ import Photos
 
 
 class ViewController: UIViewController {
+    
+    var container: NSPersistentContainer!
 
     @IBOutlet weak var textFieldUser: UITextField!
+    @IBOutlet weak var textFieldUserView: UIView!
     @IBOutlet weak var textFieldPassword: UITextField!
+    @IBOutlet weak var textFieldPasswordView: UIView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var singInButton: UIButton!
+    @IBOutlet weak var backgroundView: UIView!
     
     @IBOutlet weak var topConstraintView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
@@ -30,14 +35,22 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        topConstantContraint = self.topConstraintView.constant
-        bottomConstantConstraint = self.bottomConstraintView.constant
-        print(topConstraintView.constant)
-        print(bottomConstraintView.constant)
         setUpView()
+        container = NSPersistentContainer(name: "Students")
+        
+        
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+                 print("Unresolved error \(error)")
+            }
+        }
+        
+        
+        
+        
+        
+//        topConstantContraint = self.topConstraintView.constant
+//        bottomConstantConstraint = self.bottomConstraintView.constant
     }
     
     func setUpView() {
@@ -46,6 +59,16 @@ class ViewController: UIViewController {
         self.textFieldPassword.delegate = self
         setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
         
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
     }
     
     
@@ -76,7 +99,7 @@ class ViewController: UIViewController {
         
         showPasswordButton.setImage(#imageLiteral(resourceName: "hidePassword").withRenderingMode(.alwaysTemplate), for: .selected)
         showPasswordButton.setImage(#imageLiteral(resourceName: "showPassword").withRenderingMode(.alwaysTemplate), for: .normal)
-        showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
     }
     
     func setBackButton(viewController: UIViewController, nombreImagen: String){
@@ -165,8 +188,23 @@ extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
-        self.topConstraintView.constant = -4
-        self.bottomConstraintView.constant = 47
+        
+        
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+            
+//            self.topConstraintView.constant = -4
+//            self.bottomConstraintView.constant = 47
+            
+            self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -110.0)
+            if textField == self.textFieldUser {
+                self.textFieldUserView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+            }
+            if textField == self.textFieldPassword {
+                self.textFieldPasswordView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+            }
+            
+            
+        }, completion: nil)
         
         return true
     }
@@ -180,33 +218,21 @@ extension ViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        self.textFieldsTopConstraint.constant = constantContraint
-        
-//        if textFieldUser.isEditing {
-//            return
-//        }
-//        if textFieldPassword.isEditing {
-//            return
-//        }
-//        if textFieldUser.isEditing == false && textFieldPassword.isEditing == false {
-////            self.topConstraintView.constant = topConstantContraint
-////            self.bottomConstraintView.constant = bottomConstantConstraint
-//        }
-//
-//        if textField == textFieldPassword && !textFieldPassword.isEditing {
-//            self.topConstraintView.constant = topConstantContraint
-//            self.bottomConstraintView.constant = bottomConstantConstraint
-//
-//        }
-//        if textField == textFieldUser && !textFieldUser.isEditing {
-//            self.topConstraintView.constant = topConstantContraint
-//            self.bottomConstraintView.constant = bottomConstantConstraint
-//        }
         
         if textField == textFieldPassword {
-            self.topConstraintView.constant = self.topConstantContraint
-            self.bottomConstraintView.constant = self.topConstantContraint
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                
+                self.backgroundView.transform = CGAffineTransform(translationX: 0, y: 0)
+                
+            }, completion: nil)
         }
+        if textField == self.textFieldUser {
+            self.textFieldUserView.backgroundColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+        }
+        if textField == self.textFieldPassword {
+            self.textFieldPasswordView.backgroundColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+        }
+        
         setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
         
     }

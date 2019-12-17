@@ -45,7 +45,8 @@ class SingInViewController: UIViewController {
         showPasswordButton.setImage(#imageLiteral(resourceName: "showPassword").withRenderingMode(.alwaysTemplate), for: .normal)
         secondShowPasswordButton.setImage(#imageLiteral(resourceName: "hidePassword").withRenderingMode(.alwaysTemplate), for: .selected)
         secondShowPasswordButton.setImage(#imageLiteral(resourceName: "showPassword").withRenderingMode(.alwaysTemplate), for: .normal)
-        showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+        secondShowPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
@@ -82,11 +83,11 @@ class SingInViewController: UIViewController {
         
         if passwordTextField.isSecureTextEntry {
             showPasswordButton.isSelected = false
-            showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         }
         if passwordTextField.isSecureTextEntry == false {
             showPasswordButton.isSelected = true
-            showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         }
     }
     
@@ -95,11 +96,11 @@ class SingInViewController: UIViewController {
         
         if secondPasswordTextField.isSecureTextEntry {
             secondShowPasswordButton.isSelected = false
-            secondShowPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            secondShowPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         }
         if secondPasswordTextField.isSecureTextEntry == false {
             secondShowPasswordButton.isSelected = true
-            secondShowPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            secondShowPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         }
     }
     
@@ -141,6 +142,22 @@ extension SingInViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField)
         setIconTextField(foto: #imageLiteral(resourceName: "mail"), textfield: mailTextField)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == nameTextField {
+            mailTextField.becomeFirstResponder()
+        }
+        if textField == mailTextField {
+            passwordTextField.becomeFirstResponder()
+        }
+        if textField == passwordTextField {
+            secondPasswordTextField.becomeFirstResponder()
+        }
+        if textField == secondPasswordTextField {
+            return textField.resignFirstResponder()
+        }
+        return true
     }
     
 }

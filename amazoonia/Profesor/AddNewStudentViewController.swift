@@ -71,19 +71,24 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         
-        let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere añadir este alumno/a?", preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "No añadir", style: .destructive) { (UIAlertAction) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        let cancel = UIAlertAction(title: "Añadir", style: .cancel) { (UIAlertAction) in
+        if !(nameTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)! {
+            let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere añadir al alumno/a \(nameTextField.text!)?", preferredStyle: .alert)
             
+            let ok = UIAlertAction(title: "No añadir", style: .destructive) { (UIAlertAction) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            let cancel = UIAlertAction(title: "Añadir", style: .cancel) { (UIAlertAction) in
+                
+            }
+            
+            alertController.addAction(cancel)
+            alertController.addAction(ok)
+            
+            present(alertController, animated: true)
+            return
         }
+        dismiss(animated: true, completion: nil)
         
-        alertController.addAction(cancel)
-        alertController.addAction(ok)
-        
-        present(alertController, animated: true)
         
     }
     

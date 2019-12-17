@@ -22,6 +22,19 @@ class PermisionsViewController: UIViewController {
     
     @IBAction func askForPermisions(_ sender: UIButton) {
         self.askForPhotosPermissions()
+        
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+        
+        if self.infoLabel.text == "Nos has denegado el permiso de fotos. Por favor, actívalo en los Ajustes de tu dispositvo para continuar.\nAjustes / Amazoonia / Fotos" {
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)") 
+                })
+            }
+        }
+        
     }
     
     func setUpAskForPermisionsButton() {
@@ -36,6 +49,7 @@ class PermisionsViewController: UIViewController {
                     self.askForCameraPermisions()
                 } else {
                     self.infoLabel.text = "Nos has denegado el permiso de fotos. Por favor, actívalo en los Ajustes de tu dispositvo para continuar.\nAjustes / Amazoonia / Fotos"
+                    
                 }
             }
         }
