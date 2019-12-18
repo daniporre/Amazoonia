@@ -357,7 +357,7 @@
                                             <color key="titleColor" red="0.30173470769999999" green="0.38761096540000001" blue="0.27622850409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <action selector="addNewStudentButton:" destination="HWe-Sk-fuw" eventType="touchUpInside" id="Vtp-98-YhF"/>
+                                            <action selector="singInButton:" destination="Xev-YH-9q5" eventType="touchUpInside" id="yYm-Fo-Sw7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -495,7 +495,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="addNewStudent"/>
                                 <connections>
-                                    <segue destination="TEM-zn-qrr" kind="show" id="YtL-jB-KJE"/>
+                                    <segue destination="HWe-Sk-fuw" kind="show" id="KRX-AH-EqB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -664,7 +664,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4049" y="-1237"/>
+            <point key="canvasLocation" x="3111" y="-1237"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5tn-DP-biZ">
@@ -683,24 +683,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwC-av-5VY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-15.199999999999999" y="-236.13193403298354"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="zCo-hp-XjJ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TEM-zn-qrr" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="62y-ow-H5u">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="HWe-Sk-fuw" kind="relationship" relationship="rootViewController" id="nkc-iL-zli"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QCm-SD-JfO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3110" y="-1237"/>
         </scene>
         <!--Perfil-->
         <scene sceneID="KtR-Po-wmV">

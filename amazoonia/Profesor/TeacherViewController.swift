@@ -11,8 +11,8 @@ import CoreData
 
 class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
-    var students: [NSManagedObject] = []
-    var teacher: [NSManagedObject]?
+    var profesor: Profesor!
+    var listaAlumnos = [Alumno]()
     
     var alumnos = [String]()
     var fotos = [UIImage]()
@@ -35,6 +35,16 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
     }
     
+    
+    @IBAction func loadTeacher(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.destination as! ViewController
+        
+        profesor = sourceViewController.profesor
+        
+        listaAlumnos = profesor!.listaAlumnos.allObjects as! [Alumno]
+        
+        print(listaAlumnos)
+    }
 
     
     override func viewDidAppear(_ animated: Bool) {

@@ -56,6 +56,8 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "cancel").withRenderingMode(.alwaysTemplate)
         self.imageView.image = #imageLiteral(resourceName: "addStudent").withRenderingMode(.alwaysTemplate)
         self.imageView.tintColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+        self.navigationItem.hidesBackButton = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     func setUpTableView () {
@@ -75,7 +77,11 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
             let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere añadir al alumno/a \(nameTextField.text!)?", preferredStyle: .alert)
             
             let ok = UIAlertAction(title: "No añadir", style: .destructive) { (UIAlertAction) in
-                self.dismiss(animated: true, completion: nil)
+                if self.presentingViewController is UINavigationController{
+                    self.dismiss(animated: true, completion: nil)
+                }else{
+                    self.navigationController!.popViewController(animated: true)
+                }
             }
             let cancel = UIAlertAction(title: "Añadir", style: .cancel) { (UIAlertAction) in
                 
@@ -85,9 +91,12 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
             alertController.addAction(ok)
             
             present(alertController, animated: true)
-            return
         }
-        dismiss(animated: true, completion: nil)
+        if self.presentingViewController is UINavigationController{
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            self.navigationController!.popViewController(animated: true)
+        }
         
         
     }
@@ -124,7 +133,11 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         let alertController = UIAlertController(title: "Añadir nuevo alumno", message: "¿Está seguro/a de que quiere añadir el alumno/a con nombre \(nameTextField.text!) a la lista de clase?", preferredStyle: .actionSheet)
         
         let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
-            self.dismiss(animated: true, completion: nil)
+            if self.presentingViewController is UINavigationController{
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                self.navigationController!.popViewController(animated: true)
+            }
         }
         let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
             

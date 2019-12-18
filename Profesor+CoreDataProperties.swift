@@ -9,7 +9,6 @@
 
 import Foundation
 import CoreData
-import UIKit
 
 extension Profesor {
 
@@ -17,11 +16,11 @@ extension Profesor {
         return NSFetchRequest<Profesor>(entityName: "Profesor")
     }
 
-    @NSManaged public var name: String!
-    @NSManaged public var password: String!
-    @NSManaged public var photo: UIImage?
-    @NSManaged public var user: String!
-    @NSManaged public var listaAlumnos: NSSet?
+    @NSManaged public var name: String
+    @NSManaged public var password: String
+    @NSManaged public var photo: NSData
+    @NSManaged public var user: String
+    @NSManaged public var listaAlumnos: NSSet
 
 }
 
@@ -33,11 +32,11 @@ extension Profesor {
 
     @objc(removeListaAlumnosObject:)
     @NSManaged public func removeFromListaAlumnos(_ value: Alumno)
-//
-//    @objc(addListaAlumnos:)
-//    @NSManaged public func addToListaAlumnos(_ values: NSSet)
-//
-//    @objc(removeListaAlumnos:)
-//    @NSManaged public func removeFromListaAlumnos(_ values: NSSet)
+
+    @objc(addListaAlumnos:)
+    @NSManaged public func addToListaAlumnos(_ values: NSSet)
+
+    @objc(removeListaAlumnos:)
+    @NSManaged public func removeFromListaAlumnos(_ values: NSSet)
 
 }

@@ -14,6 +14,11 @@ import Photos
 class ViewController: UIViewController {
     
     var container: NSPersistentContainer!
+    var profesores = [Profesor]()
+    var profesor: Profesor?
+    var alumno: Alumno?
+    var alumnos = [Alumno]()
+    
 
     @IBOutlet weak var textFieldUser: UITextField!
     @IBOutlet weak var textFieldUserView: UIView!
@@ -28,7 +33,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var topConstraintView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
     
-    var profesores: [NSManagedObject] = []
     
     var topConstantContraint: CGFloat = 0
     var bottomConstantConstraint: CGFloat = 0
@@ -36,21 +40,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
+        createContainer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+        self.checkForGrantedPermissions()
+        loadSavedData()
+        self.textFieldUser.text! = ""
+        self.textFieldPassword.text! = ""
+    }
+    
+    func createContainer() {
         container = NSPersistentContainer(name: "Students")
-        
-        
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error {
-                 print("Unresolved error \(error)")
+                print("Unresolved error \(error)")
             }
         }
-        
-        
-        
-        
-        
-//        topConstantContraint = self.topConstraintView.constant
-//        bottomConstantConstraint = self.bottomConstraintView.constant
     }
     
     func setUpView() {
@@ -72,23 +79,31 @@ class ViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
-        self.checkForGrantedPermissions()
+    func loadSavedData() {
+        
+        let request = Profesor.createFetchRequest()
+        let sort = NSSortDescriptor(key: "name", ascending: false)
+        request.sortDescriptors = [sort]
+        
+        do {
+            profesores = try container.viewContext.fetch(request)
+            print("Got \(profesores.count) profesores")
+        } catch {
+            print("fetch failed")
+        }
+        
     }
+    
+    
     
     func checkForGrantedPermissions() {
         let photosAuth : Bool = PHPhotoLibrary.authorizationStatus() == .authorized
-        
         let authorized = photosAuth
-        
-        
         if !authorized {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "ShowTerms") {
                 navigationController?.present(vc, animated: true)
             }
         }
-        
     }
     
     func configTextFieldsButton() {
@@ -112,41 +127,61 @@ class ViewController: UIViewController {
     
     
     @IBAction func loginButton(_ sender: UIButton) {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            performSegue(withIdentifier: "inicioProfesor", sender: nil)
-        }
-        if segmentedControl.selectedSegmentIndex == 1 {
-            performSegue(withIdentifier: "inicioAlumno", sender: nil)
-        }
+        
+        auntenticacion()
         
     }
     
-    func auntenticacion (user: String, password: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if(segue.identifier == "inicioProfesor"){
+//            let viewDestiny = segue.destination as? TeacherViewController
+//            viewDestiny?.profesor = self.profesor
+//            self.navigationItem.title = self.profesor?.name
+//
+//        }
+////        if(segue.identifier == "inicioAlumno"){
+////            let viewDestiny = segue.destination as? StudentViewController
+////            viewDestiny?.alumno = self.profesor
+////            self.navigationItem.title = self.profesor?.name
+////
+////        }
+//    }
+    
+    func auntenticacion () {
+
+        if (textFieldUser.text?.isEmpty)! || (textFieldPassword.text?.isEmpty)! {
             return
         }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Profesor")
-        
-        do {
-            profesores = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("No se pudo obtener la lista de profesores. \(error), \(error.userInfo)")
+        if segmentedControl.selectedSegmentIndex == 0 {
+            if let profesor = profesores.first(where: {$0.user.lowercased() == textFieldUser.text?.lowercased()}) {
+                if profesor.password == textFieldPassword.text! {
+                    self.profesor = profesor
+                    print(profesor.name)
+                    print(profesor.password)
+                    performSegue(withIdentifier: "inicioProfesor", sender: nil)
+                    
+                }
+                return
+            }
         }
         
-        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            if let alumno = alumnos.first(where: {$0.user.lowercased() == textFieldUser.text?.lowercased()}) {
+                if alumno.password == textFieldPassword.text! {
+                    self.alumno = alumno
+                    print(alumno.name)
+                    print(alumno.password)
+                    performSegue(withIdentifier: "inicioAlumno", sender: nil)
+                    
+                }
+                return
+            }
+        }
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "inicioProfesor"){
-            let viewDestiny = segue.destination as? TeacherViewController 
-                
-            
-        }
-    }
     
     @IBAction func showPasswordButton(_ sender: UIButton) {
         self.textFieldPassword.isSecureTextEntry = !self.textFieldPassword.isSecureTextEntry
@@ -168,6 +203,9 @@ class ViewController: UIViewController {
 
 }
 
+
+
+//MARK: - TEXTFIELD
 extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -177,10 +215,10 @@ extension ViewController: UITextFieldDelegate {
         if textField == textFieldPassword {
             textFieldPassword.resignFirstResponder()
             if segmentedControl.selectedSegmentIndex == 0 {
-                performSegue(withIdentifier: "inicioProfesor", sender: nil)
+                auntenticacion()
             }
             if segmentedControl.selectedSegmentIndex == 1 {
-                performSegue(withIdentifier: "inicioAlumno", sender: nil)
+                auntenticacion()
             }
         }
         return true

@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class SingInViewController: UIViewController {
+    
+    var container: NSPersistentContainer!
 
     @IBOutlet weak var singInButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
@@ -24,8 +27,34 @@ class SingInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        
+        createContainer()
+
     }
+    
+    func createContainer() {
+        container = NSPersistentContainer(name: "Students")
+        
+        
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+                print("Unresolved error \(error)")
+            }
+        }
+
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
+    }
+    
+    
+
     
     func setUpView(){
         self.singInButton.layer.cornerRadius = 10
@@ -47,7 +76,37 @@ class SingInViewController: UIViewController {
         secondShowPasswordButton.setImage(#imageLiteral(resourceName: "showPassword").withRenderingMode(.alwaysTemplate), for: .normal)
         showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         secondShowPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+//        singInButton.isEnabled = false
     }
+    
+    @IBAction func singInButton(_ sender: UIButton) {
+        
+        if (nameTextField.text?.isEmpty)! || (mailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! || (secondPasswordTextField.text?.isEmpty)! {
+            return
+        }
+        
+        let profesor = Profesor(context: self.container.viewContext)
+        profesor.name = nameTextField.text!
+        profesor.user = mailTextField.text!
+        if passwordTextField.text! != secondPasswordTextField.text! {
+            let alertController = UIAlertController(title: "Error", message: "La contraseña no coincide", preferredStyle: .alert)
+            
+            let ok = UIAlertAction(title: "Aceptar", style: .cancel) { (UIAlertAction) in
+                
+            }
+            
+            alertController.addAction(ok)
+            present(alertController, animated: true)
+            return
+        }
+        
+        profesor.password = passwordTextField.text!
+        
+        self.saveContext()
+        
+        
+    }
+    
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere registrar este profesor?", preferredStyle: .alert)
@@ -75,6 +134,7 @@ class SingInViewController: UIViewController {
             }
             
         }
+        
         
     }
     

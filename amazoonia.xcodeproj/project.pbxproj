@@ -16,6 +16,10 @@
 		17144239238D9B610075C653 /* amazooniaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17144238238D9B610075C653 /* amazooniaUITests.swift */; };
 		1736013D23A9342900CC7B13 /* Profesor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736013B23A9342900CC7B13 /* Profesor+CoreDataClass.swift */; };
 		1736013E23A9342900CC7B13 /* Profesor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736013C23A9342900CC7B13 /* Profesor+CoreDataProperties.swift */; };
+		1757A81023A93C130096782C /* Experimento+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1757A80C23A93C130096782C /* Experimento+CoreDataClass.swift */; };
+		1757A81123A93C130096782C /* Experimento+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1757A80D23A93C130096782C /* Experimento+CoreDataProperties.swift */; };
+		1757A81223A93C130096782C /* Alumno+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1757A80E23A93C130096782C /* Alumno+CoreDataClass.swift */; };
+		1757A81323A93C130096782C /* Alumno+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1757A80F23A93C130096782C /* Alumno+CoreDataProperties.swift */; };
 		175C153C23A2CE9100899CE6 /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153B23A2CE9100899CE6 /* SingInViewController.swift */; };
 		175C153E23A2DF5300899CE6 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153D23A2DF5300899CE6 /* Funcs.swift */; };
 		175C154023A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153F23A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift */; };
@@ -69,6 +73,10 @@
 		1714423A238D9B610075C653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1736013B23A9342900CC7B13 /* Profesor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profesor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1736013C23A9342900CC7B13 /* Profesor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profesor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1757A80C23A93C130096782C /* Experimento+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Experimento+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1757A80D23A93C130096782C /* Experimento+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Experimento+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1757A80E23A93C130096782C /* Alumno+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alumno+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1757A80F23A93C130096782C /* Alumno+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alumno+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		175C153B23A2CE9100899CE6 /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
 		175C153D23A2DF5300899CE6 /* Funcs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
 		175C153F23A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentStudentViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +125,10 @@
 		1714420C238D9B5F0075C653 = {
 			isa = PBXGroup;
 			children = (
+				1757A80C23A93C130096782C /* Experimento+CoreDataClass.swift */,
+				1757A80D23A93C130096782C /* Experimento+CoreDataProperties.swift */,
+				1757A80E23A93C130096782C /* Alumno+CoreDataClass.swift */,
+				1757A80F23A93C130096782C /* Alumno+CoreDataProperties.swift */,
 				1736013B23A9342900CC7B13 /* Profesor+CoreDataClass.swift */,
 				1736013C23A9342900CC7B13 /* Profesor+CoreDataProperties.swift */,
 				17DD9ED7239C2C3700D36818 /* Cells */,
@@ -361,11 +373,14 @@
 				178EDC54239B584C00A2071F /* StudentTeacherTableViewCell.swift in Sources */,
 				17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */,
 				17DD9F2A23A06A4500D36818 /* StudentTableViewCell.swift in Sources */,
+				1757A81223A93C130096782C /* Alumno+CoreDataClass.swift in Sources */,
 				175C154023A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift in Sources */,
 				1714421B238D9B5F0075C653 /* ViewController.swift in Sources */,
 				17144219238D9B5F0075C653 /* AppDelegate.swift in Sources */,
+				1757A81323A93C130096782C /* Alumno+CoreDataProperties.swift in Sources */,
 				175C153C23A2CE9100899CE6 /* SingInViewController.swift in Sources */,
 				17DD9F1C239FF7BA00D36818 /* ShowExperimentTeacherViewController.swift in Sources */,
+				1757A81123A93C130096782C /* Experimento+CoreDataProperties.swift in Sources */,
 				175C153E23A2DF5300899CE6 /* Funcs.swift in Sources */,
 				1736013D23A9342900CC7B13 /* Profesor+CoreDataClass.swift in Sources */,
 				17DD9F2E23A0777000D36818 /* PermisionsViewController.swift in Sources */,
@@ -376,6 +391,7 @@
 				178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */,
 				17DD9F3023A080E700D36818 /* AddNewExperimentTableViewCell.swift in Sources */,
 				17D75D892396E34C00B79EEE /* AddNewStudentViewController.swift in Sources */,
+				1757A81023A93C130096782C /* Experimento+CoreDataClass.swift in Sources */,
 				1736013E23A9342900CC7B13 /* Profesor+CoreDataProperties.swift in Sources */,
 				17DD9F1A239CAAD100D36818 /* Students.xcdatamodeld in Sources */,
 			);
