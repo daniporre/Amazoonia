@@ -22,3 +22,19 @@ func setEmptyViewTextField(textfield: UITextField) {
     textfield.leftViewMode = UITextField.ViewMode.always
     textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 }
+
+
+public func lanzarAlertaConUnBoton(viewController: UIViewController, title: String, message: String?, buttonText: String, buttonType: UIAlertAction.Style) {
+    
+    //creamos alerta
+    let alertController:UIAlertController = UIAlertController(title: title, message: (message == "") ? nil : message, preferredStyle: .alert)
+    
+    let cancelAction:UIAlertAction = UIAlertAction(title: buttonText,
+                                                   style: buttonType, handler: nil)
+    //Hacemos que el boton aparezca en la alerta al usuario
+    alertController.addAction(cancelAction)
+    
+    viewController.present(alertController, animated: true, completion: nil)
+    
+    
+}

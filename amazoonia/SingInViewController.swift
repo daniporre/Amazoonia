@@ -12,6 +12,7 @@ import CoreData
 class SingInViewController: UIViewController {
     
     var container: NSPersistentContainer!
+    var profesores = [Profesor]()
 
     @IBOutlet weak var singInButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
@@ -29,6 +30,11 @@ class SingInViewController: UIViewController {
         setUpView()
         createContainer()
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadSavedData()
     }
     
     func createContainer() {
@@ -53,6 +59,24 @@ class SingInViewController: UIViewController {
         }
     }
     
+    func loadSavedData() {
+        
+        let request = Profesor.createFetchRequest()
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sort]
+        
+        do {
+            profesores = try container.viewContext.fetch(request)
+            
+            for profesor in profesores {
+                print("Profesor numero: \(profesor.user)")
+            }
+            print("Got \(profesores.count) profesores")
+        } catch {
+            print("fetch failed")
+        }
+        
+    }
     
 
     
@@ -80,31 +104,44 @@ class SingInViewController: UIViewController {
     }
     
     @IBAction func singInButton(_ sender: UIButton) {
+        let request = Profesor.createFetchRequest()
+        
         
         if (nameTextField.text?.isEmpty)! || (mailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! || (secondPasswordTextField.text?.isEmpty)! {
+            lanzarAlertaConUnBoton(viewController: self, title: "Campos incompletos", message: "Debes de rellenar todos los campos para poder registrarte en Amazoonia", buttonText: "Aceptar", buttonType: .default)
             return
         }
         
-        let profesor = Profesor(context: self.container.viewContext)
-        profesor.name = nameTextField.text!
-        profesor.user = mailTextField.text!
-        if passwordTextField.text! != secondPasswordTextField.text! {
-            let alertController = UIAlertController(title: "Error", message: "La contraseña no coincide", preferredStyle: .alert)
+        do {
+            profesores = try container.viewContext.fetch(request)
             
-            let ok = UIAlertAction(title: "Aceptar", style: .cancel) { (UIAlertAction) in
+            if profesores.contains(where: {$0.user.lowercased() == (self.mailTextField.text!).lowercased()}) {
                 
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido ya existe, escoge otro", buttonText: "Aceptar", buttonType: .cancel)
+                return
+                
+            } else {
+                
+                
+                if passwordTextField.text! != secondPasswordTextField.text! {
+                    lanzarAlertaConUnBoton(viewController: self, title: "Las contraseñas no coinciden", message: "", buttonText: "Aceptar", buttonType: .cancel)
+                    return
+                }
+                
+                let profesor = Profesor(context: self.container.viewContext)
+                profesor.name = nameTextField.text!
+                profesor.user = mailTextField.text!
+                profesor.password = passwordTextField.text!
+                
+                self.saveContext()
+                
+                lanzarAlertaConUnBoton(viewController: self, title: "Profesor registrado", message: "El profesor se ha registrado correctamente en Amazoonia", buttonText: "Aceptar", buttonType: .cancel)
             }
             
-            alertController.addAction(ok)
-            present(alertController, animated: true)
-            return
+            print("Got \(profesores.count) profesores")
+        } catch {
+            print("fetch failed")
         }
-        
-        profesor.password = passwordTextField.text!
-        
-        self.saveContext()
-        
-        
     }
     
     
