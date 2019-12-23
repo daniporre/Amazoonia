@@ -481,7 +481,7 @@
                                             <outlet property="imageViewCell" destination="CMY-g2-RDj" id="Q4i-OA-xFn"/>
                                             <outlet property="nameCell" destination="arI-8K-qf7" id="ihP-SV-DaZ"/>
                                             <outlet property="numExpCell" destination="P5M-z8-OvF" id="jNK-VL-Rml"/>
-                                            <segue destination="i6Z-ib-Xly" kind="show" id="tOT-xd-Xf6"/>
+                                            <segue destination="i6Z-ib-Xly" kind="show" identifier="showStudentSegue" id="tOT-xd-Xf6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -495,7 +495,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="addNewStudent"/>
                                 <connections>
-                                    <segue destination="HWe-Sk-fuw" kind="show" id="KRX-AH-EqB"/>
+                                    <segue destination="HWe-Sk-fuw" kind="show" identifier="addNewStudentSegue" id="KRX-AH-EqB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -614,6 +614,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="addNewStudentButton:" destination="HWe-Sk-fuw" eventType="touchUpInside" id="7n1-bh-ktE"/>
+                                                    <segue destination="fsc-lm-Xba" kind="unwind" identifier="addUnwind" unwindAction="loadTeacherWithSender:" id="Bbg-Ll-skC"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -658,6 +659,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHN-YF-vHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fsc-lm-Xba" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="yIr-KK-wiV">
                     <connections>
                         <action selector="imageTapped:" destination="HWe-Sk-fuw" id="cBk-4b-4br"/>

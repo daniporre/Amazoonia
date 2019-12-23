@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class AddNewStudentViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var profesor: Profesor!
+    var container: NSPersistentContainer!
+    var alumno: Alumno!
     
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
@@ -124,29 +129,47 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addUnwind" {
+        }
+    }
+    
     @IBAction func addNewStudentButton(_ sender: UIButton) {
         
         if (nameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! {
             return
         }
         
-        let alertController = UIAlertController(title: "Añadir nuevo alumno", message: "¿Está seguro/a de que quiere añadir el alumno/a con nombre \(nameTextField.text!) a la lista de clase?", preferredStyle: .actionSheet)
+        self.alumno = Alumno(context: self.container.viewContext)
+        self.alumno.name = self.nameTextField.text!
+        self.alumno.password = self.passwordTextField.text!
+        self.alumno.photo = self.imageView.image?.pngData() as! NSData
         
-        let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
-            if self.presentingViewController is UINavigationController{
-                self.dismiss(animated: true, completion: nil)
-            }else{
-                self.navigationController!.popViewController(animated: true)
-            }
-        }
-        let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
-            
-        }
+        self.profesor.addToListaAlumnos(self.alumno)
         
-        alertController.addAction(cancel)
-        alertController.addAction(ok)
+        self.saveContext()
         
-        present(alertController, animated: true)
+        
+//        let alertController = UIAlertController(title: "Añadir nuevo alumno", message: "¿Está seguro/a de que quiere añadir el alumno/a con nombre \(nameTextField.text!) a la lista de clase?", preferredStyle: .actionSheet)
+//
+//        let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
+//
+//
+//
+////            if self.presentingViewController is UINavigationController{
+////                self.dismiss(animated: true, completion: nil)
+////            }else{
+////                self.navigationController!.popViewController(animated: true)
+////            }
+//        }
+//        let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
+//
+//        }
+//
+//        alertController.addAction(cancel)
+//        alertController.addAction(ok)
+//
+//        present(alertController, animated: true)
     }
     
     
@@ -252,7 +275,15 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         self.view.endEditing(true)
     }
     
-    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
+    }
 }
 
 extension AddNewStudentViewController: UITextFieldDelegate {

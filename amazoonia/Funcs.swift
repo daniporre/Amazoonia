@@ -38,3 +38,9 @@ public func lanzarAlertaConUnBoton(viewController: UIViewController, title: Stri
     
     
 }
+
+public func setNormalNavigationBar(viewController: UIViewController){
+    if #available(iOS 11.0, *) {
+        viewController.navigationItem.largeTitleDisplayMode = .never
+    }
+}

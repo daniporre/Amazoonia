@@ -12,7 +12,10 @@ import CoreData
 class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
     var profesor: Profesor!
-    var listaAlumnos = [Alumno]()
+    var listaAlumnos2 = [Alumno]()
+    
+    var container: NSPersistentContainer!
+    var fetchResultsController: NSFetchedResultsController<Profesor>!
     
     var alumnos = [String]()
     var fotos = [UIImage]()
@@ -27,95 +30,116 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         setUpNavigationBar()
         setUpTableView()
         setUpNewStudentButton()
+//
+//        alumnos = ["José Ortega Cano","Alejandro Rodriguez Felices","Elena Nito Fernandez","Francisco Hernández Del Pino","David Martínez Fernandez","Juan Escaño García", "Penélope Luda Soler"]
+//        fotos = [#imageLiteral(resourceName: "niño5"),#imageLiteral(resourceName: "niño4"),#imageLiteral(resourceName: "niño1"),#imageLiteral(resourceName: "niño3"),#imageLiteral(resourceName: "niño2"),#imageLiteral(resourceName: "niño6"),#imageLiteral(resourceName: "niño7")]
+//        numExp = [7,5,7,4,5,7,3]
         
-        alumnos = ["José Ortega Cano","Alejandro Rodriguez Felices","Elena Nito Fernandez","Francisco Hernández Del Pino","David Martínez Fernandez","Juan Escaño García", "Penélope Luda Soler"]
-        fotos = [#imageLiteral(resourceName: "niño5"),#imageLiteral(resourceName: "niño4"),#imageLiteral(resourceName: "niño1"),#imageLiteral(resourceName: "niño3"),#imageLiteral(resourceName: "niño2"),#imageLiteral(resourceName: "niño6"),#imageLiteral(resourceName: "niño7")]
-        numExp = [7,5,7,4,5,7,3]
+        
+        
+        
+        
+        //saveContext()
+        
+        
+//        for alumno in profesor.listaAlumnos {
+//            listaAlumnos.append(alumno as! Alumno)
+//        }
+        
+//
+//        let newAlumno = Alumno(context: self.container.viewContext)
+//        newAlumno.name = "daniel martinez111"
+//
+////        listaAlumnos.removeAll()
+////        listaAlumnos.append(newAlumno)
+//
+////        self.saveContext()
+//
+////        self.listaAlumnos.removeAll()
+//
+//
+//        profesor.removeFromListaAlumnos(newAlumno)
+//        self.saveContext()
+        
+        print("La lista de alumnos es: \n \(listaAlumnos2)")
+        
         
 
     }
     
+    @IBAction func newStudent(sender: UIStoryboardSegue) {
+        if sender.identifier != "addUnwind"{return}
+        let source = sender.source as! AddNewStudentViewController
+        let newStudent = source.alumno
+        listaAlumnos2.append(newStudent!)
+        let newIndexPath: IndexPath = IndexPath(row: listaAlumnos2.count-1, section: 0)
+        self.studentsTableView.insertRows(at: [newIndexPath], with: .fade)
+        self.saveContext()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "addNewStudentSegue"){
+            let viewDestiny = segue.destination as? AddNewStudentViewController
+            viewDestiny?.profesor = self.profesor
+            viewDestiny?.container = self.container
+            self.navigationItem.title = self.profesor?.name
+        }
+        if segue.identifier == "showStudentSegue" {
+            let viewDestiny = segue.destination as? ShowStudentTeacherViewController
+            let filaSeleccionada = studentsTableView.indexPathForSelectedRow
+            viewDestiny?.alumno = listaAlumnos2[(filaSeleccionada?.row)!]
+            studentsTableView.reloadRows(at: [filaSeleccionada!], with: .fade)
+        }
+    }
+    
     
     @IBAction func loadTeacher(sender: UIStoryboardSegue) {
-        let sourceViewController = sender.destination as! ViewController
+        if sender.identifier == "inicioProfesor" {
+            print("Segue")
+        }
         
-        profesor = sourceViewController.profesor
         
-        listaAlumnos = profesor!.listaAlumnos.allObjects as! [Alumno]
         
-        print(listaAlumnos)
     }
 
     
     override func viewDidAppear(_ animated: Bool) {
         setUpNavigationBar()
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
         self.studentsTableView.reloadData()
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.title = self.profesor.name.capitalized
+        listaAlumnos2 = profesor!.listaAlumnos.allObjects as! [Alumno]
+//        loadSavedData()
+        print(profesor.listaAlumnos)
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-    }
-    
-    func setUpTableView(){
-        self.childrenTableView.delegate = self
-        self.childrenTableView.dataSource = self
-    }
-    
-    
-    func setUpNewStudentButton() {
-        addNewStudentButton.setImage(#imageLiteral(resourceName: "addNewStudentLong").withRenderingMode(.alwaysOriginal), for: .normal)
-        addNewStudentButton.layer.shadowRadius = 2
-        addNewStudentButton.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        addNewStudentButton.layer.shadowOpacity = 5
-        addNewStudentButton.adjustsImageWhenHighlighted = false
-        addNewStudentButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-    }
-    
-    func setUpNavigationBar() {
-        
-//        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysTemplate)
-        
-        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "addNewStudent").withRenderingMode(.alwaysTemplate)
-        setNavigationBarStyle11(viewController: self)
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
         
     }
     
-    func setUpBackGroundTableCell() {
-        
-    }
-    func setNavigationBarStyle11(viewController: UIViewController){
-        if #available(iOS 11.0, *) {
-            viewController.navigationController?.navigationBar.prefersLargeTitles = true
-        }
-    }
+    
     
     
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro/a de que quiere cerrar la sesión activa?", preferredStyle: .alert)
-        
+
         let ok = UIAlertAction(title: "Cerrar sesión", style: .destructive) { (UIAlertAction) in
             self.navigationController?.popViewController(animated: true)
-            
+
             self.dismiss(animated: true, completion: nil)
         }
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
-            
+
         }
-        
+
         alertController.addAction(cancel)
         alertController.addAction(ok)
-        
+
         present(alertController, animated: true)
     }
     
@@ -134,7 +158,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
 extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return alumnos.count
+        return listaAlumnos2.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -148,9 +172,9 @@ extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeacherTableViewCell", for: indexPath) as! TeacherTableViewCell
         
         
-        cell.nameCell.text = alumnos[indexPath.row]
-        cell.imageViewCell.image = fotos[indexPath.row]
-        cell.numExpCell.text = "Número de experimentos: \(String(numExp[indexPath.row]))"
+        cell.nameCell.text = listaAlumnos2[indexPath.row].name
+        cell.imageViewCell.image = UIImage(data: listaAlumnos2[indexPath.row].photo as Data)
+        cell.numExpCell.text = "Número de experimentos: \(listaAlumnos2[indexPath.row].numExp)"
         cell.imageViewCell.layer.cornerRadius = cell.imageViewCell.frame.height / 2
         cell.imageViewCell.clipsToBounds = true
 //        cell.accessoryType = .disclosureIndicator
@@ -176,5 +200,118 @@ extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
+}
+
+
+//MARK: - CORE DATA CONFIGURATIONS
+extension TeacherViewController {
+    
+    func createContainer() {
+        container = NSPersistentContainer(name: "Students")
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+                print("Unresolved error \(error)")
+            }
+        }
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
+    }
+    
+//    func loadSavedData() {
+//
+//        let request: NSFetchRequest<Alumno> = NSFetchRequest(entityName: "Alumno")
+//        let sort = NSSortDescriptor(key: "name", ascending: true)
+//        request.sortDescriptors = [sort]
+//
+//        do {
+////            listaAlumnos = try container.viewContext.fetch(request)
+//
+//        } catch {
+//            print("fetch failed")
+//        }
+//
+//    }
+//    func deleteTeacher(user: String) {
+//        let context = container.viewContext
+//        let request = Profesor.createFetchRequest()
+//
+//        do {
+//            listaAlumnos = try container.viewContext.fetch(request)
+//
+//            for profesor in listaAlumnos {
+//                if profesor.user == user {
+//                    context.delete(profesor)
+//                    saveContext()
+//                }
+//            }
+//        } catch {
+//            print("fetch failed")
+//        }
+//
+//    }
+//
+//    func loadTeacher(user: String) -> Profesor? {
+//        let request = Profesor.createFetchRequest()
+//
+//        do {
+//            profesores = try container.viewContext.fetch(request)
+//
+//            for profesor in profesores {
+//                if profesor.user == user {
+//                    return profesor
+//                }
+//            }
+//        } catch {
+//            print("fetch failed")
+//        }
+//        return profesor
+//    }
+    
+}
+
+//MARK: - SETUPS
+extension TeacherViewController {
+    
+    func setUpTableView(){
+        self.childrenTableView.delegate = self
+        self.childrenTableView.dataSource = self
+    }
+    
+    func setUpNewStudentButton() {
+        addNewStudentButton.setImage(#imageLiteral(resourceName: "addNewStudentLong").withRenderingMode(.alwaysOriginal), for: .normal)
+        addNewStudentButton.layer.shadowRadius = 2
+        addNewStudentButton.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        addNewStudentButton.layer.shadowOpacity = 5
+        addNewStudentButton.adjustsImageWhenHighlighted = false
+        addNewStudentButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
+    
+    func setUpNavigationBar() {
+        
+        //        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysTemplate)
+        
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "addNewStudent").withRenderingMode(.alwaysTemplate)
+        setNavigationBarStyle11(viewController: self)
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
+        
+    }
+    
+    func setNavigationBarStyle11(viewController: UIViewController){
+        if #available(iOS 11.0, *) {
+            viewController.navigationController?.navigationBar.prefersLargeTitles = true
+        }
+    }
     
 }

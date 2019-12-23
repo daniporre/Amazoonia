@@ -135,7 +135,13 @@ class SingInViewController: UIViewController {
                 
                 self.saveContext()
                 
-                lanzarAlertaConUnBoton(viewController: self, title: "Profesor registrado", message: "El profesor se ha registrado correctamente en Amazoonia", buttonText: "Aceptar", buttonType: .cancel)
+                let alertController = UIAlertController(title: "Profesor registrado", message: "El profesor se ha registrado correctamente en Amazoonia", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Aceptar", style: .default) { (UIAlertAction) in
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alertController.addAction(okAction)
+                present(alertController, animated: true)
+                
             }
             
             print("Got \(profesores.count) profesores")

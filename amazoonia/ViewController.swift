@@ -51,23 +51,32 @@ class ViewController: UIViewController {
     
     @IBAction func loginButton(_ sender: UIButton) {
         auntenticacion()
+        
+        
+       
+        
     }
     
+    
 //
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if(segue.identifier == "inicioProfesor"){
-//            let viewDestiny = segue.destination as? TeacherViewController
-//            viewDestiny?.profesor = self.profesor
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "inicioProfesor"){
+            let viewDestiny = segue.destination as? TeacherViewController
+            viewDestiny?.profesor = self.profesor
+            viewDestiny?.container = self.container
+            self.navigationItem.title = self.profesor?.name
+
+        }
+        
+//        if(segue.identifier == "inicioAlumno"){
+//            let viewDestiny = segue.destination as? StudentViewController
+////            viewDestiny?.alumno = self.profesor
 //            self.navigationItem.title = self.profesor?.name
 //
 //        }
-////        if(segue.identifier == "inicioAlumno"){
-////            let viewDestiny = segue.destination as? StudentViewController
-////            viewDestiny?.alumno = self.profesor
-////            self.navigationItem.title = self.profesor?.name
-////
-////        }
-//    }
+    }
+    
+    
     //MARK: - AUNTENTICACION
     func auntenticacion () {
 
