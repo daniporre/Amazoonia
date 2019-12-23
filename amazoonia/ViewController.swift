@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     //MARK: - ATTRIBUTES
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Profesor>!
+    var fetchResultsController2: NSFetchedResultsController<Alumno>!
+
     
     var profesores = [Profesor]()
     var profesor: Profesor?
@@ -44,7 +46,8 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
         self.checkForGrantedPermissions()
-        loadSavedData()
+        loadTeacherSavedData()
+        loadStudentSavedData()
         self.textFieldUser.text! = ""
         self.textFieldPassword.text! = ""
     }
@@ -68,12 +71,12 @@ class ViewController: UIViewController {
 
         }
         
-//        if(segue.identifier == "inicioAlumno"){
-//            let viewDestiny = segue.destination as? StudentViewController
-////            viewDestiny?.alumno = self.profesor
-//            self.navigationItem.title = self.profesor?.name
-//
-//        }
+        if(segue.identifier == "inicioAlumno"){
+            let viewDestiny = segue.destination as? StudentViewController
+            viewDestiny?.alumno = self.alumno
+            self.navigationItem.title = self.profesor?.name
+
+        }
     }
     
     
@@ -114,7 +117,13 @@ class ViewController: UIViewController {
                     print("------------ Inicio de sesión correcto (Alumno) ------------")
                     performSegue(withIdentifier: "inicioAlumno", sender: nil)
                     
+                } else {
+                    lanzarAlertaConUnBoton(viewController: self, title: "Usuario o contraseña incorrectos", message: "El usuario o la contraseña introducidos son incorrectos", buttonText: "Aceptar", buttonType: .cancel)
+                    return
                 }
+                return
+            } else {
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario o contraseña incorrectos", message: "El usuario o la contraseña introducidos son incorrectos", buttonText: "Aceptar", buttonType: .cancel)
                 return
             }
         }
@@ -218,7 +227,7 @@ extension ViewController {
         }
     }
     
-    func loadSavedData() {
+    func loadTeacherSavedData() {
         
         let request = Profesor.createFetchRequest()
         let sort = NSSortDescriptor(key: "name", ascending: true)
@@ -226,6 +235,27 @@ extension ViewController {
         
         do {
             profesores = try container.viewContext.fetch(request)
+            
+            for profesor in profesores {
+                print("Profesor numero: \(profesor.user)")
+            }
+            
+            print(profesores)
+            print("Got \(profesores.count) profesores")
+        } catch {
+            print("fetch failed")
+        }
+        
+    }
+    
+    func loadStudentSavedData() {
+        
+        let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        requestAlumno.sortDescriptors = [sort]
+        
+        do {
+            alumnos = try container.viewContext.fetch(requestAlumno)
             
             for profesor in profesores {
                 print("Profesor numero: \(profesor.user)")

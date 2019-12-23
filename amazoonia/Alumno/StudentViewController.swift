@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class StudentViewController: UIViewController {
+    
+    var alumno: Alumno!
+    var listaExperimentps = [Experimento]()
+    
+    var container: NSPersistentContainer!
+    var fetchResultsController: NSFetchedResultsController<Alumno>!
     
     @IBOutlet weak var studentImageView: UIImageView!
     @IBOutlet weak var nameStudentLabel: UILabel!
@@ -24,9 +31,9 @@ class StudentViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationBar()
         setUpHeaderView()
-        setUpTemporallyData()
+        setUpData()
         setUpTableView()
-        
+        print(alumno)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,10 +53,10 @@ class StudentViewController: UIViewController {
         self.tableView.dataSource = self
     }
     
-    func setUpTemporallyData() {
-        experiments = ["Experimento1","Experimento2","Experimento3","Experimento4","Experimento5","Experimento6","Experimento7"]
-        date = ["20/02/2019","30/04/2019","18/09/2019","28/11/2019","28/11/2019","28/11/2019","28/11/2019"]
-        fotos = [#imageLiteral(resourceName: "pajaro"),#imageLiteral(resourceName: "libelula"),#imageLiteral(resourceName: "cocodrilo"),#imageLiteral(resourceName: "pez-volador"),#imageLiteral(resourceName: "sapo"),#imageLiteral(resourceName: "tigre"),#imageLiteral(resourceName: "koala"),]
+    func setUpData() {
+        self.studentImageView.image = UIImage(data: self.alumno.photo as Data)
+        self.nameStudentLabel.text = alumno.name
+        self.numExpStudentLabel.text = "Número de experimentos: \(String(alumno.experimentos.count))"
     }
     
     func setUpHeaderView() {

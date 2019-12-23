@@ -142,6 +142,7 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         
         self.alumno = Alumno(context: self.container.viewContext)
         self.alumno.name = self.nameTextField.text!
+        self.alumno.user = self.nameTextField.text!
         self.alumno.password = self.passwordTextField.text!
         self.alumno.photo = self.imageView.image?.pngData() as! NSData
         
