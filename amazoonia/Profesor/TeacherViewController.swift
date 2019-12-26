@@ -17,6 +17,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Profesor>!
     
+    
     var alumnos = [String]()
     var fotos = [UIImage]()
     var numExp = [Int]()
@@ -106,7 +107,6 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         setUpNavigationBar()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
         self.studentsTableView.reloadData()
     }
     
@@ -114,11 +114,11 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = self.profesor.name.capitalized
+        self.navigationItem.title = self.profesor.user.capitalized
         listaAlumnos2 = profesor!.listaAlumnos.allObjects as! [Alumno]
 //        loadSavedData()
         print(profesor.listaAlumnos)
-        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         
     }
     
@@ -174,7 +174,7 @@ extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.nameCell.text = listaAlumnos2[indexPath.row].name
         cell.imageViewCell.image = UIImage(data: listaAlumnos2[indexPath.row].photo as Data)
-        cell.numExpCell.text = "Número de experimentos: \(listaAlumnos2[indexPath.row].numExp)"
+        cell.numExpCell.text = "Número de experimentos: \(listaAlumnos2[indexPath.row].experimentos.count)"
         cell.imageViewCell.layer.cornerRadius = cell.imageViewCell.frame.height / 2
         cell.imageViewCell.clipsToBounds = true
 //        cell.accessoryType = .disclosureIndicator
@@ -201,6 +201,68 @@ extension TeacherViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        //Creamos la accion Eliminar de tipo UIContextualAction para la celda...
+//        let deleteAction = UIContextualAction(style: .destructive, title:  "Eliminar", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
+//
+//            //Alerta con tres tipos de acciones
+//            let alertController = UIAlertController(title: "Eliminar", message: "¿Estás seguro de que quiere eliminar \(self.listaAlumnos2[indexPath.row].name) de sus alumnos?", preferredStyle: .alert)
+//            //Creamos el generador de hapticFeedback
+//            let generator = UINotificationFeedbackGenerator()
+//            generator.prepare()
+//            //Hacemos que mande una notificacion al usuario de tipo warning de forma haptica...
+//            generator.notificationOccurred(.warning)
+//
+//            let alertAction = UIAlertAction(title: "Eliminar seleccionada", style: .destructive, handler: { (UIAlertAction) in
+//                self.deleteStudent(user: self.listaAlumnos2[indexPath.row].user)
+//                self.studentsTableView.deleteRows(at: [indexPath], with: .left)
+//                let generator = UINotificationFeedbackGenerator()
+//                generator.prepare()
+//                //Notifiacion de tipo error...
+//                generator.notificationOccurred(.error)
+//                success(true)
+//            })
+//            let cancelarAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: { (UIAlertAction) in
+//                self.studentsTableView.isEditing = false
+//                self.studentsTableView.reloadData()
+//            })
+//            alertController.addAction(cancelarAction)
+//            alertController.addAction(alertAction)
+//
+//            self.present(alertController, animated: true)
+//            // Reset state
+//
+//        })
+//
+//        deleteAction.backgroundColor = .red
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 
@@ -224,6 +286,25 @@ extension TeacherViewController {
                 print("An error ocurred shile saving: \(error)")
             }
         }
+    }
+    
+    func deleteStudent(user: String) {
+        let context = container.viewContext
+        let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
+        
+        do {
+            listaAlumnos2 = try container.viewContext.fetch(requestAlumno)
+            
+            for alumno in listaAlumnos2 {
+                if alumno.user == user {
+                    context.delete(alumno)
+                    saveContext()
+                }
+            }
+        } catch {
+            print("fetch failed \(error.localizedDescription)")
+        }
+        
     }
     
 //    func loadSavedData() {

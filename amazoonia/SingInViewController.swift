@@ -85,8 +85,8 @@ class SingInViewController: UIViewController {
         self.helpButton.layer.cornerRadius = 10
         self.passwordTextField.isSecureTextEntry = true
         self.secondPasswordTextField.isSecureTextEntry = true
-        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField)
-        setIconTextField(foto: #imageLiteral(resourceName: "mail"), textfield: mailTextField)
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
+        setIconTextField(foto: #imageLiteral(resourceName: "mail"), textfield: mailTextField, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
         self.nameTextField.delegate = self
         self.mailTextField.delegate = self
         self.passwordTextField.delegate = self
@@ -243,8 +243,8 @@ extension SingInViewController: UITextFieldDelegate {
         
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField)
-        setIconTextField(foto: #imageLiteral(resourceName: "mail"), textfield: mailTextField)
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: nameTextField, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
+        setIconTextField(foto: #imageLiteral(resourceName: "mail"), textfield: mailTextField, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

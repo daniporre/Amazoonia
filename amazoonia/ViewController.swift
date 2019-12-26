@@ -50,16 +50,50 @@ class ViewController: UIViewController {
         loadStudentSavedData()
         self.textFieldUser.text! = ""
         self.textFieldPassword.text! = ""
+        self.view.endEditing(true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.view.endEditing(true)
     }
     
     @IBAction func loginButton(_ sender: UIButton) {
         auntenticacion()
-        
-        
-       
-        
     }
     
+    //MARK: - SINGINBUTTON
+    @IBAction func singInButton(_ sender: UIButton) {
+        
+        let alertController = UIAlertController(title: "Auntenticación profesores", message: "Introduzca la contraseña del profesorado para poder registrarte", preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce la contraseña"
+            textFieldAlert.isSecureTextEntry = true
+            textFieldAlert.borderStyle = .none
+            textFieldAlert.delegate = self
+        }
+        
+        let ok = UIAlertAction(title: "Entrar", style: .default) { (UIAlertAction) in
+            
+            
+            if alertController.textFields?.first?.text == "contraseñaProfesores" {
+                self.performSegue(withIdentifier: "backToLogIn", sender: nil)
+            } else {
+                lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña incorrecta", mensaje: "La contraseña introducida no es correcta, inténtelo de nuevo", segundos: 2)
+            }
+            
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        self.present(alertController, animated: true)
+        
+    }
     
 //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -67,15 +101,14 @@ class ViewController: UIViewController {
             let viewDestiny = segue.destination as? TeacherViewController
             viewDestiny?.profesor = self.profesor
             viewDestiny?.container = self.container
-            self.navigationItem.title = self.profesor?.name
+            self.navigationItem.title = self.profesor?.user.capitalized
 
         }
         
         if(segue.identifier == "inicioAlumno"){
             let viewDestiny = segue.destination as? StudentViewController
             viewDestiny?.alumno = self.alumno
-            self.navigationItem.title = self.profesor?.name
-
+            viewDestiny?.container = self.container
         }
     }
     
@@ -192,11 +225,9 @@ class ViewController: UIViewController {
         
         if textFieldPassword.isSecureTextEntry {
             showPasswordButton.isSelected = false
-            showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         }
         if textFieldPassword.isSecureTextEntry == false {
             showPasswordButton.isSelected = true
-            showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         }
     }
     
@@ -269,6 +300,25 @@ extension ViewController {
         
     }
     
+    func deleteStudent(user: String) {
+        let context = container.viewContext
+        let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
+        
+        do {
+            alumnos = try container.viewContext.fetch(requestAlumno)
+            
+            for alumno in alumnos {
+                if alumno.user == user {
+                    context.delete(alumno)
+                    saveContext()
+                }
+            }
+        } catch {
+            print("fetch failed")
+        }
+        
+    }
+    
     func deleteTeacher(user: String) {
         let context = container.viewContext
         let request = Profesor.createFetchRequest()
@@ -314,8 +364,8 @@ extension ViewController {
         configTextFieldsButton()
         self.textFieldUser.delegate = self
         self.textFieldPassword.delegate = self
-        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
-        
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
+        showPasswordButton.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
     }
     
     func checkForGrantedPermissions() {
@@ -375,32 +425,26 @@ extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
-        
-        
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
-            
-//            self.topConstraintView.constant = -4
-//            self.bottomConstraintView.constant = 47
-            
-            self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -110.0)
-            if textField == self.textFieldUser {
-                self.textFieldUserView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
-            }
-            if textField == self.textFieldPassword {
-                self.textFieldPasswordView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
-            }
-            
-            
-        }, completion: nil)
+        if textField == textFieldUser || textField == textFieldPassword {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                
+                self.backgroundView.transform = CGAffineTransform(translationX: 0, y: -110.0)
+                if textField == self.textFieldUser {
+                    self.textFieldUserView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+                    setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: self.textFieldUser, tintColor: #colorLiteral(red: 1, green: 0.9058823529, blue: 0.3411764706, alpha: 1))
+                }
+                if textField == self.textFieldPassword {
+                    self.textFieldPasswordView.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
+                    self.showPasswordButton.tintColor = #colorLiteral(red: 1, green: 0.9058823529, blue: 0.3411764706, alpha: 1)
+                }
+                
+            }, completion: nil)
+        }
         
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == textFieldUser {
-            setEmptyViewTextField(textfield: textFieldUser)
-        }
         
     }
     
@@ -410,7 +454,7 @@ extension ViewController: UITextFieldDelegate {
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
                 
                 self.backgroundView.transform = CGAffineTransform(translationX: 0, y: 0)
-                
+                self.showPasswordButton.tintColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
             }, completion: nil)
         }
         if textField == self.textFieldUser {
@@ -420,9 +464,21 @@ extension ViewController: UITextFieldDelegate {
             self.textFieldPasswordView.backgroundColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
         }
         
-        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser)
+        setIconTextField(foto: #imageLiteral(resourceName: "user"), textfield: textFieldUser, tintColor: #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1))
+        
         
     }
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//        if ((range.location == 4 && range.length == 0) || (range.location == 5 && range.length == 1)) {
+//            alertController.actions[1].isEnabled = true
+//        }else{
+//            self.alertController.actions[1].isEnabled = false
+//        }
+//
+//        return true;
+//    }
     
 }
 

@@ -21,6 +21,7 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         }
     }
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var userTextfield: UITextField!
     @IBOutlet weak var addNewStudentButton: UIButton!
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -78,7 +79,7 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         
-        if !(nameTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)! {
+        if !(nameTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)! && !(userTextfield.text?.isEmpty)!{
             let alertController = UIAlertController(title: "Cancelar", message: "¿Está seguro/a de que no quiere añadir al alumno/a \(nameTextField.text!)?", preferredStyle: .alert)
             
             let ok = UIAlertAction(title: "No añadir", style: .destructive) { (UIAlertAction) in
@@ -129,48 +130,45 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addUnwind" {
-        }
-    }
     
     @IBAction func addNewStudentButton(_ sender: UIButton) {
         
-        if (nameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! {
+        if (nameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! || (userTextfield.text?.isEmpty)! {
             return
         }
         
-        self.alumno = Alumno(context: self.container.viewContext)
-        self.alumno.name = self.nameTextField.text!
-        self.alumno.user = self.nameTextField.text!
-        self.alumno.password = self.passwordTextField.text!
-        self.alumno.photo = self.imageView.image?.pngData() as! NSData
-        
-        self.profesor.addToListaAlumnos(self.alumno)
-        
-        self.saveContext()
-        
-        
-//        let alertController = UIAlertController(title: "Añadir nuevo alumno", message: "¿Está seguro/a de que quiere añadir el alumno/a con nombre \(nameTextField.text!) a la lista de clase?", preferredStyle: .actionSheet)
-//
-//        let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
-//
-//
-//
-////            if self.presentingViewController is UINavigationController{
-////                self.dismiss(animated: true, completion: nil)
-////            }else{
-////                self.navigationController!.popViewController(animated: true)
-////            }
-//        }
-//        let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
-//
-//        }
-//
-//        alertController.addAction(cancel)
-//        alertController.addAction(ok)
-//
-//        present(alertController, animated: true)
+        let alertController = UIAlertController(title: "Añadir nuevo alumno", message: "¿Está seguro/a de que quiere añadir el alumno/a con nombre \(nameTextField.text!) a la lista de clase?", preferredStyle: .actionSheet)
+
+        let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
+
+            self.alumno = Alumno(context: self.container.viewContext)
+            self.alumno.name = self.nameTextField.text!
+            self.alumno.user = self.userTextfield.text!
+            self.alumno.password = self.passwordTextField.text!
+            self.alumno.photo = self.imageView.image?.pngData() as! NSData
+            
+            self.profesor.addToListaAlumnos(self.alumno)
+            
+            self.saveContext()
+            
+            self.performSegue(withIdentifier: "addUnwind", sender: nil)
+
+            
+            
+//            if self.presentingViewController is UINavigationController{
+//                self.dismiss(animated: true, completion: nil)
+//            }else{
+//                self.navigationController!.popViewController(animated: true)
+//            }
+        }
+        let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
+
+        }
+
+        alertController.addAction(cancel)
+        alertController.addAction(ok)
+
+        present(alertController, animated: true)
     }
     
     
@@ -294,16 +292,20 @@ extension AddNewStudentViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        
-        self.topConstraintView.constant = self.topConstraintView.constant - 100
-        self.bottomConstraintView.constant = self.bottomConstraintView.constant - 100
+        print(self.topConstraintView.constant)
+        print(self.bottomConstraintView.constant)
+        self.topConstraintView.constant = -39
+        self.bottomConstraintView.constant = 82
         
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         //        self.textFieldsTopConstraint.constant = constantContraint
-        self.topConstraintView.constant = topConstantContraint
-        self.bottomConstraintView.constant = bottomConstantConstraint
+        if textField == passwordTextField {
+            self.topConstraintView.constant = topConstantContraint
+            self.bottomConstraintView.constant = bottomConstantConstraint
+        }
+        
     }
 }

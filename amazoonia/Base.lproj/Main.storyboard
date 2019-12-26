@@ -164,7 +164,7 @@
                                     <color key="titleColor" red="0.57107255710000004" green="0.73468026590000002" blue="0.52447424030000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <segue destination="lHa-dH-4NK" kind="presentation" identifier="backToLogIn" id="Bfi-7o-8sa"/>
+                                    <action selector="singInButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XuQ-Qq-a3s"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -194,6 +194,7 @@
                         <outlet property="topConstraintView" destination="rv0-MN-hRz" id="0bd-ei-47f"/>
                         <segue destination="civ-lO-ODC" kind="show" identifier="inicioProfesor" id="NaI-6o-SlC"/>
                         <segue destination="bGp-T5-beY" kind="show" identifier="inicioAlumno" id="YYT-Fq-0bk"/>
+                        <segue destination="lHa-dH-4NK" kind="show" identifier="backToLogIn" id="hwC-yJ-eAq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -532,7 +533,7 @@
                                 <rect key="frame" x="10" y="125" width="355" height="360"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="siq-06-fMb">
-                                        <rect key="frame" x="15" y="176" width="319" height="176"/>
+                                        <rect key="frame" x="15" y="176" width="319" height="242"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZGl-zW-nlz">
@@ -561,8 +562,34 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l0z-eH-brE">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j9H-rf-8Bc">
                                                 <rect key="frame" x="0.0" y="66" width="319" height="51"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Usuario" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-b7-amZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="319" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="SlY-O4-sjU"/>
+                                                        </constraints>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" textContentType="username"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                                <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grl-e4-56U">
+                                                        <rect key="frame" x="0.0" y="50" width="319" height="1"/>
+                                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="AOM-MM-PhN"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l0z-eH-brE">
+                                                <rect key="frame" x="0.0" y="132" width="319" height="51"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="6Wu-zP-jP2">
                                                         <rect key="frame" x="0.0" y="0.0" width="319" height="50"/>
@@ -603,7 +630,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlQ-mD-i51">
-                                                <rect key="frame" x="0.0" y="132" width="319" height="44"/>
+                                                <rect key="frame" x="0.0" y="198" width="319" height="44"/>
                                                 <color key="backgroundColor" red="1" green="0.87058823529999996" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="hFD-E2-L2M"/>
@@ -614,7 +641,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="addNewStudentButton:" destination="HWe-Sk-fuw" eventType="touchUpInside" id="7n1-bh-ktE"/>
-                                                    <segue destination="fsc-lm-Xba" kind="unwind" identifier="addUnwind" unwindAction="loadTeacherWithSender:" id="Bbg-Ll-skC"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -656,6 +682,8 @@
                         <outlet property="passwordTextField" destination="myI-iu-4r2" id="bvm-eD-DEm"/>
                         <outlet property="showPasswordButton" destination="iJM-G4-Ng0" id="Iz8-zf-Io3"/>
                         <outlet property="topConstraintView" destination="NGW-5g-Exm" id="Rk2-cU-ibk"/>
+                        <outlet property="userTextfield" destination="6NK-b7-amZ" id="VNy-zp-1mK"/>
+                        <segue destination="fsc-lm-Xba" kind="unwind" identifier="addUnwind" unwindAction="loadTeacherWithSender:" id="rAx-0v-kl4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHN-YF-vHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -716,7 +744,7 @@
                                                         <color key="textColor" red="1" green="0.87058823529999996" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Número de experimentos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Io-d4-SBX">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Número de experimentos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Io-d4-SBX">
                                                         <rect key="frame" x="58" y="33" width="242" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
@@ -727,9 +755,13 @@
                                             </view>
                                             <blurEffect style="dark"/>
                                         </visualEffectView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="niño5" translatesAutoresizingMaskIntoConstraints="NO" id="36v-Mf-mxD">
+                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="niño5" translatesAutoresizingMaskIntoConstraints="NO" id="36v-Mf-mxD">
                                             <rect key="frame" x="114" y="10" width="147" height="147"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="GSE-ln-p2Q" appends="YES" id="Ro6-CO-94h"/>
+                                            </connections>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oEV-dV-Tub">
                                             <rect key="frame" x="0.0" y="256" width="375" height="44"/>
@@ -741,7 +773,7 @@
                                             </state>
                                             <connections>
                                                 <action selector="newExperimentButton:" destination="bGp-T5-beY" eventType="touchUpInside" id="Y9F-gA-0Eh"/>
-                                                <segue destination="G0P-5H-AqE" kind="presentation" identifier="addNewExperiment" id="mXR-LN-trd"/>
+                                                <segue destination="gbA-IT-vWO" kind="show" identifier="addNewExperiment" id="D2D-Xc-XUO"/>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0F-SA-tdO">
@@ -818,8 +850,9 @@
                                         <connections>
                                             <outlet property="dateCell" destination="VEv-Xl-pDV" id="gbj-3x-MhB"/>
                                             <outlet property="imageViewCell" destination="XKi-dj-LZI" id="o27-ah-nVJ"/>
+                                            <outlet property="markImageCell" destination="4Jz-yb-qXn" id="eRg-6T-e91"/>
                                             <outlet property="nameCell" destination="MlU-Ql-qL6" id="Rui-xz-TWv"/>
-                                            <segue destination="Sf9-lk-MD2" kind="show" id="4C6-aY-sCN"/>
+                                            <segue destination="Sf9-lk-MD2" kind="show" identifier="showExperimentSegue" id="4C6-aY-sCN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -848,6 +881,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ogD-Rm-Qf6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="GSE-ln-p2Q">
+                    <connections>
+                        <action selector="changeImageTapped:" destination="bGp-T5-beY" id="lgD-Rb-JZA"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3111.1999999999998" y="330.58470764617692"/>
         </scene>
@@ -959,6 +997,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="experimentTableview" destination="5ke-p6-Chp" id="uem-2Q-TJo"/>
                         <outlet property="labelTexfield" destination="pgn-ni-qHQ" id="JjO-gs-sCK"/>
                         <outlet property="nameTextField" destination="uvm-mA-Y8T" id="MOh-ie-KqO"/>
                         <outlet property="pickerView" destination="c57-h5-fRz" id="jfx-FK-pIO"/>
@@ -968,7 +1007,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7u-5g-c8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5138.3999999999996" y="330.58470764617692"/>
+            <point key="canvasLocation" x="4247" y="316"/>
         </scene>
         <!--Ver alumno/a-->
         <scene sceneID="vre-9w-3qZ">
@@ -1073,7 +1112,7 @@
                                             <outlet property="dateCell" destination="zcz-Zx-XvT" id="u2g-9F-dbw"/>
                                             <outlet property="imageViewCell" destination="dUW-Jv-i5x" id="OMd-lY-IQt"/>
                                             <outlet property="nameCell" destination="PRH-o7-afQ" id="ZgU-k0-tMX"/>
-                                            <segue destination="YnS-2V-h8R" kind="show" id="GsA-pP-Mze"/>
+                                            <segue destination="YnS-2V-h8R" kind="show" identifier="showExperimentTeacherSegue" id="GsA-pP-Mze"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1440,24 +1479,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="alZ-zG-mqQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2346" y="-236"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="008-ph-qYD">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G0P-5H-AqE" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gMw-qr-WCU">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="gbA-IT-vWO" kind="relationship" relationship="rootViewController" id="pYj-zQ-a8u"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LMy-Fe-fJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4199.1999999999998" y="330.58470764617692"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Cp-zh-UQC">

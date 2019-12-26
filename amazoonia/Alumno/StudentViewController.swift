@@ -12,7 +12,7 @@ import CoreData
 class StudentViewController: UIViewController {
     
     var alumno: Alumno!
-    var listaExperimentps = [Experimento]()
+    var listaExperimentos = [Experimento]()
     
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Alumno>!
@@ -23,9 +23,6 @@ class StudentViewController: UIViewController {
     @IBOutlet weak var blurViewBackground: UIVisualEffectView!
     @IBOutlet weak var tableView: UITableView!
     
-    var experiments = [String]()
-    var date = [String]()
-    var fotos = [UIImage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +31,41 @@ class StudentViewController: UIViewController {
         setUpData()
         setUpTableView()
         print(alumno)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        print(self.alumno)
         self.tableView.reloadData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = String(alumno.user).capitalized
+        print(self.listaExperimentos)
+        listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
+        self.tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addNewExperiment" {
+            let viewDestiny = segue.destination as? AddNewExperimentViewController
+            viewDestiny!.alumno = self.alumno!
+            viewDestiny!.container = self.container!
+        }
+        if segue.identifier == "showExperimentSegue" {
+            let viewDestiny = segue.destination as? ShowExperimentStudentViewController
+            let filaSeleccionada = self.tableView.indexPathForSelectedRow
+            viewDestiny?.experimento = listaExperimentos[(filaSeleccionada?.row)!]
+            self.tableView.reloadRows(at: [filaSeleccionada!], with: .fade)
+        }
+    }
+    
+//    override func viewDidDisappear(_ animated: Bool) {
+//        self.alumno.photo = studentImageView.image?.pngData() as! NSData
+//        self.saveContext()
+//    }
     
     @IBAction func newExperimentButton(_ sender: UIButton) {
         
@@ -48,6 +73,9 @@ class StudentViewController: UIViewController {
         
     }
     
+    @IBAction func changeImageTapped(_ sender: UITapGestureRecognizer) {
+        alertForSourceType()
+    }
     func setUpTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -56,7 +84,7 @@ class StudentViewController: UIViewController {
     func setUpData() {
         self.studentImageView.image = UIImage(data: self.alumno.photo as Data)
         self.nameStudentLabel.text = alumno.name
-        self.numExpStudentLabel.text = "Número de experimentos: \(String(alumno.experimentos.count))"
+        self.numExpStudentLabel.text = "Profesor: \(String(alumno.profesor.name).capitalized)"
     }
     
     func setUpHeaderView() {
@@ -82,17 +110,17 @@ class StudentViewController: UIViewController {
         
     }
     
-    func setNormalNavigationBar(viewController: UIViewController){
-        if #available(iOS 11.0, *) {
-            viewController.navigationItem.largeTitleDisplayMode = .never
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
         }
     }
     
-    func setNavigationBarStyle11(viewController: UIViewController){
-        if #available(iOS 11.0, *) {
-            viewController.navigationController?.navigationBar.prefersLargeTitles = true
-        }
-    }
+    
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro/a de que quiere cerrar la sesión activa?", preferredStyle: .alert)
         
@@ -124,41 +152,42 @@ class StudentViewController: UIViewController {
 
 extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if experiments.count == 0 {
+        if listaExperimentos.count == 0 {
             return 1
         }
-        return experiments.count
+        return listaExperimentos.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Lista de experimentos"
+        return "Lista de experimentos - \(self.listaExperimentos.count)"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentTableViewCell", for: indexPath) as! StudentTableViewCell
         
-        if experiments.count == 0 {
+        if listaExperimentos.count == 0 {
             
             cell.imageViewCell.image = #imageLiteral(resourceName: "nullContent")
             cell.imageViewCell.backgroundColor = #colorLiteral(red: 1, green: 0.2800146937, blue: 0.3337086439, alpha: 1)
             cell.imageViewCell.clipsToBounds = true
             cell.imageViewCell.layer.cornerRadius = cell.imageViewCell.frame.height / 2
             cell.nameCell.text = "No hay ningun experimento"
-            cell.dateCell.text = "Pulsa el botón Añadir experimento para crear uno nuevo."
+            cell.dateCell.text = "Pulsa el botón Nuevo experimento para crear uno nuevo."
             cell.accessoryType = .none
+            cell.markImageCell.isHidden = true
             self.tableView.tableFooterView = UIView(frame: CGRect.zero)
             
             return cell
         }
-        
-        
-        cell.imageViewCell.image = fotos[indexPath.row]
-        cell.nameCell.text = experiments[indexPath.row]
-        cell.dateCell.text = date[indexPath.row]
+        cell.imageViewCell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        cell.markImageCell.isHidden = false
+        cell.imageViewCell.image = UIImage(data: listaExperimentos[indexPath.row].photo as Data)
+        cell.nameCell.text = listaExperimentos[indexPath.row].name
+//        cell.dateCell.text = listaExperimentos[indexPath.row].date
         cell.accessoryType = .disclosureIndicator
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -171,12 +200,12 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if experiments.count != 0 {
+        if listaExperimentos.count != 0 {
         //Creamos la accion Eliminar de tipo UIContextualAction para la celda...
             let deleteAction = UIContextualAction(style: .destructive, title:  "Eliminar", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
             
                 //Alerta con tres tipos de acciones
-                let alertController = UIAlertController(title: "Eliminar", message: "¿Estás seguro de que quieres eliminar \(self.experiments[indexPath.row]) de tus experimentos?", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Eliminar", message: "¿Estás seguro de que quieres eliminar \(self.listaExperimentos[indexPath.row]) de tus experimentos?", preferredStyle: .alert)
                 //Creamos el generador de hapticFeedback
                 let generator = UINotificationFeedbackGenerator()
                 generator.prepare()
@@ -184,7 +213,7 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
                 generator.notificationOccurred(.warning)
                 
                 let alertAction = UIAlertAction(title: "Eliminar seleccionado", style: .destructive, handler: { (UIAlertAction) in
-                    self.experiments.remove(at: indexPath.row)
+                    self.listaExperimentos.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .left)
                     let generator = UINotificationFeedbackGenerator()
                     generator.prepare()
@@ -193,8 +222,8 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
                     success(true)
                 })
                 let deleteAll = UIAlertAction(title: "Eliminar todos", style: .destructive, handler: { (UIAlertAction) in
-                    self.experiments.removeAll()
-                    print(self.experiments.count)
+                    self.listaExperimentos.removeAll()
+                    print(self.listaExperimentos.count)
                     let generator = UINotificationFeedbackGenerator()
                     generator.prepare()
                     generator.notificationOccurred(.error)
@@ -220,8 +249,8 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
             let shareAction = UIContextualAction(style: .destructive, title:  "Compartir", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
                 //Aqui llamamos al UIActivityViewController y establcemos lo que queremos compartir, en mi caso un texto y una imagen del paisaje.
-                let defaultText = "Mira mi experimento: \(self.experiments[indexPath.row])"
-                let activityController = UIActivityViewController(activityItems: [defaultText, self.fotos[indexPath.row]], applicationActivities: nil)
+                let defaultText = "Mira mi experimento: \(self.listaExperimentos[indexPath.row].name)"
+                let activityController = UIActivityViewController(activityItems: [defaultText, self.listaExperimentos[indexPath.row].photo], applicationActivities: nil)
                 //respuesta haptica de tipo impacto...
                 let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
                 //            if #available(iOS 13, *) {
@@ -257,6 +286,97 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
         createAction.backgroundColor = #colorLiteral(red: 1, green: 0.8705882353, blue: 0.3490196078, alpha: 1)
         
         return UISwipeActionsConfiguration(actions: [createAction])
+    }
+    
+    
+}
+
+
+extension StudentViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //      Con .editedImage nos quedamos con la foto editada y esa es la que establecemos en imageViewUser.image
+        if let theImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.studentImageView.image = theImage
+            
+            //            if(imageView.image != UIImage(named: "addUserImage")){
+            //                //Establecemos configuraciones, establecemos la imagen con forma redondeada
+            //                imageView.layer.cornerRadius = imageView.frame.width / 2
+            //                imageView.layer.borderWidth = 3
+            //
+            //            }
+            let generator = UINotificationFeedbackGenerator()
+            generator.prepare()
+            generator.notificationOccurred(.success)
+            studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
+            studentImageView.clipsToBounds = true
+            studentImageView.layer.borderWidth = 4
+            studentImageView.layer.borderColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func alertForSourceType(){
+        //Creamos el picker y asignamos su delegado a self
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        //Permite que podamos editar la imagen que escojemos
+        picker.allowsEditing = true
+        //Creamos el alertControlller con el mensaje el titulo y el tipo de alerta, en este caso de tipo actionSheet
+        let alertController:UIAlertController = UIAlertController(title: "Añade una imagen",
+                                                                  message: "¿De dónde quieres escoger la imagen?",
+                                                                  preferredStyle: .actionSheet)
+        
+        
+        //Creamos una accion que posteriormente sera un boton en la alerta,
+        //pulsar este boton ocasionara que se abra la libreeria de fotos porque .sourceType == .photoLibrary
+        let photoLibraryaction:UIAlertAction = UIAlertAction(title: "Librería de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            //Codigo que se ejecuta cuando pulsamos el boton de la alerta
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abrira la camara de fotos permitiendonos hacer una foto y editarla
+        let cameraAction:UIAlertAction = UIAlertAction(title: "Cámara", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .camera
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abre directamente las fotos guardadas
+        let savedPhotosAlbumAction:UIAlertAction = UIAlertAction(title: "Álbum de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .savedPhotosAlbum
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion es la de candelar, de tipo .cancel para que aparezca abajo, oculta la alerta
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        photoLibraryaction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        savedPhotosAlbumAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cameraAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelAction.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        photoLibraryaction.setValue(UIImage(named: "imagen"), forKey: "image")
+        savedPhotosAlbumAction.setValue(UIImage(named: "album"), forKey: "image")
+        cameraAction.setValue(UIImage(named: "camera"), forKey: "image")
+        
+        //Añadimos todas las acciones al alertcontroller
+        alertController.addAction(photoLibraryaction)
+        alertController.addAction(savedPhotosAlbumAction)
+        alertController.addAction(cameraAction)
+        alertController.addAction(cancelAction)
+        //Mostramos la alerta al usuario
+        present(alertController, animated: true, completion: nil)
     }
     
     

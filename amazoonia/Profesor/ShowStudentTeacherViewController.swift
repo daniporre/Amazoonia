@@ -28,8 +28,8 @@ class ShowStudentTeacherViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tableViewExperiments.reloadData()
         listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
+        self.navigationItem.title = alumno.user
     }
-    
     
     func setUpUI() {
         studentImageView.layer.borderWidth = 7
@@ -39,22 +39,20 @@ class ShowStudentTeacherViewController: UIViewController {
         setNormalNavigationBar(viewController: self)
         
         nameTextField.text = alumno.name
-        numExpTextField.text = "Número de experimentos: \(String(alumno!.numExp as Int16))"
+        numExpTextField.text = "Número de experimentos: \(String(alumno.experimentos.count))"
         studentImageView.image = UIImage(data: alumno.photo as Data)
     }
-
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showExperimentTeacherSegue" {
+            let viewDestiny = segue.destination as? ShowExperimentTeacherViewController
+            viewDestiny?.alumno = self.alumno
+            let filaSeleccionada = self.tableViewExperiments.indexPathForSelectedRow
+            viewDestiny?.experimento = listaExperimentos[(filaSeleccionada?.row)!]
+            self.tableViewExperiments.reloadRows(at: [filaSeleccionada!], with: .fade)
+            
+        }
     }
-    */
 
 }
 
@@ -72,7 +70,7 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentTeacherTableViewCell", for: indexPath) as! StudentTeacherTableViewCell
-        cell.imageViewCell.image = UIImage(data: alumno.photo as Data)
+        cell.imageViewCell.image = UIImage(data: listaExperimentos[indexPath.row].photo as Data)
         cell.nameCell.text = listaExperimentos[indexPath.row].name
 //        cell.dateCell.text = listaExperimentos[indexPath.row].date
         cell.accessoryType = .disclosureIndicator
