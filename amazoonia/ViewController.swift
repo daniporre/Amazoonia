@@ -41,6 +41,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         createContainer()
+        
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "dd-MM-yyyy"
+        let formattedDate = format.string(from: date)
+        
+        
+        print(Calendar.current.component(.day, from: date))
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -89,6 +89,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
             let viewDestiny = segue.destination as? ShowStudentTeacherViewController
             let filaSeleccionada = studentsTableView.indexPathForSelectedRow
             viewDestiny?.alumno = listaAlumnos2[(filaSeleccionada?.row)!]
+            viewDestiny?.container = self.container
             studentsTableView.reloadRows(at: [filaSeleccionada!], with: .fade)
         }
     }

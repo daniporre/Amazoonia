@@ -36,6 +36,8 @@ class ShowExperimentStudentViewController: UIViewController {
         //MARK: - DATA
         self.navigationItem.title = "Test: \(self.experimento.name.capitalized)"
         self.typeLabel.text = self.experimento.type.capitalized
+        
+        
     }
     
 }

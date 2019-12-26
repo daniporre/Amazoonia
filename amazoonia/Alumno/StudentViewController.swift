@@ -138,15 +138,12 @@ class StudentViewController: UIViewController {
         
         present(alertController, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func dateToString(dateFormat format: String , date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
     }
-    */
 
 }
 
@@ -187,12 +184,29 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
         cell.markImageCell.isHidden = false
         cell.imageViewCell.image = UIImage(data: listaExperimentos[indexPath.row].photo as Data)
         cell.nameCell.text = listaExperimentos[indexPath.row].name
-//        cell.dateCell.text = listaExperimentos[indexPath.row].date
+        cell.dateCell.text = self.listaExperimentos[indexPath.row].dateString
+        
+        if self.listaExperimentos[indexPath.row].mark == "bad" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "bad")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "good" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "good")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "great" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "great")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "mark")
+        }
+        
         cell.accessoryType = .disclosureIndicator
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         return cell
     }
+    
+    
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90

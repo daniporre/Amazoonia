@@ -13,6 +13,7 @@ class StudentTeacherTableViewCell: UITableViewCell {
     @IBOutlet weak var imageViewCell: UIImageView!
     @IBOutlet weak var nameCell: UILabel!
     @IBOutlet weak var dateCell: UILabel!
+    @IBOutlet weak var markImageViewCell: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

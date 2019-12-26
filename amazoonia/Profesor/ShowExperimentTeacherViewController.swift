@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ShowExperimentTeacherViewController: UIViewController {
     
@@ -20,6 +21,7 @@ class ShowExperimentTeacherViewController: UIViewController {
     
     var alumno: Alumno!
     var experimento: Experimento!
+    var container: NSPersistentContainer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +41,15 @@ class ShowExperimentTeacherViewController: UIViewController {
     }
     
     @IBAction func qualifyButton(_ sender: UIBarButtonItem) {
-        let vc = self.storyboard!.instantiateViewController(withIdentifier: "qualifyViewController")
-        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "secondMarkSegue" {
+            let viewDestiny = segue.destination as? ReviewViewController
+            viewDestiny?.experimento = self.experimento
+            viewDestiny?.container = self.container
+        }
     }
     
     /*

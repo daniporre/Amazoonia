@@ -833,7 +833,7 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="4Jz-yb-qXn">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark" translatesAutoresizingMaskIntoConstraints="NO" id="4Jz-yb-qXn">
                                                     <rect key="frame" x="349" y="34" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="1go-oh-0Ij"/>
@@ -851,6 +851,7 @@
                                             <outlet property="dateCell" destination="VEv-Xl-pDV" id="gbj-3x-MhB"/>
                                             <outlet property="imageViewCell" destination="XKi-dj-LZI" id="o27-ah-nVJ"/>
                                             <outlet property="markImageCell" destination="4Jz-yb-qXn" id="eRg-6T-e91"/>
+                                            <outlet property="markImageViewCell" destination="4Jz-yb-qXn" id="8Sg-x0-eLp"/>
                                             <outlet property="nameCell" destination="MlU-Ql-qL6" id="Rui-xz-TWv"/>
                                             <segue destination="Sf9-lk-MD2" kind="show" identifier="showExperimentSegue" id="4C6-aY-sCN"/>
                                         </connections>
@@ -1007,7 +1008,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7u-5g-c8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4247" y="316"/>
+            <point key="canvasLocation" x="4049" y="331"/>
         </scene>
         <!--Ver alumno/a-->
         <scene sceneID="vre-9w-3qZ">
@@ -1094,7 +1095,7 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="kQ3-54-tZP">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark" translatesAutoresizingMaskIntoConstraints="NO" id="kQ3-54-tZP">
                                                     <rect key="frame" x="349" y="34" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="iJ9-BF-I5w"/>
@@ -1111,6 +1112,7 @@
                                         <connections>
                                             <outlet property="dateCell" destination="zcz-Zx-XvT" id="u2g-9F-dbw"/>
                                             <outlet property="imageViewCell" destination="dUW-Jv-i5x" id="OMd-lY-IQt"/>
+                                            <outlet property="markImageViewCell" destination="kQ3-54-tZP" id="5FW-dZ-ZP2"/>
                                             <outlet property="nameCell" destination="PRH-o7-afQ" id="ZgU-k0-tMX"/>
                                             <segue destination="YnS-2V-h8R" kind="show" identifier="showExperimentTeacherSegue" id="GsA-pP-Mze"/>
                                         </connections>
@@ -1137,6 +1139,7 @@
                         <outlet property="numExpTextField" destination="CIj-Od-LdG" id="GiD-2z-rtv"/>
                         <outlet property="studentImageView" destination="Pq5-vQ-VKl" id="13k-Lv-TA8"/>
                         <outlet property="tableViewExperiments" destination="lhA-8T-H93" id="Ngm-rb-saC"/>
+                        <segue destination="4pf-Zf-aOn" kind="presentation" identifier="firstMarkSegue" id="f6c-BM-lE8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRa-6O-Cg0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1246,6 +1249,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="calificar" id="esQ-pf-Nzx">
                             <connections>
                                 <action selector="qualifyButton:" destination="YnS-2V-h8R" id="DTN-t6-Xf1"/>
+                                <segue destination="4pf-Zf-aOn" kind="presentation" identifier="secondMarkSegue" id="0F3-ZQ-t6q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1308,7 +1312,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dislike" translatesAutoresizingMaskIntoConstraints="NO" id="45c-Hg-PSL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bad" translatesAutoresizingMaskIntoConstraints="NO" id="45c-Hg-PSL">
                                                     <rect key="frame" x="8" y="34" width="27" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1369,7 +1373,7 @@
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9R-Ee-0Rb">
                                 <rect key="frame" x="53" y="293" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="dislike"/>
+                                <state key="normal" image="bad"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="35"/>
@@ -1390,6 +1394,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="zGi-SI-VDE"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="backGroundImageView" destination="dew-AC-nUe" id="6Lv-EG-Xyp"/>
                         <outlet property="badButton" destination="c9R-Ee-0Rb" id="gwI-8G-xbe"/>
@@ -1401,7 +1406,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vLO-eN-RlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4876" y="-510"/>
+            <point key="canvasLocation" x="4753" y="-976"/>
         </scene>
         <!--¡Bienvenido a Amazoonia!-->
         <scene sceneID="p8q-5W-M7L">
@@ -1604,24 +1609,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8CA-Bs-K1l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4199" y="1062"/>
+            <point key="canvasLocation" x="4049" y="1061"/>
         </scene>
     </scenes>
     <resources>
         <image name="add" width="700" height="700"/>
         <image name="addNewStudent" width="56" height="56"/>
         <image name="addStudent" width="700" height="700"/>
+        <image name="bad" width="85.333335876464844" height="85.333335876464844"/>
         <image name="calificar" width="56" height="56"/>
         <image name="close" width="64" height="64"/>
-        <image name="dislike" width="85.333335876464844" height="85.333335876464844"/>
         <image name="good" width="256" height="256"/>
         <image name="great" width="85.333335876464844" height="85.333335876464844"/>
         <image name="logo sin fondo" width="900" height="900"/>
+        <image name="mark" width="256" height="256"/>
         <image name="nido" width="900" height="900"/>
         <image name="nidoLleno" width="384" height="384"/>
         <image name="niño5" width="194" height="260"/>
-        <image name="rating" width="256" height="256"/>
         <image name="tigre" width="240" height="159.36000061035156"/>
         <image name="users-and-groups-user-128-px" width="72" height="72"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="f6c-BM-lE8"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ShowStudentTeacherViewController: UIViewController {
     
@@ -18,6 +19,9 @@ class ShowStudentTeacherViewController: UIViewController {
     
     var alumno: Alumno!
     var listaExperimentos = [Experimento]()
+    var container: NSPersistentContainer!
+    
+    var indice: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +41,6 @@ class ShowStudentTeacherViewController: UIViewController {
         self.studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
         blurView.layer.cornerRadius = 15
         setNormalNavigationBar(viewController: self)
-        
         nameTextField.text = alumno.name
         numExpTextField.text = "Número de experimentos: \(String(alumno.experimentos.count))"
         studentImageView.image = UIImage(data: alumno.photo as Data)
@@ -49,8 +52,14 @@ class ShowStudentTeacherViewController: UIViewController {
             viewDestiny?.alumno = self.alumno
             let filaSeleccionada = self.tableViewExperiments.indexPathForSelectedRow
             viewDestiny?.experimento = listaExperimentos[(filaSeleccionada?.row)!]
+            viewDestiny!.container = self.container
             self.tableViewExperiments.reloadRows(at: [filaSeleccionada!], with: .fade)
-            
+        }
+        if segue.identifier == "firstMarkSegue" {
+            let viewDestiny = segue.destination as? ReviewViewController
+            let filaSeleccionada = self.tableViewExperiments.indexPathForSelectedRow
+            viewDestiny?.experimento = listaExperimentos[(self.indice?.row)!]
+            viewDestiny?.container = self.container
         }
     }
 
@@ -72,7 +81,20 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentTeacherTableViewCell", for: indexPath) as! StudentTeacherTableViewCell
         cell.imageViewCell.image = UIImage(data: listaExperimentos[indexPath.row].photo as Data)
         cell.nameCell.text = listaExperimentos[indexPath.row].name
-//        cell.dateCell.text = listaExperimentos[indexPath.row].date
+        
+        if self.listaExperimentos[indexPath.row].mark == "bad" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "bad")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "good" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "good")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "great" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "great")
+        }
+        if self.listaExperimentos[indexPath.row].mark == "" {
+            cell.markImageViewCell.image = #imageLiteral(resourceName: "mark")
+        }
+        cell.dateCell.text = listaExperimentos[indexPath.row].dateString
         cell.accessoryType = .disclosureIndicator
         
         return cell
@@ -85,12 +107,11 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //Creamos la accion Eliminar de tipo UIContextualAction para la celda...
         
-        
+        self.indice = indexPath
         //Creamos la accion Compartir de tipo UIContextualAction para la celda...
         let shareAction = UIContextualAction(style: .destructive, title:  "Calificar", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
-            let vc = self.storyboard!.instantiateViewController(withIdentifier: "qualifyViewController")
-            self.present(vc, animated: true, completion: nil)
+            self.performSegue(withIdentifier: "firstMarkSegue", sender: nil)
             
             //respuesta haptica de tipo impacto...
             let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
@@ -98,9 +119,11 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
             generator.prepare()
             
             generator.impactOccurred()
+            success(true)
         })
         shareAction.image = #imageLiteral(resourceName: "calificar").withRenderingMode(.alwaysTemplate)
         shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        
         
         return UISwipeActionsConfiguration(actions: [shareAction])
     }

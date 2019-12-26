@@ -92,6 +92,19 @@ class AddNewExperimentViewController: UIViewController {
             self.experimento.legs = self.legs
             self.experimento.name = String(self.nameTextField.text!).capitalized
             self.experimento.type = self.type.capitalized
+            self.experimento.mark = ""
+            
+            let date = Date()
+            let format = DateFormatter()
+            format.dateFormat = "dd-MM-yyyy"
+            let formattedDate = format.string(from: date)
+            print(formattedDate)
+            
+            self.experimento.dateString = formattedDate
+            
+            
+//            self.experimento.date = Calendar.current
+            print(Calendar.current)
             
             if self.experimento.type == "Mamífero" {
                 let randomIndex = Int.random(in: 0...self.imageMamiferos.count-1)

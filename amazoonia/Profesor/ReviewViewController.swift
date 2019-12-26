@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ReviewViewController: UIViewController {
 
@@ -18,6 +19,8 @@ class ReviewViewController: UIViewController {
     @IBOutlet weak var blurViewMarks: UIVisualEffectView!
     
     var ratingSelected : String?
+    var experimento: Experimento!
+    var container: NSPersistentContainer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +118,7 @@ class ReviewViewController: UIViewController {
         
         switch sender.tag {
         case 1:
-            ratingSelected = "dislike"
+            ratingSelected = "bad"
         case 2:
             ratingSelected = "good"
         case 3:
@@ -124,9 +127,20 @@ class ReviewViewController: UIViewController {
             break
         }
         
-//        performSegue(withIdentifier: "", sender: sender)
+        self.experimento.mark = ratingSelected!
+        self.saveContext()
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
     }
     
     
