@@ -45,7 +45,14 @@ class StudentViewController: UIViewController {
         self.navigationItem.title = String(alumno.user).capitalized
         print(self.listaExperimentos)
         listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
+        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
         self.tableView.reloadData()
+    }
+    
+    func sortDate() {
+        
+        
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -216,49 +223,49 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if listaExperimentos.count != 0 {
         //Creamos la accion Eliminar de tipo UIContextualAction para la celda...
-            let deleteAction = UIContextualAction(style: .destructive, title:  "Eliminar", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
-            
-                //Alerta con tres tipos de acciones
-                let alertController = UIAlertController(title: "Eliminar", message: "¿Estás seguro de que quieres eliminar \(self.listaExperimentos[indexPath.row]) de tus experimentos?", preferredStyle: .alert)
-                //Creamos el generador de hapticFeedback
-                let generator = UINotificationFeedbackGenerator()
-                generator.prepare()
-                //Hacemos que mande una notificacion al usuario de tipo warning de forma haptica...
-                generator.notificationOccurred(.warning)
-                
-                let alertAction = UIAlertAction(title: "Eliminar seleccionado", style: .destructive, handler: { (UIAlertAction) in
-                    self.listaExperimentos.remove(at: indexPath.row)
-                    self.tableView.deleteRows(at: [indexPath], with: .left)
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.prepare()
-                    //Notifiacion de tipo error...
-                    generator.notificationOccurred(.error)
-                    success(true)
-                })
-                let deleteAll = UIAlertAction(title: "Eliminar todos", style: .destructive, handler: { (UIAlertAction) in
-                    self.listaExperimentos.removeAll()
-                    print(self.listaExperimentos.count)
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.prepare()
-                    generator.notificationOccurred(.error)
-                    self.tableView.reloadData()
-                })
-                let cancelarAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: { (UIAlertAction) in
-                    self.tableView.isEditing = false
-                  self.tableView.reloadData()
-                })
-                alertController.addAction(cancelarAction)
-                alertController.addAction(alertAction)
-                alertController.addAction(deleteAll)
-            
-                self.present(alertController, animated: true)
-            
-                // Reset state
-            
-            })
-            deleteAction.image = #imageLiteral(resourceName: "delete").withRenderingMode(.alwaysTemplate)
-            deleteAction.title = "Eliminar"
-        
+//            let deleteAction = UIContextualAction(style: .destructive, title:  "Eliminar", handler: { (ac:UIContextualAction, view:UIView, success:@escaping (Bool) -> Void) in
+//
+//                //Alerta con tres tipos de acciones
+//                let alertController = UIAlertController(title: "Eliminar", message: "¿Estás seguro de que quieres eliminar \(self.listaExperimentos[indexPath.row]) de tus experimentos?", preferredStyle: .alert)
+//                //Creamos el generador de hapticFeedback
+//                let generator = UINotificationFeedbackGenerator()
+//                generator.prepare()
+//                //Hacemos que mande una notificacion al usuario de tipo warning de forma haptica...
+//                generator.notificationOccurred(.warning)
+//
+//                let alertAction = UIAlertAction(title: "Eliminar seleccionado", style: .destructive, handler: { (UIAlertAction) in
+//                    self.listaExperimentos.remove(at: indexPath.row)
+//                    self.tableView.deleteRows(at: [indexPath], with: .left)
+//                    let generator = UINotificationFeedbackGenerator()
+//                    generator.prepare()
+//                    //Notifiacion de tipo error...
+//                    generator.notificationOccurred(.error)
+//                    success(true)
+//                })
+//                let deleteAll = UIAlertAction(title: "Eliminar todos", style: .destructive, handler: { (UIAlertAction) in
+//                    self.listaExperimentos.removeAll()
+//                    print(self.listaExperimentos.count)
+//                    let generator = UINotificationFeedbackGenerator()
+//                    generator.prepare()
+//                    generator.notificationOccurred(.error)
+//                    self.tableView.reloadData()
+//                })
+//                let cancelarAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: { (UIAlertAction) in
+//                    self.tableView.isEditing = false
+//                  self.tableView.reloadData()
+//                })
+//                alertController.addAction(cancelarAction)
+//                alertController.addAction(alertAction)
+//                alertController.addAction(deleteAll)
+//
+//                self.present(alertController, animated: true)
+//
+//                // Reset state
+//
+//            })
+//            deleteAction.image = #imageLiteral(resourceName: "delete").withRenderingMode(.alwaysTemplate)
+//            deleteAction.title = "Eliminar"
+//
             //Creamos la accion Compartir de tipo UIContextualAction para la celda...
             let shareAction = UIContextualAction(style: .destructive, title:  "Compartir", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
@@ -279,8 +286,8 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
             shareAction.image = #imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate)
             shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         
-            deleteAction.backgroundColor = .red
-            return UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
+//            deleteAction.backgroundColor = .red
+            return UISwipeActionsConfiguration(actions: [shareAction])
         }
         
         let createAction = UIContextualAction(style: .destructive, title:  "Crear", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -288,10 +295,10 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
             self.performSegue(withIdentifier: "addNewExperiment", sender: nil)
             
             
-            let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
-            //            if #available(iOS 13, *) {
-            //                impact = .rigid
-            //            }
+            var impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
+//            if #available(iOS 13, *) {
+//                impact = .rigid
+//            }
             let generator = UIImpactFeedbackGenerator(style: impact)
             generator.prepare()
             generator.impactOccurred()

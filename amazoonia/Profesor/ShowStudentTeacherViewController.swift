@@ -32,6 +32,7 @@ class ShowStudentTeacherViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tableViewExperiments.reloadData()
         listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
+        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
         self.navigationItem.title = alumno.user
     }
     
