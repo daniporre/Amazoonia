@@ -676,12 +676,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addNewStudentButton" destination="FlQ-mD-i51" id="Pa9-th-i79"/>
-                        <outlet property="bottomConstraintView" destination="oHr-iQ-dpH" id="fH2-c0-Mcu"/>
+                        <outlet property="backGroundView" destination="UaV-Il-Nul" id="NNe-TL-P02"/>
                         <outlet property="imageView" destination="QEA-eF-Hq7" id="IXt-xP-pBx"/>
                         <outlet property="nameTextField" destination="bVU-P1-spQ" id="mmU-cQ-hJh"/>
                         <outlet property="passwordTextField" destination="myI-iu-4r2" id="bvm-eD-DEm"/>
                         <outlet property="showPasswordButton" destination="iJM-G4-Ng0" id="Iz8-zf-Io3"/>
-                        <outlet property="topConstraintView" destination="NGW-5g-Exm" id="Rk2-cU-ibk"/>
                         <outlet property="userTextfield" destination="6NK-b7-amZ" id="VNy-zp-1mK"/>
                         <segue destination="fsc-lm-Xba" kind="unwind" identifier="addUnwind" unwindAction="loadTeacherWithSender:" id="rAx-0v-kl4"/>
                     </connections>

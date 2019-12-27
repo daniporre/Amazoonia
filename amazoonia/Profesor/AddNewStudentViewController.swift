@@ -16,6 +16,7 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     var fetchResultsController2: NSFetchedResultsController<Alumno>!
     var alumno: Alumno!
     var alumnos = [Alumno]()
+    @IBOutlet weak var backGroundView: UIView!
     
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
@@ -28,31 +29,20 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var showPasswordButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var topConstraintView: NSLayoutConstraint!
-    @IBOutlet weak var bottomConstraintView: NSLayoutConstraint!
-    
-    
     
     var topConstantContraint: CGFloat = 0
     var bottomConstantConstraint: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configTextFieldsButton()
         setUpAnimation()
         setUpTableView()
         setUpNavBarAndImageView()
-        
-        topConstantContraint = self.topConstraintView.constant
-        bottomConstantConstraint = self.bottomConstraintView.constant
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.viewWillAppear(animated)
-        loadStudentSavedData()
         UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
             
             self.imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -303,43 +293,25 @@ extension AddNewStudentViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print(self.topConstraintView.constant)
-        print(self.bottomConstraintView.constant)
-        self.topConstraintView.constant = -39
-        self.bottomConstraintView.constant = 82
-        
+        if textField == userTextfield || textField == passwordTextField || textField == nameTextField {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                
+                self.backGroundView.transform = CGAffineTransform(translationX: 0, y: -110.0)
+                
+                
+            }, completion: nil)
+        }
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //        self.textFieldsTopConstraint.constant = constantContraint
+        
         if textField == passwordTextField {
-            self.topConstraintView.constant = topConstantContraint
-            self.bottomConstraintView.constant = bottomConstantConstraint
-        }
-        
-    }
-}
-
-
-extension AddNewStudentViewController {
-    func loadStudentSavedData() {
-        
-        let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        requestAlumno.sortDescriptors = [sort]
-        
-        do {
-            alumnos = try container.viewContext.fetch(requestAlumno)
-            
-            for alumno in alumnos {
-                print("Profesor numero: \(profesor.user)")
-            }
-            
-            print(alumnos)
-            print("Got \(alumnos.count) profesores")
-        } catch {
-            print("fetch failed")
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                
+                self.backGroundView.transform = CGAffineTransform(translationX: 0, y: 0)
+                
+            }, completion: nil)
         }
         
     }

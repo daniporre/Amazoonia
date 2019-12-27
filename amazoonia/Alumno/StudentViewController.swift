@@ -325,7 +325,8 @@ extension StudentViewController: UIImagePickerControllerDelegate, UINavigationCo
         //      Con .editedImage nos quedamos con la foto editada y esa es la que establecemos en imageViewUser.image
         if let theImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.studentImageView.image = theImage
-            
+            self.alumno.photo = theImage.pngData()! as NSData
+            self.saveContext()
             //            if(imageView.image != UIImage(named: "addUserImage")){
             //                //Establecemos configuraciones, establecemos la imagen con forma redondeada
             //                imageView.layer.cornerRadius = imageView.frame.width / 2
