@@ -13,7 +13,9 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     
     var profesor: Profesor!
     var container: NSPersistentContainer!
+    var fetchResultsController2: NSFetchedResultsController<Alumno>!
     var alumno: Alumno!
+    var alumnos = [Alumno]()
     
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
@@ -50,7 +52,7 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     
     override func viewDidAppear(_ animated: Bool) {
         self.viewWillAppear(animated)
-        
+        loadStudentSavedData()
         UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
             
             self.imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -132,6 +134,13 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
     
     
     @IBAction func addNewStudentButton(_ sender: UIButton) {
+        let request: NSFetchRequest<Alumno> = Alumno.fetchRequest()
+        do {
+            alumnos = try container.viewContext.fetch(request)
+        } catch {
+            print("Fetch failed (Alumnos): \(error.localizedDescription)")
+            return
+        }
         
         if (nameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)! || (userTextfield.text?.isEmpty)! {
             return
@@ -141,25 +150,27 @@ class AddNewStudentViewController: UIViewController, UIImagePickerControllerDele
 
         let ok = UIAlertAction(title: "Añadir", style: .default) { (UIAlertAction) in
 
-            self.alumno = Alumno(context: self.container.viewContext)
-            self.alumno.name = self.nameTextField.text!
-            self.alumno.user = self.userTextfield.text!
-            self.alumno.password = self.passwordTextField.text!
-            self.alumno.photo = self.imageView.image?.pngData() as! NSData
             
-            self.profesor.addToListaAlumnos(self.alumno)
-            
-            self.saveContext()
-            
-            self.performSegue(withIdentifier: "addUnwind", sender: nil)
-
-            
-            
-//            if self.presentingViewController is UINavigationController{
-//                self.dismiss(animated: true, completion: nil)
-//            }else{
-//                self.navigationController!.popViewController(animated: true)
-//            }
+            if self.alumnos.contains(where: {$0.user.lowercased() == (self.userTextfield.text?.lowercased())}) {
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este alumno ya existe, por favor, escoge otro", buttonText: "Aceptar", buttonType: .cancel)
+                return
+            } else {
+                
+                
+                self.alumno = Alumno(context: self.container.viewContext)
+                self.alumno.name = self.nameTextField.text!
+                self.alumno.user = self.userTextfield.text!
+                self.alumno.password = self.passwordTextField.text!
+                self.alumno.photo = self.imageView.image?.pngData() as! NSData
+                
+                
+                self.profesor.addToListaAlumnos(self.alumno)
+                
+                self.saveContext()
+                
+                self.performSegue(withIdentifier: "addUnwind", sender: nil)
+                
+            }
         }
         let cancel = UIAlertAction(title: "No añadir", style: .cancel) { (UIAlertAction) in
 
@@ -305,6 +316,30 @@ extension AddNewStudentViewController: UITextFieldDelegate {
         if textField == passwordTextField {
             self.topConstraintView.constant = topConstantContraint
             self.bottomConstraintView.constant = bottomConstantConstraint
+        }
+        
+    }
+}
+
+
+extension AddNewStudentViewController {
+    func loadStudentSavedData() {
+        
+        let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        requestAlumno.sortDescriptors = [sort]
+        
+        do {
+            alumnos = try container.viewContext.fetch(requestAlumno)
+            
+            for alumno in alumnos {
+                print("Profesor numero: \(profesor.user)")
+            }
+            
+            print(alumnos)
+            print("Got \(alumnos.count) profesores")
+        } catch {
+            print("fetch failed")
         }
         
     }

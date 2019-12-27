@@ -96,7 +96,7 @@ class AddNewExperimentViewController: UIViewController {
             
             let date = Date()
             let format = DateFormatter()
-            format.dateFormat = "dd-MM-yyyy"
+            format.dateFormat = "dd-MM-yyyy HH:mm"
             let formattedDate = format.string(from: date)
             print(formattedDate)
             
@@ -109,37 +109,37 @@ class AddNewExperimentViewController: UIViewController {
             if self.experimento.type == "Mamífero" {
                 let randomIndex = Int.random(in: 0...self.imageMamiferos.count-1)
                 let randomImage = self.imageMamiferos[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Anfibio" {
                 let randomIndex = Int.random(in: 0...self.imageAnfibios.count-1)
                 let randomImage = self.imageAnfibios[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Ave" {
                 let randomIndex = Int.random(in: 0...self.imageAves.count-1)
                 let randomImage = self.imageAves[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Pez" {
                 let randomIndex = Int.random(in: 0...self.imagePeces.count-1)
                 let randomImage = self.imagePeces[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Invertebrado" {
                 let randomIndex = Int.random(in: 0...self.imageInvertebrados.count-1)
                 let randomImage = self.imageInvertebrados[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Insecto" {
                 let randomIndex = Int.random(in: 0...self.imageInsectos.count-1)
                 let randomImage = self.imageInsectos[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             if self.experimento.type == "Reptil" {
                 let randomIndex = Int.random(in: 0...self.imageReptiles.count-1)
                 let randomImage = self.imageReptiles[randomIndex]
-                self.experimento.photo = randomImage.pngData() as! NSData
+                self.experimento.photo = randomImage.pngData()! as NSData
             }
             
             self.alumno.addToExperimentos(self.experimento)
@@ -384,3 +384,4 @@ extension AddNewExperimentViewController: UITextFieldDelegate {
         }, completion: nil)
     }
 }
+
