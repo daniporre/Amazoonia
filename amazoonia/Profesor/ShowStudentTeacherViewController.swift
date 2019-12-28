@@ -75,7 +75,7 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         return 1
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Lista de experimentos"
+        return "Lista de experimentos                                \(self.listaExperimentos.count)"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
