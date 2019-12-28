@@ -13,14 +13,12 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
 
     var profesor: Profesor!
     var listaAlumnos2 = [Alumno]()
+    var alumnos = [Alumno]()
     
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Profesor>!
     
     
-    var alumnos = [String]()
-    var fotos = [UIImage]()
-    var numExp = [Int]()
     @IBOutlet weak var studentsTableView: UITableView!
     @IBOutlet weak var childrenTableView: UITableView!
     @IBOutlet weak var addNewStudentButton: UIButton!
@@ -90,6 +88,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
             let filaSeleccionada = studentsTableView.indexPathForSelectedRow
             viewDestiny?.alumno = listaAlumnos2[(filaSeleccionada?.row)!]
             viewDestiny?.container = self.container
+            viewDestiny?.alumnos = self.alumnos
             studentsTableView.reloadRows(at: [filaSeleccionada!], with: .fade)
         }
     }

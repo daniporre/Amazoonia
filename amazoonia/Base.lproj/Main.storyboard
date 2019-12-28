@@ -1136,7 +1136,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Wvp-eo-sZW"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Ver alumno/a" largeTitleDisplayMode="never" id="fbm-IE-FJE"/>
+                    <navigationItem key="navigationItem" title="Ver alumno/a" largeTitleDisplayMode="never" id="fbm-IE-FJE">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="VKY-Ic-SU0">
+                            <connections>
+                                <action selector="editUserButton:" destination="i6Z-ib-Xly" id="ubl-r2-Rcg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="blurView" destination="V4o-rB-gLv" id="uJI-E4-VvU"/>
                         <outlet property="nameTextField" destination="Unr-kx-CZe" id="W9G-rU-mt1"/>

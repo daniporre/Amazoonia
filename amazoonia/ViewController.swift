@@ -101,6 +101,7 @@ class ViewController: UIViewController {
             let viewDestiny = segue.destination as? TeacherViewController
             viewDestiny?.profesor = self.profesor
             viewDestiny?.container = self.container
+            viewDestiny?.alumnos = self.alumnos
             self.navigationItem.title = self.profesor?.user.capitalized
 
         }

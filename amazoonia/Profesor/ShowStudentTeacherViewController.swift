@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ShowStudentTeacherViewController: UIViewController {
+class ShowStudentTeacherViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var studentImageView: UIImageView!
     @IBOutlet weak var nameTextField: UILabel!
@@ -19,6 +19,7 @@ class ShowStudentTeacherViewController: UIViewController {
     
     var alumno: Alumno!
     var listaExperimentos = [Experimento]()
+    var alumnos = [Alumno]()
     var container: NSPersistentContainer!
     
     var indice: IndexPath?
@@ -58,11 +59,190 @@ class ShowStudentTeacherViewController: UIViewController {
         }
         if segue.identifier == "firstMarkSegue" {
             let viewDestiny = segue.destination as? ReviewViewController
-            let filaSeleccionada = self.tableViewExperiments.indexPathForSelectedRow
             viewDestiny?.experimento = listaExperimentos[(self.indice?.row)!]
             viewDestiny?.container = self.container
         }
     }
+    
+    @IBAction func editUserButton(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
+        let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
+        }
+        let password = UIAlertAction(title: "Contraseña", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldContraseña(viewController: self, title: "Cambiar contraseña de usuario", message: "Introduce tu nueva contraseña de usuario")
+        }
+        let imageUser = UIAlertAction(title: "Foto de perfil", style: .default) { (UIAlertAction) in
+            self.alertForSourceType()
+        }
+        let nameUser = UIAlertAction(title: "Nombre completo", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldName(viewController: self, title: "Cambiar nombre completo de usuario", message: "Introduce tu nuevo nombre completo de usuario")
+        }
+        let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        alertController.addAction(nameUser)
+        alertController.addAction(userName)
+        alertController.addAction(imageUser)
+        alertController.addAction(password)
+        alertController.addAction(cancelar)
+        
+        self.present(alertController, animated: true)
+    }
+    
+    func lanzarAlertaTextfieldContraseña(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce la contraseña"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            self.alumno.password = (alertController.textFields?.first!.text)!
+            self.saveContext()
+            lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
+    func lanzarAlertaTextfieldUsername(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre de usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            if self.alumnos.contains(where: {$0.user.lowercased() == (alertController.textFields?.first!.text)!.lowercased()}) {
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este alumno ya existe, por favor, escoge otro.", buttonText: "Aceptar", buttonType: .cancel)
+                return
+            } else {
+                self.alumno.user = (alertController.textFields?.first!.text)!
+                self.navigationItem.title = self.alumno.user.capitalized
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+            }
+            
+            
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    func lanzarAlertaTextfieldName(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre completo del usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            self.alumno.name = (alertController.textFields?.first!.text)!
+            self.nameTextField.text = self.alumno.name
+            self.saveContext()
+            lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error ocurred shile saving: \(error)")
+            }
+        }
+    }
+    
+    func alertForSourceType(){
+        //Creamos el picker y asignamos su delegado a self
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        //Permite que podamos editar la imagen que escojemos
+        picker.allowsEditing = true
+        //Creamos el alertControlller con el mensaje el titulo y el tipo de alerta, en este caso de tipo actionSheet
+        let alertController:UIAlertController = UIAlertController(title: "Cambiar foto de perfil",
+                                                                  message: "¿De dónde quieres escoger la foto?",
+                                                                  preferredStyle: .actionSheet)
+        
+        
+        //Creamos una accion que posteriormente sera un boton en la alerta,
+        //pulsar este boton ocasionara que se abra la libreeria de fotos porque .sourceType == .photoLibrary
+        let photoLibraryaction:UIAlertAction = UIAlertAction(title: "Librería de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            //Codigo que se ejecuta cuando pulsamos el boton de la alerta
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abrira la camara de fotos permitiendonos hacer una foto y editarla
+        let cameraAction:UIAlertAction = UIAlertAction(title: "Cámara", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .camera
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abre directamente las fotos guardadas
+        let savedPhotosAlbumAction:UIAlertAction = UIAlertAction(title: "Álbum de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .savedPhotosAlbum
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion es la de candelar, de tipo .cancel para que aparezca abajo, oculta la alerta
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        photoLibraryaction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        savedPhotosAlbumAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cameraAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelAction.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        photoLibraryaction.setValue(UIImage(named: "imagen"), forKey: "image")
+        savedPhotosAlbumAction.setValue(UIImage(named: "album"), forKey: "image")
+        cameraAction.setValue(UIImage(named: "camera"), forKey: "image")
+        
+        //Añadimos todas las acciones al alertcontroller
+        alertController.addAction(photoLibraryaction)
+        alertController.addAction(savedPhotosAlbumAction)
+        alertController.addAction(cameraAction)
+        alertController.addAction(cancelAction)
+        //Mostramos la alerta al usuario
+        present(alertController, animated: true, completion: nil)
+    }
+
 
 }
 
