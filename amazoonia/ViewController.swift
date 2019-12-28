@@ -76,7 +76,7 @@ class ViewController: UIViewController {
         let ok = UIAlertAction(title: "Entrar", style: .default) { (UIAlertAction) in
             
             
-            if alertController.textFields?.first?.text == "contraseñaProfesores" {
+            if alertController.textFields?.first?.text == "pass" {
                 self.performSegue(withIdentifier: "backToLogIn", sender: nil)
             } else {
                 lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña incorrecta", mensaje: "La contraseña introducida no es correcta, inténtelo de nuevo", segundos: 2)
@@ -109,6 +109,7 @@ class ViewController: UIViewController {
             let viewDestiny = segue.destination as? StudentViewController
             viewDestiny?.alumno = self.alumno
             viewDestiny?.container = self.container
+            viewDestiny?.alumnos = self.alumnos
         }
     }
     

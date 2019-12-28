@@ -13,6 +13,7 @@ class StudentViewController: UIViewController {
     
     var alumno: Alumno!
     var listaExperimentos = [Experimento]()
+    var alumnos = [Alumno]()
     
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Alumno>!
@@ -83,6 +84,119 @@ class StudentViewController: UIViewController {
     @IBAction func changeImageTapped(_ sender: UITapGestureRecognizer) {
         alertForSourceType()
     }
+    
+    @IBAction func editUserButton(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
+        let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
+        }
+        let password = UIAlertAction(title: "Contraseña", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldContraseña(viewController: self, title: "Cambiar contraseña de usuario", message: "Introduce tu nueva contraseña de usuario")
+        }
+        let imageUser = UIAlertAction(title: "Foto de perfil", style: .default) { (UIAlertAction) in
+            self.alertForSourceType()
+        }
+        let nameUser = UIAlertAction(title: "Nombre completo", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldName(viewController: self, title: "Cambiar nombre completo de usuario", message: "Introduce tu nuevo nombre completo de usuario")
+        }
+        let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        alertController.addAction(nameUser)
+        alertController.addAction(userName)
+        alertController.addAction(imageUser)
+        alertController.addAction(password)
+        alertController.addAction(cancelar)
+        
+        self.present(alertController, animated: true)
+    }
+    
+    func lanzarAlertaTextfieldContraseña(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce la contraseña"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            self.alumno.password = (alertController.textFields?.first!.text)!
+            self.saveContext()
+            lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
+    func lanzarAlertaTextfieldUsername(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre de usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            if self.alumnos.contains(where: {$0.user.lowercased() == (alertController.textFields?.first!.text)!.lowercased()}) {
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este alumno ya existe, por favor, escoge otro.", buttonText: "Aceptar", buttonType: .cancel)
+                return
+            } else {
+                self.alumno.user = (alertController.textFields?.first!.text)!
+                self.navigationItem.title = self.alumno.user.capitalized
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+            }
+            
+            
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    func lanzarAlertaTextfieldName(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre completo del usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            self.alumno.name = (alertController.textFields?.first!.text)!
+            self.nameStudentLabel.text = self.alumno.name
+            self.saveContext()
+            lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
     func setUpTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -110,7 +224,7 @@ class StudentViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysTemplate)
         
-        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "addNewStudent").withRenderingMode(.alwaysTemplate)
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editUser").withRenderingMode(.alwaysTemplate)
         setNormalNavigationBar(viewController: self)
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)

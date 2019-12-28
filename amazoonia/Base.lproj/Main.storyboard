@@ -871,6 +871,11 @@
                                 <action selector="logOutButton:" destination="bGp-T5-beY" id="YmN-pA-MFW"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="rvj-F6-Y3c">
+                            <connections>
+                                <action selector="editUserButton:" destination="bGp-T5-beY" id="Aaf-Rv-la4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="blurViewBackground" destination="rBE-Nw-UhM" id="Gpp-8v-LLt"/>
