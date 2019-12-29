@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ShowStudentTeacherViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ShowStudentTeacherViewController: UIViewController {
     
     @IBOutlet weak var studentImageView: UIImageView!
     @IBOutlet weak var nameTextField: UILabel!
@@ -41,6 +41,7 @@ class ShowStudentTeacherViewController: UIViewController, UIImagePickerControlle
         studentImageView.layer.borderWidth = 7
         studentImageView.layer.borderColor = #colorLiteral(red: 0.9029806256, green: 0.7490995526, blue: 0, alpha: 1)
         self.studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editStudent").withRenderingMode(.alwaysTemplate)
         blurView.layer.cornerRadius = 15
         setNormalNavigationBar(viewController: self)
         nameTextField.text = alumno.name
@@ -186,6 +187,41 @@ class ShowStudentTeacherViewController: UIViewController, UIImagePickerControlle
         }
     }
     
+    
+
+}
+
+extension ShowStudentTeacherViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //      Con .editedImage nos quedamos con la foto editada y esa es la que establecemos en imageViewUser.image
+        if let theImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.studentImageView.image = theImage
+            self.alumno.photo = theImage.pngData()! as NSData
+            self.saveContext()
+            //            if(imageView.image != UIImage(named: "addUserImage")){
+            //                //Establecemos configuraciones, establecemos la imagen con forma redondeada
+            //                imageView.layer.cornerRadius = imageView.frame.width / 2
+            //                imageView.layer.borderWidth = 3
+            //
+            //            }
+            let generator = UINotificationFeedbackGenerator()
+            generator.prepare()
+            generator.notificationOccurred(.success)
+            studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
+            studentImageView.clipsToBounds = true
+            studentImageView.layer.borderWidth = 4
+            studentImageView.layer.borderColor = #colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1)
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
     func alertForSourceType(){
         //Creamos el picker y asignamos su delegado a self
         let picker = UIImagePickerController()
@@ -193,8 +229,8 @@ class ShowStudentTeacherViewController: UIViewController, UIImagePickerControlle
         //Permite que podamos editar la imagen que escojemos
         picker.allowsEditing = true
         //Creamos el alertControlller con el mensaje el titulo y el tipo de alerta, en este caso de tipo actionSheet
-        let alertController:UIAlertController = UIAlertController(title: "Cambiar foto de perfil",
-                                                                  message: "¿De dónde quieres escoger la foto?",
+        let alertController:UIAlertController = UIAlertController(title: "Añade una imagen",
+                                                                  message: "¿De dónde quieres escoger la imagen?",
                                                                   preferredStyle: .actionSheet)
         
         
@@ -242,9 +278,10 @@ class ShowStudentTeacherViewController: UIViewController, UIImagePickerControlle
         //Mostramos la alerta al usuario
         present(alertController, animated: true, completion: nil)
     }
-
-
+    
+    
 }
+
 
 extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -277,6 +314,8 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         }
         cell.dateCell.text = listaExperimentos[indexPath.row].dateString
         cell.accessoryType = .disclosureIndicator
+        
+        self.tableViewExperiments.tableFooterView = UIView(frame: CGRect.zero)
         
         return cell
     }

@@ -224,7 +224,7 @@ class StudentViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysTemplate)
         
-        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editUser").withRenderingMode(.alwaysTemplate)
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editStudent").withRenderingMode(.alwaysTemplate)
         setNormalNavigationBar(viewController: self)
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
@@ -393,9 +393,9 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
                 //            }
                 let generator = UIImpactFeedbackGenerator(style: impact)
                 generator.prepare()
-            
                 self.present(activityController, animated: true, completion: nil)
                 generator.impactOccurred()
+                
             })
             shareAction.image = #imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate)
             shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)

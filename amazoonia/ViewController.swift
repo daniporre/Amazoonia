@@ -284,8 +284,6 @@ extension ViewController {
     func loadStudentSavedData() {
         
         let requestAlumno: NSFetchRequest<Alumno> = Alumno.fetchRequest()
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        requestAlumno.sortDescriptors = [sort]
         
         do {
             alumnos = try container.viewContext.fetch(requestAlumno)

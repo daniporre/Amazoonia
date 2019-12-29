@@ -116,6 +116,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         super.viewWillAppear(animated)
         self.navigationItem.title = self.profesor.user.capitalized
         listaAlumnos2 = profesor!.listaAlumnos.allObjects as! [Alumno]
+        listaAlumnos2.sort(by: {$0.name.compare($1.name) == .orderedAscending})
 //        loadSavedData()
         print(profesor.listaAlumnos)
         self.navigationController?.navigationBar.prefersLargeTitles = true
