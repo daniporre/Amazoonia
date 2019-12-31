@@ -298,6 +298,10 @@ extension AddNewStudentViewController: UITextFieldDelegate {
                 
                 self.backGroundView.transform = CGAffineTransform(translationX: 0, y: -110.0)
                 
+                let animation1 = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                let animation2 = CGAffineTransform(translationX: 0, y: 50)
+                
+                self.imageView.transform = animation1.concatenating(animation2)
                 
             }, completion: nil)
         }
@@ -306,13 +310,13 @@ extension AddNewStudentViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        if textField == passwordTextField {
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
-                
-                self.backGroundView.transform = CGAffineTransform(translationX: 0, y: 0)
-                
-            }, completion: nil)
-        }
+//        if textField == passwordTextField {
+//            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+//
+//                self.backGroundView.transform = CGAffineTransform(translationX: 0, y: 0)
+//
+//            }, completion: nil)
+//        }
         
     }
 }

@@ -23,6 +23,7 @@ class StudentViewController: UIViewController {
     @IBOutlet weak var numExpStudentLabel: UILabel!
     @IBOutlet weak var blurViewBackground: UIVisualEffectView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
 
     override func viewDidLoad() {
@@ -37,7 +38,6 @@ class StudentViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(self.alumno)
         self.tableView.reloadData()
     }
     
@@ -46,14 +46,13 @@ class StudentViewController: UIViewController {
         self.navigationItem.title = String(alumno.user).capitalized
         print(self.listaExperimentos)
         listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
-        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
+        sortByDate()
+        backgroundImageView.image = UIImage(data: self.alumno.photo as Data)
         self.tableView.reloadData()
     }
     
-    func sortDate() {
-        
-        
-
+    func sortByDate() {
+        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,6 +101,21 @@ class StudentViewController: UIViewController {
         let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
             
         }
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        userName.setValue(#colorLiteral(red: 0.2784313725, green: 0.3921568627, blue: 0.262745098, alpha: 1), forKey: "titleTextColor")
+        nameUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        password.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        imageUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelar.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        nameUser.setValue(UIImage(named: "userData"), forKey: "image")
+        userName.setValue(UIImage(named: "userImage"), forKey: "image")
+        imageUser.setValue(UIImage(named: "userPhoto"), forKey: "image")
+        password.setValue(UIImage(named: "userPassword"), forKey: "image")
+        
         alertController.addAction(nameUser)
         alertController.addAction(userName)
         alertController.addAction(imageUser)
@@ -121,10 +135,11 @@ class StudentViewController: UIViewController {
         }
         
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
-            
-            self.alumno.password = (alertController.textFields?.first!.text)!
-            self.saveContext()
-            lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+            if alertController.textFields?.first?.text != "" {
+                self.alumno.password = (alertController.textFields?.first!.text)!
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+            }
         }
         
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
@@ -152,10 +167,12 @@ class StudentViewController: UIViewController {
                 lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este alumno ya existe, por favor, escoge otro.", buttonText: "Aceptar", buttonType: .cancel)
                 return
             } else {
-                self.alumno.user = (alertController.textFields?.first!.text)!
-                self.navigationItem.title = self.alumno.user.capitalized
-                self.saveContext()
-                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+                if alertController.textFields?.first?.text != "" {
+                    self.alumno.user = (alertController.textFields?.first!.text)!
+                    self.navigationItem.title = self.alumno.user.capitalized
+                    self.saveContext()
+                    lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+                }
             }
             
             
@@ -180,11 +197,12 @@ class StudentViewController: UIViewController {
         }
         
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
-            
-            self.alumno.name = (alertController.textFields?.first!.text)!
-            self.nameStudentLabel.text = self.alumno.name
-            self.saveContext()
-            lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+            if alertController.textFields?.first?.text != "" {
+                self.alumno.name = (alertController.textFields?.first!.text)!
+                self.nameStudentLabel.text = self.alumno.name
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+            }
         }
         
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in

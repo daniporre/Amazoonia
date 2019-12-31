@@ -16,6 +16,7 @@ class ShowStudentTeacherViewController: UIViewController {
     @IBOutlet weak var numExpTextField: UILabel!
     @IBOutlet weak var tableViewExperiments: UITableView!
     @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var alumno: Alumno!
     var listaExperimentos = [Experimento]()
@@ -33,8 +34,13 @@ class ShowStudentTeacherViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tableViewExperiments.reloadData()
         listaExperimentos = alumno!.experimentos.allObjects as! [Experimento]
-        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
+        sortByDate()
+        backgroundImageView.image = UIImage(data: self.alumno.photo as Data)
         self.navigationItem.title = alumno.user
+    }
+    
+    func sortByDate() {
+        listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
     }
     
     func setUpUI() {
@@ -82,6 +88,21 @@ class ShowStudentTeacherViewController: UIViewController {
         let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
             
         }
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        userName.setValue(#colorLiteral(red: 0.2784313725, green: 0.3921568627, blue: 0.262745098, alpha: 1), forKey: "titleTextColor")
+        nameUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        password.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        imageUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelar.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        nameUser.setValue(UIImage(named: "userData"), forKey: "image")
+        userName.setValue(UIImage(named: "userImage"), forKey: "image")
+        imageUser.setValue(UIImage(named: "userPhoto"), forKey: "image")
+        password.setValue(UIImage(named: "userPassword"), forKey: "image")
+        
         alertController.addAction(nameUser)
         alertController.addAction(userName)
         alertController.addAction(imageUser)

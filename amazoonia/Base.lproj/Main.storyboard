@@ -729,6 +729,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhz-pI-YZy">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tzV-72-q7I">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Lqe-xL-SnX">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <blurEffect style="light"/>
+                                        </visualEffectView>
                                         <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rBE-Nw-UhM">
                                             <rect key="frame" x="8" y="169" width="359" height="77"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -878,6 +891,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundImageView" destination="bhz-pI-YZy" id="syC-0a-tEv"/>
                         <outlet property="blurViewBackground" destination="rBE-Nw-UhM" id="Gpp-8v-LLt"/>
                         <outlet property="nameStudentLabel" destination="FtX-5q-LAC" id="E1e-MH-ApK"/>
                         <outlet property="numExpStudentLabel" destination="7Io-d4-SBX" id="YaI-iW-coT"/>
@@ -1029,6 +1043,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HId-2E-GYn">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jfL-af-NMr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="nQv-oj-2bu">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="257"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <blurEffect style="light"/>
+                                        </visualEffectView>
                                         <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4o-rB-gLv">
                                             <rect key="frame" x="8" y="167" width="359" height="77"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1144,6 +1171,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundImageView" destination="HId-2E-GYn" id="0Zg-h6-Yef"/>
                         <outlet property="blurView" destination="V4o-rB-gLv" id="uJI-E4-VvU"/>
                         <outlet property="nameTextField" destination="Unr-kx-CZe" id="W9G-rU-mt1"/>
                         <outlet property="numExpTextField" destination="CIj-Od-LdG" id="GiD-2z-rtv"/>
