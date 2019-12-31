@@ -261,7 +261,7 @@ class StudentViewController: UIViewController {
     
     
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro/a de que quiere cerrar la sesión activa?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro/a de que quiere salir de \(self.alumno.name)?", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "Cerrar sesión", style: .destructive) { (UIAlertAction) in
             self.navigationController?.popViewController(animated: true)

@@ -122,10 +122,11 @@ class ShowStudentTeacherViewController: UIViewController {
         }
         
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
-            
-            self.alumno.password = (alertController.textFields?.first!.text)!
-            self.saveContext()
-            lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+            if alertController.textFields?.first?.text != "" {
+                self.alumno.password = (alertController.textFields?.first!.text)!
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+            }
         }
         
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
@@ -153,10 +154,12 @@ class ShowStudentTeacherViewController: UIViewController {
                 lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este alumno ya existe, por favor, escoge otro.", buttonText: "Aceptar", buttonType: .cancel)
                 return
             } else {
-                self.alumno.user = (alertController.textFields?.first!.text)!
-                self.navigationItem.title = self.alumno.user.capitalized
-                self.saveContext()
-                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+                if alertController.textFields?.first?.text != "" {
+                    self.alumno.user = (alertController.textFields?.first!.text)!
+                    self.navigationItem.title = self.alumno.user.capitalized
+                    self.saveContext()
+                    lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+                }
             }
             
             
@@ -181,11 +184,12 @@ class ShowStudentTeacherViewController: UIViewController {
         }
         
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
-            
-            self.alumno.name = (alertController.textFields?.first!.text)!
-            self.nameTextField.text = self.alumno.name
-            self.saveContext()
-            lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+            if alertController.textFields?.first?.text != "" {
+                self.alumno.name = (alertController.textFields?.first!.text)!
+                self.nameTextField.text = self.alumno.name
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+            }
         }
         
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in

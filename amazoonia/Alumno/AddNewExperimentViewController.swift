@@ -173,7 +173,7 @@ class AddNewExperimentViewController: UIViewController {
             return
         }
         
-        let alertController = UIAlertController(title: "Cancelar", message: "¿Estás seguro/a de que no quieres realizar el experimento \(nameTextField.text!)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Cancelar", message: "¿Estás seguro/a de que no quieres realizar el experimento \(nameTextField.text!)?", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "No realizar", style: .destructive) { (UIAlertAction) in
             if self.presentingViewController is UINavigationController{
