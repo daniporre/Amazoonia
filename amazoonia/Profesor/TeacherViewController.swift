@@ -106,7 +106,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         setUpNavigationBar()
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.studentsTableView.reloadData()
     }
     
@@ -119,10 +119,46 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         listaAlumnos2.sort(by: {$0.name.compare($1.name) == .orderedAscending})
 //        loadSavedData()
         print(profesor.listaAlumnos)
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         
     }
     
+    @IBAction func editUserButton(_ sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
+        let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
+        }
+        let password = UIAlertAction(title: "Contraseña", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldContraseña(viewController: self, title: "Cambiar contraseña de usuario", message: "Introduce tu nueva contraseña de usuario")
+        }
+        let nameUser = UIAlertAction(title: "Nombre completo", style: .default) { (UIAlertAction) in
+            self.lanzarAlertaTextfieldName(viewController: self, title: "Cambiar nombre completo de usuario", message: "Introduce tu nuevo nombre completo de usuario")
+        }
+        let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        userName.setValue(#colorLiteral(red: 0.2784313725, green: 0.3921568627, blue: 0.262745098, alpha: 1), forKey: "titleTextColor")
+        nameUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        password.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelar.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        nameUser.setValue(UIImage(named: "userData"), forKey: "image")
+        userName.setValue(UIImage(named: "userImage"), forKey: "image")
+        password.setValue(UIImage(named: "userPassword"), forKey: "image")
+        
+        alertController.addAction(nameUser)
+        alertController.addAction(userName)
+        alertController.addAction(password)
+        alertController.addAction(cancelar)
+        
+        self.present(alertController, animated: true)
+        
+    }
     
     
     
@@ -381,11 +417,14 @@ extension TeacherViewController {
         
         //        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysTemplate)
         
-        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "addNewStudent").withRenderingMode(.alwaysTemplate)
-        setNavigationBarStyle11(viewController: self)
+        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editUser").withRenderingMode(.alwaysTemplate)
+//        setNavigationBarStyle11(viewController: self)
         self.navigationItem.hidesBackButton = true
+        
+        
+       
+        
         self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
         
         //TITLEVIEW
@@ -406,3 +445,96 @@ extension TeacherViewController {
     }
     
 }
+
+extension TeacherViewController {
+    func lanzarAlertaTextfieldContraseña(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce la contraseña"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            if alertController.textFields?.first?.text != "" {
+                self.profesor.password = (alertController.textFields?.first!.text)!
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Contraseña cambiada", mensaje: "Su contraseña ha sido cambiada correctamente", segundos: 3)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
+    func lanzarAlertaTextfieldUsername(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre de usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        alertController.textFields?.first?.text = self.profesor.user
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            
+            if self.alumnos.contains(where: {$0.user.lowercased() == (alertController.textFields?.first!.text)!.lowercased()}) {
+                lanzarAlertaConUnBoton(viewController: self, title: "Usuario no disponible", message: "El usuario introducido para este profesor ya existe, por favor, escoge otro.", buttonText: "Aceptar", buttonType: .cancel)
+                return
+            } else {
+                if alertController.textFields?.first?.text != "" {
+                    self.profesor.user = (alertController.textFields?.first!.text)!
+                    self.navigationItem.title = self.profesor.user.capitalized
+                    self.saveContext()
+                    lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiado correctamente", segundos: 3)
+                }
+            }
+            
+            
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    func lanzarAlertaTextfieldName(viewController: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField { (textFieldAlert) in
+            textFieldAlert.placeholder = "Introduce el nombre completo del usuario"
+            textFieldAlert.isSecureTextEntry = false
+            textFieldAlert.borderStyle = .none
+        }
+        alertController.textFields?.first?.text = self.profesor.name.capitalized
+        let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
+            if alertController.textFields?.first?.text != "" {
+                self.profesor.name = (alertController.textFields?.first!.text)!
+                self.saveContext()
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiado correctamente", segundos: 3)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        viewController.present(alertController, animated: true)
+    }
+    
+}
+

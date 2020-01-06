@@ -48,7 +48,7 @@ class ShowStudentTeacherViewController: UIViewController {
         studentImageView.layer.borderColor = #colorLiteral(red: 0.9029806256, green: 0.7490995526, blue: 0, alpha: 1)
         self.studentImageView.layer.cornerRadius = studentImageView.frame.height / 2
         self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editStudent").withRenderingMode(.alwaysTemplate)
-        blurView.layer.cornerRadius = 15
+        blurView.layer.cornerRadius = 10
         setNormalNavigationBar(viewController: self)
         nameTextField.text = alumno.name
         numExpTextField.text = "Número de experimentos: \(String(alumno.experimentos.count))"
@@ -147,7 +147,7 @@ class ShowStudentTeacherViewController: UIViewController {
             textFieldAlert.isSecureTextEntry = false
             textFieldAlert.borderStyle = .none
         }
-        
+        alertController.textFields?.first?.text = self.alumno.user
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
             
             if self.alumnos.contains(where: {$0.user.lowercased() == (alertController.textFields?.first!.text)!.lowercased()}) {
@@ -158,7 +158,7 @@ class ShowStudentTeacherViewController: UIViewController {
                     self.alumno.user = (alertController.textFields?.first!.text)!
                     self.navigationItem.title = self.alumno.user.capitalized
                     self.saveContext()
-                    lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiada correctamente", segundos: 3)
+                    lanzarAlertaConTiempo(viewController: self, titulo: "Nombre de usuario cambiado", mensaje: "Su nombre de usuario ha sido cambiado correctamente", segundos: 3)
                 }
             }
             
@@ -182,13 +182,13 @@ class ShowStudentTeacherViewController: UIViewController {
             textFieldAlert.isSecureTextEntry = false
             textFieldAlert.borderStyle = .none
         }
-        
+        alertController.textFields?.first?.text = self.alumno.name.capitalized
         let ok = UIAlertAction(title: "Cambiar", style: .default) { (UIAlertAction) in
             if alertController.textFields?.first?.text != "" {
                 self.alumno.name = (alertController.textFields?.first!.text)!
                 self.nameTextField.text = self.alumno.name
                 self.saveContext()
-                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiada correctamente", segundos: 3)
+                lanzarAlertaConTiempo(viewController: self, titulo: "Nombre completo de usuario cambiado", mensaje: "Su nombre completo de usuario ha sido cambiado correctamente", segundos: 3)
             }
         }
         

@@ -18,6 +18,12 @@ class ReviewViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var blurViewMarks: UIVisualEffectView!
     
+    @IBOutlet weak var experimentImageView: UIImageView!
+    @IBOutlet weak var nameExperimentLabel: UILabel!
+    @IBOutlet weak var dateExperimentLabel: UILabel!
+    @IBOutlet weak var markExperimentImageView: UIImageView!
+    @IBOutlet weak var experimentBlurview: UIVisualEffectView!
+    
     var ratingSelected : String?
     var experimento: Experimento!
     var container: NSPersistentContainer!
@@ -25,6 +31,9 @@ class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.experimentBlurview.layer.cornerRadius = 10
+        experimentBlurview.clipsToBounds = true
+        self.questionLabel.text = "¿Qué calificación obtiene el experimento \(self.experimento.name.capitalized) del alumno \(self.experimento.alumno.name)?"
         
         //MARK: - Aplicar efecto blur
         let blurEffect = UIBlurEffect(style: .light)
@@ -63,7 +72,23 @@ class ReviewViewController: UIViewController {
         
         //Creamos animacion de traslacion del questionLabel
         questionLabel.transform = CGAffineTransform(translationX: 0.0, y: -500.0)
+        experimentBlurview.transform = CGAffineTransform(translationX: 0.0, y: -500.0)
         
+        self.experimentImageView.image = UIImage(data: self.experimento.photo as Data)
+        self.nameExperimentLabel.text = self.experimento.name
+        self.dateExperimentLabel.text = self.experimento.dateString
+        if self.experimento.mark == "bad" {
+            self.markExperimentImageView.image = #imageLiteral(resourceName: "bad")
+        }
+        if self.experimento.mark == "good" {
+            self.markExperimentImageView.image = #imageLiteral(resourceName: "good")
+        }
+        if self.experimento.mark == "great" {
+            self.markExperimentImageView.image = #imageLiteral(resourceName: "great")
+        }
+        if self.experimento.mark == "" {
+            self.markExperimentImageView.image = #imageLiteral(resourceName: "mark")
+        }
 
     }
     
@@ -84,6 +109,7 @@ class ReviewViewController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
             
             self.questionLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.experimentBlurview.transform = CGAffineTransform(scaleX: 1, y: 1)
             
         }, completion: nil)
         
