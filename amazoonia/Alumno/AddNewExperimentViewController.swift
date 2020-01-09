@@ -65,6 +65,7 @@ class AddNewExperimentViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "done").withRenderingMode(.alwaysTemplate)
         self.saveButton.isEnabled = false
         addToolBarForCalcules(viewController: self, titulo: "Introduce el nombre del animal", textField: nameTextField, selectorCalc: #selector(self.dismissKeyboard))
+        self.experimentTableview.isScrollEnabled = false
     }
 
     @objc func dismissKeyboard(){

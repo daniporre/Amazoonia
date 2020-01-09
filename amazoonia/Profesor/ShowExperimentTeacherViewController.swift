@@ -41,7 +41,78 @@ class ShowExperimentTeacherViewController: UIViewController {
     }
     
     @IBAction func qualifyButton(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Experimento", message: "\n\n\n", preferredStyle: .actionSheet)
+        //MARK: -  CUSTOMVIEW IN ACTIONSHEET
+        let view = UIView(frame: CGRect(x: 10, y: 40, width: alertController.view.bounds.size.width - 10 * 4.0, height: 72))
+        view.backgroundColor = .clear
         
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.layer.cornerRadius = 10
+        blurEffectView.clipsToBounds = true
+        
+        let image = UIImageView(frame: CGRect(x: 8, y: 8, width: 56, height: 56))
+        image.image = UIImage(data: self.experimento.photo as Data)
+        
+        let labelTitle = UILabel(frame: CGRect(x: 76, y: 14, width: 160, height: 24))
+        labelTitle.text = self.experimento.name
+        labelTitle.textColor = #colorLiteral(red: 0.5019607843, green: 0.6509803922, blue: 0.4862745098, alpha: 1)
+        labelTitle.font = UIFont(name: "AvenirNext-Bold", size: 17)
+        
+        let labelDate = UILabel(frame: CGRect(x: 76, y: 36, width: 160, height: 24))
+        labelDate.text = self.experimento.dateString
+        labelDate.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        labelDate.font = UIFont(name: "AvenirNext-UltraLightItalic", size: 17)
+        
+        let imageViewMark = UIImageView(frame: CGRect(x: 303, y: 25, width: 22, height: 22))
+        
+        if self.experimento.mark == "bad" {
+            imageViewMark.image = #imageLiteral(resourceName: "bad")
+        }
+        if self.experimento.mark == "good" {
+            imageViewMark.image = #imageLiteral(resourceName: "good")
+        }
+        if self.experimento.mark == "great" {
+            imageViewMark.image = #imageLiteral(resourceName: "great")
+        }
+        if self.experimento.mark == "" {
+            imageViewMark.image = #imageLiteral(resourceName: "mark")
+        }
+        
+        view.addSubview(blurEffectView)
+        view.addSubview(image)
+        view.addSubview(imageViewMark)
+        view.addSubview(labelDate)
+        view.addSubview(labelTitle)
+        
+        
+        
+        alertController.view.addSubview(view)
+        
+        
+        let qualify = UIAlertAction(title: "Calificar", style: .default) { (UIAlertAction) in
+            self.performSegue(withIdentifier: "secondMarkSegue", sender: nil)
+        }
+        let comment = UIAlertAction(title: "Comentar", style: .destructive) { (UIAlertAction) in
+            self.performSegue(withIdentifier: "commentSegue", sender: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
+            
+        }
+        cancel.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        qualify.setValue(#colorLiteral(red: 0.3133951426, green: 0.4417499304, blue: 0.2995533347, alpha: 1), forKey: "titleTextColor")
+        comment.setValue(#colorLiteral(red: 0.3133951426, green: 0.4417499304, blue: 0.2995533347, alpha: 1), forKey: "titleTextColor")
+        
+        
+        qualify.setValue(UIImage(named: "calificar"), forKey: "image")
+        comment.setValue(UIImage(named: "comment"), forKey: "image")
+        
+        alertController.addAction(cancel)
+        alertController.addAction(qualify)
+        alertController.addAction(comment)
+        
+        present(alertController, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -49,6 +120,12 @@ class ShowExperimentTeacherViewController: UIViewController {
             let viewDestiny = segue.destination as? ReviewViewController
             viewDestiny?.experimento = self.experimento
             viewDestiny?.container = self.container
+        }
+        if segue.identifier == "commentSegue" {
+            let NavigationController = segue.destination as! UINavigationController
+            let viewDestiny = NavigationController.topViewController as! CommentExperimentViewController
+            viewDestiny.experimento = self.experimento
+            viewDestiny.container = self.container
         }
     }
     

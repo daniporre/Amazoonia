@@ -24,6 +24,7 @@
 		175C153E23A2DF5300899CE6 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153D23A2DF5300899CE6 /* Funcs.swift */; };
 		175C154023A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C153F23A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift */; };
 		175C154223A2EBA000899CE6 /* ShowExperimentStudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C154123A2EBA000899CE6 /* ShowExperimentStudentTableViewCell.swift */; };
+		178B76DD23C2E5FD00EA1DB5 /* CommentExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178B76DC23C2E5FD00EA1DB5 /* CommentExperimentViewController.swift */; };
 		178EDC52239B536100A2071F /* ShowStudentTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */; };
 		178EDC54239B584C00A2071F /* StudentTeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */; };
 		17D75D852396D0F200B79EEE /* TeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D75D842396D0F200B79EEE /* TeacherViewController.swift */; };
@@ -81,6 +82,7 @@
 		175C153D23A2DF5300899CE6 /* Funcs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
 		175C153F23A2EAEB00899CE6 /* ShowExperimentStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentStudentViewController.swift; sourceTree = "<group>"; };
 		175C154123A2EBA000899CE6 /* ShowExperimentStudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExperimentStudentTableViewCell.swift; sourceTree = "<group>"; };
+		178B76DC23C2E5FD00EA1DB5 /* CommentExperimentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentExperimentViewController.swift; sourceTree = "<group>"; };
 		178EDC51239B536100A2071F /* ShowStudentTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStudentTeacherViewController.swift; sourceTree = "<group>"; };
 		178EDC53239B584C00A2071F /* StudentTeacherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTeacherTableViewCell.swift; sourceTree = "<group>"; };
 		17D75D842396D0F200B79EEE /* TeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				17144218238D9B5F0075C653 /* AppDelegate.swift */,
 				1714421A238D9B5F0075C653 /* ViewController.swift */,
 				1714421C238D9B5F0075C653 /* Main.storyboard */,
+				178B76DC23C2E5FD00EA1DB5 /* CommentExperimentViewController.swift */,
 				1714421F238D9B600075C653 /* Assets.xcassets */,
 				17144221238D9B600075C653 /* LaunchScreen.storyboard */,
 				17144224238D9B600075C653 /* Info.plist */,
@@ -371,6 +374,7 @@
 				17DD9F2C23A0729200D36818 /* AddNewExperimentViewController.swift in Sources */,
 				17DD9F2723A060CF00D36818 /* StudentViewController.swift in Sources */,
 				178EDC54239B584C00A2071F /* StudentTeacherTableViewCell.swift in Sources */,
+				178B76DD23C2E5FD00EA1DB5 /* CommentExperimentViewController.swift in Sources */,
 				17D75D872396D41700B79EEE /* TeacherTableViewCell.swift in Sources */,
 				17DD9F2A23A06A4500D36818 /* StudentTableViewCell.swift in Sources */,
 				1757A81223A93C130096782C /* Alumno+CoreDataClass.swift in Sources */,

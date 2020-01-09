@@ -79,3 +79,39 @@ func lanzarAlertaConTiempo(viewController: UIViewController, titulo: String, men
     })
     
 }
+
+func crearVistaActionSheet(alertController: UIAlertController, objeto: AnyObject, foto: UIImage) {
+    let view = UIView(frame: CGRect(x: 10, y: 40, width: alertController.view.bounds.size.width - 10 * 4.0, height: 72))
+    view.backgroundColor = .clear
+    
+    let blurEffect = UIBlurEffect(style: .dark)
+    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+    blurEffectView.frame = view.bounds
+    blurEffectView.layer.cornerRadius = 10
+    blurEffectView.clipsToBounds = true
+    
+    let image = UIImageView(frame: CGRect(x: 8, y: 8, width: 56, height: 56))
+    image.image = foto
+    image.layer.cornerRadius = image.frame.height / 2
+    image.clipsToBounds = true
+    
+    let labelTitle = UILabel(frame: CGRect(x: 76, y: 14, width: 210, height: 24))
+    labelTitle.text = objeto.name
+    labelTitle.textColor = #colorLiteral(red: 0.5019607843, green: 0.6509803922, blue: 0.4862745098, alpha: 1)
+    labelTitle.font = UIFont(name: "AvenirNext-Bold", size: 17)
+    
+    let labelDate = UILabel(frame: CGRect(x: 76, y: 36, width: 190, height: 24))
+    labelDate.text = objeto.user
+    labelDate.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    labelDate.font = UIFont(name: "AvenirNext-UltraLightItalic", size: 17)
+    
+    
+    view.addSubview(blurEffectView)
+    view.addSubview(image)
+    view.addSubview(labelDate)
+    view.addSubview(labelTitle)
+    
+    
+    
+    alertController.view.addSubview(view)
+}

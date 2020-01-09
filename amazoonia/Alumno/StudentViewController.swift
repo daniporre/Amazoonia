@@ -57,9 +57,10 @@ class StudentViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewExperiment" {
-            let viewDestiny = segue.destination as? AddNewExperimentViewController
-            viewDestiny!.alumno = self.alumno!
-            viewDestiny!.container = self.container!
+            let NavigationController = segue.destination as! UINavigationController
+            let viewDestiny = NavigationController.topViewController as! AddNewExperimentViewController
+            viewDestiny.alumno = self.alumno!
+            viewDestiny.container = self.container!
         }
         if segue.identifier == "showExperimentSegue" {
             let viewDestiny = segue.destination as? ShowExperimentStudentViewController
@@ -85,7 +86,10 @@ class StudentViewController: UIViewController {
     }
     
     @IBAction func editUserButton(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Editar perfil", message: "\n\n\n", preferredStyle: .actionSheet)
+        
+        crearVistaActionSheet(alertController: alertController, objeto: self.alumno, foto: UIImage(data: self.alumno.photo as Data)!)
+        
         let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
             self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
         }
@@ -245,7 +249,7 @@ class StudentViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editUser").withRenderingMode(.alwaysTemplate)
         setNormalNavigationBar(viewController: self)
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
+        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "logOut").withRenderingMode(.alwaysTemplate)
         
     }
     
@@ -338,6 +342,14 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.markImageViewCell.image = #imageLiteral(resourceName: "mark")
         }
         
+        if self.listaExperimentos[indexPath.row].comment != "" {
+            cell.commentImageview.tintColor = #colorLiteral(red: 1, green: 0.8707417846, blue: 0.1957176328, alpha: 1)
+            cell.commentImageview.image = #imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate)
+        }
+        if self.listaExperimentos[indexPath.row].comment == "" {
+            cell.commentImageview.image = nil
+        }
+        
         cell.accessoryType = .disclosureIndicator
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -348,7 +360,7 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 92
     }
     
     
@@ -417,6 +429,26 @@ extension StudentViewController: UITableViewDelegate, UITableViewDataSource {
             })
             shareAction.image = #imageLiteral(resourceName: "share").withRenderingMode(.alwaysTemplate)
             shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+            
+            if self.listaExperimentos[indexPath.row].comment != "" {
+                let showComment = UIContextualAction(style: .destructive, title:  nil, handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+                    
+                    lanzarAlertaConUnBoton(viewController: self, title: "Comentario para \(self.listaExperimentos[indexPath.row].name)", message: self.listaExperimentos[indexPath.row].comment, buttonText: "Aceptar", buttonType: .cancel)
+                    
+                    
+                    //respuesta haptica de tipo impacto...
+                    let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
+                    let generator = UIImpactFeedbackGenerator(style: impact)
+                    generator.prepare()
+                    
+//                    success(true)
+                    generator.impactOccurred()
+                })
+                showComment.image = #imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate)
+                showComment.backgroundColor = #colorLiteral(red: 1, green: 0.8707417846, blue: 0.1957176328, alpha: 1)
+                return UISwipeActionsConfiguration(actions: [showComment, shareAction])
+            }
+            
         
 //            deleteAction.backgroundColor = .red
             return UISwipeActionsConfiguration(actions: [shareAction])
@@ -483,7 +515,7 @@ extension StudentViewController: UIImagePickerControllerDelegate, UINavigationCo
         //Permite que podamos editar la imagen que escojemos
         picker.allowsEditing = true
         //Creamos el alertControlller con el mensaje el titulo y el tipo de alerta, en este caso de tipo actionSheet
-        let alertController:UIAlertController = UIAlertController(title: "Añade una imagen",
+        let alertController:UIAlertController = UIAlertController(title: "Cambiar foto de perfil",
                                                                   message: "¿De dónde quieres escoger la imagen?",
                                                                   preferredStyle: .actionSheet)
         

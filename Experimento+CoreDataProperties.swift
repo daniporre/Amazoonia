@@ -25,6 +25,7 @@ extension Experimento {
     @NSManaged public var milk: Bool
     @NSManaged public var name: String
     @NSManaged public var mark: String
+    @NSManaged public var comment: String
     @NSManaged public var dateString: String
     @NSManaged public var photo: NSData
     @NSManaged public var type: String

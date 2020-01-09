@@ -15,6 +15,9 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     var listaAlumnos2 = [Alumno]()
     var alumnos = [Alumno]()
     
+    var profesorPhoto = UIImage()
+    let buttonUser = UIButton()
+    
     var container: NSPersistentContainer!
     var fetchResultsController: NSFetchedResultsController<Profesor>!
     
@@ -25,6 +28,10 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.profesor.photo != nil {
+            self.profesorPhoto = UIImage(data: self.profesor.photo as Data)!
+        }
         
         setUpNavigationBar()
         setUpTableView()
@@ -78,10 +85,10 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "addNewStudentSegue"){
-            let viewDestiny = segue.destination as? AddNewStudentViewController
-            viewDestiny?.profesor = self.profesor
-            viewDestiny?.container = self.container
-            self.navigationItem.title = self.profesor?.name
+            let NavigationController = segue.destination as! UINavigationController
+            let viewDestiny = NavigationController.topViewController as! AddNewStudentViewController
+            viewDestiny.profesor = self.profesor
+            viewDestiny.container = self.container
         }
         if segue.identifier == "showStudentSegue" {
             let viewDestiny = segue.destination as? ShowStudentTeacherViewController
@@ -123,8 +130,7 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         
     }
     
-    @IBAction func editUserButton(_ sender: UIBarButtonItem) {
-        
+    func editUserAction() {
         let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
         let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
             self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
@@ -135,6 +141,9 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         let nameUser = UIAlertAction(title: "Nombre completo", style: .default) { (UIAlertAction) in
             self.lanzarAlertaTextfieldName(viewController: self, title: "Cambiar nombre completo de usuario", message: "Introduce tu nuevo nombre completo de usuario")
         }
+        let imageUser = UIAlertAction(title: "Foto de perfil", style: .default) { (UIAlertAction) in
+            self.alertForSourceType()
+        }
         let cancelar = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
             
         }
@@ -143,40 +152,93 @@ class TeacherViewController: UIViewController, UINavigationControllerDelegate {
         userName.setValue(#colorLiteral(red: 0.2784313725, green: 0.3921568627, blue: 0.262745098, alpha: 1), forKey: "titleTextColor")
         nameUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
         password.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        imageUser.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
         cancelar.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
         
         
         //Añadimos imagenes a las acciones del actionSheet
         nameUser.setValue(UIImage(named: "userData"), forKey: "image")
         userName.setValue(UIImage(named: "userImage"), forKey: "image")
+        imageUser.setValue(UIImage(named: "userPhoto"), forKey: "image")
         password.setValue(UIImage(named: "userPassword"), forKey: "image")
         
         alertController.addAction(nameUser)
         alertController.addAction(userName)
+        alertController.addAction(imageUser)
         alertController.addAction(password)
         alertController.addAction(cancelar)
         
         self.present(alertController, animated: true)
-        
     }
     
     
     
+    
+    
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro/a de que quiere salir de \(self.profesor.name)?", preferredStyle: .alert)
-
-        let ok = UIAlertAction(title: "Cerrar sesión", style: .destructive) { (UIAlertAction) in
+        let alertController = UIAlertController(title: "Menú", message: "\n\n\n", preferredStyle: .actionSheet)
+        
+        
+        
+        let view = UIView(frame: CGRect(x: 10, y: 40, width: alertController.view.bounds.size.width - 10 * 4.0, height: 72))
+        view.backgroundColor = .clear
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.layer.cornerRadius = 10
+        blurEffectView.clipsToBounds = true
+        
+        let image = UIImageView(frame: CGRect(x: 8, y: 8, width: 56, height: 56))
+        image.image = UIImage(data: self.profesor.photo as Data)
+        image.layer.cornerRadius = image.frame.height / 2
+        image.clipsToBounds = true
+        
+        let labelTitle = UILabel(frame: CGRect(x: 76, y: 14, width: 210, height: 24))
+        labelTitle.text = self.profesor.name
+        labelTitle.textColor = #colorLiteral(red: 0.5019607843, green: 0.6509803922, blue: 0.4862745098, alpha: 1)
+        labelTitle.font = UIFont(name: "AvenirNext-Bold", size: 17)
+        
+        let labelDate = UILabel(frame: CGRect(x: 76, y: 36, width: 190, height: 24))
+        labelDate.text = self.profesor.user
+        labelDate.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        labelDate.font = UIFont(name: "AvenirNext-UltraLightItalic", size: 17)
+        
+        
+        view.addSubview(blurEffectView)
+        view.addSubview(image)
+        view.addSubview(labelDate)
+        view.addSubview(labelTitle)
+        
+        
+        
+        alertController.view.addSubview(view)
+        
+        
+        
+        
+        let editUser = UIAlertAction(title: "Editar usuario", style: .default) { (UIAlertAction) in
+            self.editUserAction()
+        }
+        let logOut = UIAlertAction(title: "Cerrar sesión", style: .destructive) { (UIAlertAction) in
             self.navigationController?.popViewController(animated: true)
-
             self.dismiss(animated: true, completion: nil)
         }
         let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (UIAlertAction) in
-
+            
         }
-
+        cancel.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        editUser.setValue(#colorLiteral(red: 0.3133951426, green: 0.4417499304, blue: 0.2995533347, alpha: 1), forKey: "titleTextColor")
+        logOut.setValue(#colorLiteral(red: 1, green: 0, blue: 0.2535486356, alpha: 1), forKey: "titleTextColor")
+        
+        
+        editUser.setValue(UIImage(named: "userData"), forKey: "image")
+        logOut.setValue(UIImage(named: "logOut"), forKey: "image")
+        
         alertController.addAction(cancel)
-        alertController.addAction(ok)
-
+        alertController.addAction(editUser)
+        alertController.addAction(logOut)
+        
         present(alertController, animated: true)
     }
     
@@ -415,17 +477,31 @@ extension TeacherViewController {
     
     func setUpNavigationBar() {
         
-        //        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.isHidden = false
-        
-        self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "editUser").withRenderingMode(.alwaysTemplate)
-//        setNavigationBarStyle11(viewController: self)
         self.navigationItem.hidesBackButton = true
         
         
-       
+        let viewImage = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        buttonUser.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+        buttonUser.setImage(self.profesorPhoto, for: .normal)
+        buttonUser.contentMode = .scaleAspectFill
+        buttonUser.layer.cornerRadius = buttonUser.frame.height / 2
+        buttonUser.clipsToBounds = true
+        buttonUser.layer.borderWidth = 1
+        buttonUser.layer.borderColor = #colorLiteral(red: 1, green: 0.8707417846, blue: 0.1957176328, alpha: 1)
+        buttonUser.addTarget(self, action: #selector(logOutButton), for: .touchUpInside)
+        viewImage.addSubview(buttonUser)
         
-        self.navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "noun_Power_1482886").withRenderingMode(.alwaysTemplate)
+        //        let barButton = UIBarButtonItem(title: "d", style: .done, target: nil, action: #selector(hola))
+        
+        self.navigationItem.leftBarButtonItem?.customView = viewImage
+        
+        
+        //        var view2 = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        //        view2.backgroundColor = .yellow
+        //        var barButtonItem = UIBarButtonItem(customView: view2)
+        //        self.navigationItem.rightBarButtonItem = barButtonItem
+        
         
         //TITLEVIEW
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -435,7 +511,6 @@ extension TeacherViewController {
         view.addSubview(image)
         
         self.navigationItem.titleView = view
-        
     }
     
     func setNavigationBarStyle11(viewController: UIViewController){
@@ -537,4 +612,88 @@ extension TeacherViewController {
     }
     
 }
+
+extension TeacherViewController: UIImagePickerControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let theImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.profesorPhoto = theImage
+            self.buttonUser.setImage(theImage, for: .normal)
+            self.profesor.photo = theImage.pngData()! as NSData
+            self.saveContext()
+            let generator = UINotificationFeedbackGenerator()
+            generator.prepare()
+            generator.notificationOccurred(.success)
+            
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func alertForSourceType(){
+        //Creamos el picker y asignamos su delegado a self
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        //Permite que podamos editar la imagen que escojemos
+        picker.allowsEditing = true
+        //Creamos el alertControlller con el mensaje el titulo y el tipo de alerta, en este caso de tipo actionSheet
+        let alertController:UIAlertController = UIAlertController(title: "Añade una imagen",
+                                                                  message: "¿De dónde quieres escoger la imagen?",
+                                                                  preferredStyle: .actionSheet)
+        
+        
+        //Creamos una accion que posteriormente sera un boton en la alerta,
+        //pulsar este boton ocasionara que se abra la libreeria de fotos porque .sourceType == .photoLibrary
+        let photoLibraryaction:UIAlertAction = UIAlertAction(title: "Librería de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            //Codigo que se ejecuta cuando pulsamos el boton de la alerta
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abrira la camara de fotos permitiendonos hacer una foto y editarla
+        let cameraAction:UIAlertAction = UIAlertAction(title: "Cámara", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .camera
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion abre directamente las fotos guardadas
+        let savedPhotosAlbumAction:UIAlertAction = UIAlertAction(title: "Álbum de fotos", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            picker.sourceType = .savedPhotosAlbum
+            self.present(picker, animated: true, completion: nil)
+        })
+        //Esta accion es la de candelar, de tipo .cancel para que aparezca abajo, oculta la alerta
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        
+        
+        //CAmbiamos el color del texto de las acciones a negro
+        photoLibraryaction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        savedPhotosAlbumAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cameraAction.setValue(#colorLiteral(red: 0.2779085934, green: 0.3907533586, blue: 0.2644636631, alpha: 1), forKey: "titleTextColor")
+        cancelAction.setValue(#colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1), forKey: "titleTextColor")
+        
+        
+        //Añadimos imagenes a las acciones del actionSheet
+        photoLibraryaction.setValue(UIImage(named: "imagen"), forKey: "image")
+        savedPhotosAlbumAction.setValue(UIImage(named: "album"), forKey: "image")
+        cameraAction.setValue(UIImage(named: "camera"), forKey: "image")
+        
+        //Añadimos todas las acciones al alertcontroller
+        alertController.addAction(photoLibraryaction)
+        alertController.addAction(savedPhotosAlbumAction)
+        alertController.addAction(cameraAction)
+        alertController.addAction(cancelAction)
+        //Mostramos la alerta al usuario
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+}
+
+
 

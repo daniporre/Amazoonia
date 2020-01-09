@@ -43,6 +43,12 @@ class ShowStudentTeacherViewController: UIViewController {
         listaExperimentos.sort(by: {$0.dateString.compare($1.dateString) == .orderedDescending})
     }
     
+    @IBAction func reloadTableview(segue: UIStoryboardSegue) {
+        if segue.identifier == "commentUndwind" {
+            self.tableViewExperiments.reloadData()
+        }
+    }
+    
     func setUpUI() {
         studentImageView.layer.borderWidth = 7
         studentImageView.layer.borderColor = #colorLiteral(red: 0.9029806256, green: 0.7490995526, blue: 0, alpha: 1)
@@ -69,10 +75,23 @@ class ShowStudentTeacherViewController: UIViewController {
             viewDestiny?.experimento = listaExperimentos[(self.indice?.row)!]
             viewDestiny?.container = self.container
         }
+        if segue.identifier == "commentSegue" {
+            let NavigationController = segue.destination as! UINavigationController
+            let viewDestiny = NavigationController.topViewController as! CommentExperimentViewController
+            viewDestiny.experimento = listaExperimentos[(self.indice?.row)!]
+            viewDestiny.container = self.container
+        }
     }
     
     @IBAction func editUserButton(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Editar perfil", message: "¿Qué quieres editar?", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Editar perfil", message: "\n\n\n", preferredStyle: .actionSheet)
+        
+        
+        
+        crearVistaActionSheet(alertController: alertController, objeto: self.alumno, foto: UIImage(data: self.alumno.photo as Data)!)
+        
+        
+        
         let userName = UIAlertAction(title: "Usuario", style: .default) { (UIAlertAction) in
             self.lanzarAlertaTextfieldUsername(viewController: self, title: "Cambiar nombre de usuario", message: "Introduce tu nuevo nombre de usuario")
         }
@@ -337,6 +356,15 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         if self.listaExperimentos[indexPath.row].mark == "" {
             cell.markImageViewCell.image = #imageLiteral(resourceName: "mark")
         }
+        
+        if self.listaExperimentos[indexPath.row].comment != "" {
+            cell.commentImageview.tintColor = #colorLiteral(red: 1, green: 0.8707417846, blue: 0.1957176328, alpha: 1)
+            cell.commentImageview.image = #imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate)
+        }
+        if self.listaExperimentos[indexPath.row].comment == "" {
+            cell.commentImageview.image = nil
+        }
+        
         cell.dateCell.text = listaExperimentos[indexPath.row].dateString
         cell.accessoryType = .disclosureIndicator
         
@@ -346,7 +374,7 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 92
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -369,8 +397,22 @@ extension ShowStudentTeacherViewController: UITableViewDelegate, UITableViewData
         shareAction.image = #imageLiteral(resourceName: "calificar").withRenderingMode(.alwaysTemplate)
         shareAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         
+        let commentAction = UIContextualAction(style: .destructive, title:  "Comentar", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            self.performSegue(withIdentifier: "commentSegue", sender: nil)
+            
+            //respuesta haptica de tipo impacto...
+            let impact: UIImpactFeedbackGenerator.FeedbackStyle = .heavy
+            let generator = UIImpactFeedbackGenerator(style: impact)
+            generator.prepare()
+            
+            generator.impactOccurred()
+            success(true)
+        })
+        commentAction.image = #imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate)
+        commentAction.backgroundColor = #colorLiteral(red: 1, green: 0.8707417846, blue: 0.1957176328, alpha: 1)
         
-        return UISwipeActionsConfiguration(actions: [shareAction])
+        return UISwipeActionsConfiguration(actions: [shareAction,commentAction])
     }
     
 }
